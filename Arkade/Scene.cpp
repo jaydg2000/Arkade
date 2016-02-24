@@ -83,13 +83,18 @@ namespace arkade {
 	}
 
 	void Scene::render_sprites() {
-		const Graphics& graphics = Graphics::instance();
+		Graphics* graphics = Graphics::instance();
 		__arkade_spr_registry* ptr_sprite_reg = __arkade_spr_registry::instance();
+		
+		graphics->begin_render();
+
 		ptr_sprite_reg->for_each([graphics](Sprite* sprite) {
 			sprite->on_pre_render();
-			graphics.render(*sprite);
+			graphics->render(sprite);
 			sprite->on_post_render();
 		});
+
+		graphics->end_render();
 	}
 
 	void Scene::handle_messages() {

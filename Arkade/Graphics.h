@@ -24,7 +24,10 @@ namespace arkade
 		SDL_Texture*							load_texture(const string& path, RGB back_color = RGB(128, 0, 128)) const;
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
-		void									render(Sprite* sprite) const;
+		void									render(Sprite* sprite);
+		void									begin_render();
+		void									end_render();
+		void									background_color(RGB rgb);
 
 	private:
 
@@ -44,8 +47,9 @@ namespace arkade
 		RGB										m_boundingBoxColor;
 		RGB										m_clipRegionColor;
 		RGB										m_stored_pen_color;
+		RGB										m_background_color;
 
-		int										clip(Rect* srcRect, Rect* destRect, Rect* clipRect);
+		uint8_t									clip(Rect* srcRect, Rect* destRect, Rect* clipRect);
 
 	};
 }

@@ -12,6 +12,10 @@ using namespace std;
 
 #define SPRITE_TYPE_UNKNOWN 0
 
+#define SPRITE_FLIP_NONE SDL_FLIP_NONE
+#define SPRITE_FLIP_HORIZONTAL SDL_FLIP_HORIZONTAL
+#define SPRITE_FLIP_VERTICAL SDL_FLIP_VERTICAL
+
 namespace arkade {
 
 	class Sprite : public MessageSink, public MessageBroadcaster {
@@ -22,6 +26,7 @@ namespace arkade {
 
 		void					texture(const string& filename);
 		void					texture(const string& filename, RGB back_color);
+		Texture*				texture();
 		void					animator(Animator* ptr_animator);
 		Animator*				animator();
 		float					position_x();
@@ -31,6 +36,8 @@ namespace arkade {
 		void					position_y(float y);
 		void					position(float x, float y);
 		void					move_relative_y(float relative_y);
+		uint32_t				rotation();
+		void					rotation(uint32_t rotation);
 		void					scale(float x, float y);
 		void					scale(PointF& point);
 		PointF					scale();
@@ -40,14 +47,22 @@ namespace arkade {
 		void					size(Point& size);
 		uint32_t				z_order();
 		void					z_order(uint32_t z_order);
+		uint8_t					flip();
+		void					flip(uint8_t flip);
 		bool					is_visible();
 		void					is_visible(bool visible);
 		void					bounds(	int32_t lower_x, 
 										int32_t upper_x, 
 										int32_t lower_y, 
 										int32_t upper_y);
+		
+		virtual Rect*			renderable_source_rect();
+		virtual Rect*			renderable_destination_rect();
+		virtual Rect*			renderable_clip_rect();
+		virtual PointF*			renderable_center_frame();
+		
 		virtual uint32_t		type();
-
+		
 		virtual void			on_setup();
 		virtual void			on_cleanup();
 		virtual void			on_update();

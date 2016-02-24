@@ -100,45 +100,58 @@ namespace arkade {
 		pen_color(m_stored_pen_color);
 	}
 
-	void Graphics::render(Sprite* sprite) const {
-		Rect* src_rect = renderable->source_rect();
-		Rect* dest_rect = renderable->destination_rect();
-		Rect* clip_rect = renderable->clip_rect();
-		float rotation = renderable->rotation();
-		Scale* scale = renderable->scale();
-		uint8_t flip = renderable->flip();
-		Texture* texture = renderable->texture();
-		Vector2* coordinates = renderable->coordinates();
-		Vector2* frame_center = renderable->frame_center();
-		Vector2* camera_coordinates = m_ptr_camera->coordinates();
+	void Graphics::begin_render() {
+		SDL_RenderClear(m_ptr_renderer);
+	}
 
-		dest_rect->x = coordinates->x - camera_coordinates->x;
-		dest_rect->y = coordinates->y - camera_coordinates->y;
+	void Graphics::end_render() {
+		SDL_RenderPresent(m_ptr_renderer);
+	}
+
+	void Graphics::background_color(RGB rgb) {
+		SDL_SetRenderDrawColor(m_ptr_renderer, rgb.r, rgb.g, rgb.b, rgb.a);
+	}
+
+	void Graphics::render(Sprite* sprite) {
+		Rect* src_rect = sprite->renderable_source_rect();
+		Rect* dest_rect = sprite->renderable_destination_rect();
+		Rect* clip_rect = sprite->renderable_clip_rect();
+		float rotation = sprite->rotation();
+		PointF scale = sprite->scale();
+		uint8_t flip = sprite->flip();
+		Texture* texture = sprite->texture();
+		float coordinate_x = sprite->position_x();
+		float coordinate_y = sprite->position_y();
+		float camera_x = m_ptr_camera->position_x();
+		float camera_y = m_ptr_camera->position_y();
+
+		dest_rect->x = coordinate_x - camera_x;
+		dest_rect->y = coordinate_y - camera_y;
 
 		if (clip_rect)
 			if (!clip(src_rect, dest_rect, clip_rect))
 				return;
 
-		bool scale_is_normal = Scale::is_normal(scale);
-		float previous_scale_x, previous_scale_y;
+		//bool scale_is_normal = Scale::is_normal(scale);
+		//float previous_scale_x, previous_scale_y;
 
-		if (!scale_is_normal) {
-			SDL_RenderGetScale(m_ptr_renderer, &previous_scale_x, &previous_scale_y);
-			SDL_RenderSetScale(m_ptr_renderer, scale->x, scale->y);
-		}
+		//if (!scale_is_normal) {
+		//	SDL_RenderGetScale(m_ptr_renderer, &previous_scale_x, &previous_scale_y);
+		//	SDL_RenderSetScale(m_ptr_renderer, scale->x, scale->y);
+		//}
 
 		SDL_RenderCopyEx(
 			m_ptr_renderer,
-			texture->texture(),
+			texture,
 			src_rect,
 			dest_rect,
 			rotation,
-			frame_center,
+			NULL,
 			SDL_FLIP_NONE
 			);
 	}
 
-	int Graphics::clip(SDL_Rect* srcRect, SDL_Rect* destRect, SDL_Rect* clipRect) {
+	uint8_t Graphics::clip(Rect* srcRect, Rect* destRect, Rect* clipRect) {
 		// at this point, destRect has been converted to screen coordinates.
 
 		int x = srcRect->x;
