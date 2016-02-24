@@ -1,0 +1,7 @@
+#include "RGB.h"
+
+namespace arkade {
+
+	const RGB RGB::Black(0x00,0x00,0x00);
+	const RGB RGB::Magenta(0xFF,0x00,0xFF);
+}

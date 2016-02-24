@@ -14,10 +14,10 @@ namespace arkade {
 		SDL_QUIT;
 	}
 
-	const Graphics& Graphics::instance() {
+	Graphics* Graphics::instance() {
 		if (!m_instance)
-			m_instance = std::make_unique<Graphics>();
-		return *m_instance;
+			m_instance = unique_ptr<Graphics>();
+		return m_instance.get();
 	}
 
 	uint8_t Graphics::init(Camera* camera, bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption) {
@@ -85,7 +85,7 @@ namespace arkade {
 
 		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, back_color.r, back_color.g, back_color.b));
 
-		shared_ptr<SDL_Texture> texture = std::make_shared<SDL_Texture>(SDL_CreateTextureFromSurface(m_ptr_renderer, surface));
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(m_ptr_renderer, surface);
 		SDL_FreeSurface(surface);
 
 		return texture;
@@ -100,10 +100,7 @@ namespace arkade {
 		pen_color(m_stored_pen_color);
 	}
 
-	void Graphics::render(const Sprite& sprite) const {
-
-		sprite->on_pre_render();
-
+	void Graphics::render(Sprite* sprite) const {
 		Rect* src_rect = renderable->source_rect();
 		Rect* dest_rect = renderable->destination_rect();
 		Rect* clip_rect = renderable->clip_rect();
@@ -139,8 +136,6 @@ namespace arkade {
 			frame_center,
 			SDL_FLIP_NONE
 			);
-
-		renderable->on_post_render();
 	}
 
 	int Graphics::clip(SDL_Rect* srcRect, SDL_Rect* destRect, SDL_Rect* clipRect) {

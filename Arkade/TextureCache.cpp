@@ -11,10 +11,10 @@ namespace arkade {
 	{
 	}
 
-	TextureCache& TextureCache::instance() {
+	TextureCache* TextureCache::instance() {
 		if (!m_ptr_instance)
-			m_ptr_instance = std::make_unique<TextureCache>(new TextureCache());
-		return *m_ptr_instance;
+			m_ptr_instance = unique_ptr<TextureCache>(new TextureCache());
+		return m_ptr_instance.get();
 	}
 
 	weak_ptr<SDL_Texture> TextureCache::obtain(const string& name) {
@@ -25,5 +25,11 @@ namespace arkade {
 		}
 
 		return weak_ptr<SDL_Texture>(m_texture_map.at(name));
+	}
+
+	void TextureCache::push(const string& name, RGB rgb) {
+		shared_ptr<SDL_Texture> ptr_texture(Graphics::instance().load_texture(name, rgb));
+		auto pair = make_pair(name, ptr_texture);
+		m_texture_map.insert(pair);
 	}
 }

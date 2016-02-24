@@ -11,14 +11,10 @@ namespace arkade {
 	{
 	}
 
-	const __arkade_spr_registry& __arkade_spr_registry::instance() {
+	__arkade_spr_registry* __arkade_spr_registry::instance() {
 		if (!m_ptr_instance)
-			m_ptr_instance = std::make_unique<__arkade_spr_registry>();
-		return *m_ptr_instance;
-	}
-
-	forward_list<Sprite*>::iterator __arkade_spr_registry::itr() {
-		return (*m_ptr_sprites).begin();
+			m_ptr_instance = new __arkade_spr_registry();
+		return m_ptr_instance;
 	}
 
 	void __arkade_spr_registry::add(Sprite* sprite) {
@@ -28,5 +24,11 @@ namespace arkade {
 
 	void __arkade_spr_registry::clear() {
 		(*m_ptr_sprites).clear();
+	}
+
+	template<typename F>
+	void __arkade_spr_registry::for_each(F op) {
+		for(Sprite* sprite : (*m_ptr_sprites)) {
+			op(sprite);
 	}
 }

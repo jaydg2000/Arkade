@@ -1,4 +1,5 @@
 #include "Sprite.h"
+#include "__arkade_spr_registry.h"
 
 namespace arkade {
 
@@ -11,18 +12,36 @@ namespace arkade {
 
 		m_enable_bounds_checking = false;
 
-		const __arkade_spr_registry& sprite_registry = __arkade_spr_registry::instance();
-		sprite_registry.add(this);
+		__arkade_spr_registry* sprite_registry = __arkade_spr_registry::instance();
+		sprite_registry->add(this);
 	}
 
+	Sprite::Sprite(const string& filename) {
+		Sprite();
+		texture(filename);
+	}
 
 	Sprite::~Sprite()
 	{
 	}
 
-	const void Sprite::texture(const string& filename) {
-		TextureCache& cache = TextureCache::instance();
-		m_ptr_texture = cache.obtain(filename);
+	void Sprite::animator(Animator* ptr_animator) {
+		m_ptr_animator = ptr_animator;
+	}
+
+	Animator* Sprite::animator() {
+		return m_ptr_animator;
+	}
+
+	void Sprite::texture(const string& filename) {
+		TextureCache* cache = TextureCache::instance();
+		m_ptr_texture = cache->obtain(filename);
+	}
+
+	void Sprite::texture(const string& filename, RGB back_color) {
+		TextureCache* cache = TextureCache::instance();
+		cache->push(filename, back_color);
+		m_ptr_texture = cache->obtain(filename);
 	}
 
 	float Sprite::position_x() {
@@ -111,10 +130,6 @@ namespace arkade {
 			m_y = m_bounds_upper_y;
 	}
 
-	void Sprite::behavior(SpriteBehavior* ptr_behavior) {
-		m_ptr_behavior = ptr_behavior;
-	}
-
 	Point Sprite::size() {
 		Point size_point;
 		size_point.x = m_size_x;
@@ -143,4 +158,31 @@ namespace arkade {
 		m_z_order = z_order;
 	}
 
+	uint32_t Sprite::type() {
+		return SPRITE_TYPE_UNKNOWN;
+	}
+
+	void Sprite::on_setup() {
+	}
+
+	void Sprite::on_cleanup() {
+	}
+
+	void Sprite::on_update() {
+	}
+
+	void Sprite::on_pre_render() {
+	}
+
+	void Sprite::on_post_render() {
+	}
+
+	void Sprite::on_collision(Sprite* ptr_sprite_collided_with) {
+	}
+
+	void Sprite::on_pool_obtain() {
+	}
+
+	void Sprite::on_pool_release() {
+	}
 }

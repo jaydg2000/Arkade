@@ -13,8 +13,9 @@ namespace arkade {
 	public:
 		~TextureCache();
 
-		static TextureCache&						instance();
+		static TextureCache*						instance();
 		weak_ptr<SDL_Texture>						obtain(const string& name);
+		void										push(const string& name, RGB rgb);
 
 	private:
 		static unique_ptr<TextureCache>				m_ptr_instance;

@@ -12,18 +12,19 @@ namespace arkade {
 	public:
 		~MessageRouter();
 
-		MessageRouter*								instance();
+		static MessageRouter*						instance();
 		void										register_sink(uint32_t message_type, MessageSink* ptr_sink);
-		void										broadcast(Message_ptr* ptr_message);
+		void										broadcast(Message* ptr_message);
 
 	private:
-		MessageRouter*								m_ptr_instance;
+		static MessageRouter*						m_ptr_instance;
 		map<uint32_t, list<MessageSink*>>			m_sink_map;
 
 		MessageRouter();
 
 		bool										contains_message_type(uint32_t message_type);
-		list<MessageSink*>&							get_or_add_message_type_list(uint32_t message_type);
+		list<MessageSink*>*							get_message_type_list(uint32_t message_type);
+		list<MessageSink*>*							get_or_add_message_type_list(uint32_t message_type);
 
 	};
 

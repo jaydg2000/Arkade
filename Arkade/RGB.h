@@ -10,10 +10,12 @@ namespace arkade {
 		RGB(uint8_t r, uint8_t g, uint8_t b, uint8_t a=0xFF);
 		~RGB();
 
-		uint8_t			r;
-		uint8_t			g;
-		uint8_t			b;
-		uint8_t			a;
-	};
+		uint8_t			 r;
+		uint8_t			 g;
+		uint8_t			 b;
+		uint8_t			 a;
 
+		static const RGB Magenta;
+		static const RGB Black;
+	};
 }

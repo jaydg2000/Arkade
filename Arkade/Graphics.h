@@ -17,14 +17,14 @@ namespace arkade
 		Graphics();
 		~Graphics();
 
-		static const Graphics&					instance();
+		static Graphics*						instance();
 		uint8_t									init(Camera* camera, bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption);
 		void									pen_color(RGB rgb);
 		RGB										pen_color();
 		SDL_Texture*							load_texture(const string& path, RGB back_color = RGB(128, 0, 128)) const;
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
-		void									render(const Sprite& renderable) const;
+		void									render(Sprite* sprite) const;
 
 	private:
 

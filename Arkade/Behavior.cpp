@@ -10,12 +10,4 @@ namespace arkade {
 	Behavior::~Behavior()
 	{
 	}
-
-	void Behavior::on_setup() {
-
-	}
-
-	void Behavior::on_cleanup() {
-
-	}
 }

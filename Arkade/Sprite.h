@@ -1,21 +1,29 @@
 #pragma once
+#include <SDL.h>
 #include <string>
 #include "Point.h"
 #include "PointF.h"
 #include "TextureCache.h"
-#include "SpriteBehavior.h"
-#include "__arkade_spr_registry.h"
+#include "Animator.h"
+#include "MessageSink.h"
+#include "MessageBroadcaster.h"
 
 using namespace std;
 
+#define SPRITE_TYPE_UNKNOWN 0
+
 namespace arkade {
 
-	class Sprite {
+	class Sprite : public MessageSink, public MessageBroadcaster {
 	public:
 		Sprite();
+		Sprite(const string& filename);
 		~Sprite();
 
-		const void				texture(const string& filename);
+		void					texture(const string& filename);
+		void					texture(const string& filename, RGB back_color);
+		void					animator(Animator* ptr_animator);
+		Animator*				animator();
 		float					position_x();
 		void					position_x(float x);
 		void					move_relative_x(float relative_x);
@@ -34,11 +42,20 @@ namespace arkade {
 		void					z_order(uint32_t z_order);
 		bool					is_visible();
 		void					is_visible(bool visible);
-		void					behavior(SpriteBehavior* ptr_behavior);
 		void					bounds(	int32_t lower_x, 
 										int32_t upper_x, 
 										int32_t lower_y, 
 										int32_t upper_y);
+		virtual uint32_t		type();
+
+		virtual void			on_setup();
+		virtual void			on_cleanup();
+		virtual void			on_update();
+		virtual void			on_pre_render();
+		virtual void			on_post_render();
+		virtual void			on_collision(Sprite* ptr_sprite_collided_with);
+		virtual void			on_pool_obtain();
+		virtual void			on_pool_release();
 
 	private:
 
@@ -57,7 +74,7 @@ namespace arkade {
 		bool					m_is_visible;
 		bool					m_enable_bounds_checking;
 		weak_ptr<SDL_Texture>	m_ptr_texture;
-		SpriteBehavior*			m_ptr_behavior;
+		Animator*				m_ptr_animator;
 
 		void					check_bounds();
 	};

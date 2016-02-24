@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 #include <forward_list>
+#include <memory>
 
 namespace arkade {
 
@@ -14,15 +15,16 @@ namespace arkade {
 	public:
 		~__arkade_spr_registry();
 
-		static const __arkade_spr_registry&			instance();
+		static __arkade_spr_registry*				instance();
 
-		forward_list<Sprite*>::iterator				itr();
+		template<typename F>
+		void										for_each(F op);
 		
 		void										add(Sprite* ptr_sprite);
 		void										clear();
 
 	private:
-		static unique_ptr<__arkade_spr_registry>	m_ptr_instance;
+		static __arkade_spr_registry*				m_ptr_instance;
 		unique_ptr<forward_list<Sprite*>>			m_ptr_sprites;
 		bool										m_is_dirty;
 

@@ -14,7 +14,11 @@ namespace arkade {
 		SpritePool(uint32_t initial_size);
 		~SpritePool();
 
-		Sprite&									obtain();
+		Sprite*									obtain();
+		void									release(Sprite*);
+
+		template<typename F>
+		void									for_each(F op);
 
 	private:
 		queue<Sprite*>							m_available_sprites;

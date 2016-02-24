@@ -73,6 +73,10 @@
     <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_image-2.0.0\include;C:\SDL\SDL2_mixer-2.0.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>C:\SDL\SDL2-2.0.4\lib\x86;C:\SDL\SDL2_image-2.0.0\lib\x86;C:\SDL\SDL2_mixer-2.0.0\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_mixer-2.0.0\include;C:\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL\SDL2-2.0.4\lib\x64;C:\SDL\SDL2_mixer-2.0.0\lib\x64;C:\SDL\SDL2_image-2.0.0\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -137,13 +141,17 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animator.h" />
     <ClInclude Include="ArkadeTypes.h" />
     <ClInclude Include="Behavior.h" />
+    <ClInclude Include="BoundingBoxCollisionDetector.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Message.h" />
+    <ClInclude Include="MessageBroadcaster.h" />
     <ClInclude Include="MessageRouter.h" />
     <ClInclude Include="MessageSink.h" />
     <ClInclude Include="Point.h" />
@@ -156,22 +164,29 @@
     <ClInclude Include="SpriteBehavior.h" />
     <ClInclude Include="SpritePool.h" />
     <ClInclude Include="TextureCache.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="__arkade_spr_registry.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Behavior.cpp" />
+    <ClCompile Include="BoundingBoxCollisionDetector.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Message.cpp" />
+    <ClCompile Include="MessageBroadcaster.cpp" />
     <ClCompile Include="MessageRouter.cpp" />
     <ClCompile Include="MessageSink.cpp" />
+    <ClCompile Include="RGB.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteBehavior.cpp" />
     <ClCompile Include="SpritePool.cpp" />
     <ClCompile Include="TextureCache.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="__arkade_spr_registry.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
