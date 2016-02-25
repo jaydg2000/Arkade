@@ -67,7 +67,8 @@ namespace arkade {
 		ACQUIRE_SPR_REG(ptr_sprite_reg);
 		ptr_sprite_reg->for_each([detector, ptr_sprite_reg](Sprite* s1) {
 			ptr_sprite_reg->for_each([detector, s1](Sprite* s2) {
-				detector->detect(s1, s2);
+				if(s1!=s2)
+					detector->detect(s1, s2);
 			});
 		});
 	}
