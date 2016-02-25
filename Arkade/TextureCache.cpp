@@ -17,19 +17,19 @@ namespace arkade {
 		return m_ptr_instance;
 	}
 
-	Texture* TextureCache::obtain(const string& name) {
+	Texture* TextureCache::obtain(std::string& name) {
 		if (m_texture_map.count(name)<1) {
-			Texture* ptr_texture(Graphics::instance()->load_texture(name));
-			auto pair = make_pair(name, ptr_texture);
+			SDL_Texture* ptr_texture(Graphics::instance()->load_texture(name));
+			auto pair = std::make_pair(name, ptr_texture);
 			m_texture_map.insert(pair);
 		}
 
 		return m_texture_map.at(name);
 	}
 
-	void TextureCache::push(const string& name, RGB rgb) {
+	void TextureCache::push(std::string& name, RGB rgb) {
 		Texture* ptr_texture = Graphics::instance()->load_texture(name, rgb);
-		auto pair = make_pair(name, ptr_texture);
+		auto pair = std::make_pair(name, ptr_texture);
 		m_texture_map.insert(pair);
 	}
 }

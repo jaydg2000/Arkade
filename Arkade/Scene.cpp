@@ -63,8 +63,7 @@ namespace arkade {
 
 	}
 
-	void Scene::on_detect_collisions(CollisionDetector* detector) {
-		__arkade_spr_registry* ptr_sprite_reg = __arkade_spr_registry::instance();		
+	void Scene::on_detect_collisions(CollisionDetector* detector) {				
 	}
 
 	void Scene::setup_sprites() {

@@ -1,5 +1,6 @@
 #include "Sprite.h"
 #include "__arkade_spr_registry.h"
+#include "TextureCache.h"
 
 namespace arkade {
 
@@ -16,7 +17,7 @@ namespace arkade {
 		sprite_registry->add(this);
 	}
 
-	Sprite::Sprite(const string& filename) {
+	Sprite::Sprite(string& filename) {
 		Sprite();
 		texture(filename);
 	}
@@ -33,15 +34,14 @@ namespace arkade {
 		return m_ptr_animator;
 	}
 
-	void Sprite::texture(const string& filename) {
-		TextureCache* cache = TextureCache::instance();
-		m_ptr_texture = cache->obtain(filename);
-	}
-
-	void Sprite::texture(const string& filename, RGB back_color) {
+	void Sprite::texture(string& filename, RGB back_color) {
 		TextureCache* cache = TextureCache::instance();
 		cache->push(filename, back_color);
 		m_ptr_texture = cache->obtain(filename);
+	}
+
+	Texture* Sprite::texture() {
+		return m_ptr_texture;
 	}
 
 	float Sprite::position_x() {
@@ -78,6 +78,14 @@ namespace arkade {
 		check_bounds();
 	}
 
+	float Sprite::rotation() {
+		return m_rotation;
+	}
+
+	void Sprite::rotation(float rotation) {
+		m_rotation = rotation;
+	}
+
 	bool Sprite::is_visible() {
 		return m_is_visible;
 	}
@@ -103,10 +111,10 @@ namespace arkade {
 		m_scale_y = scale.y;
 	}
 
-	void Sprite::bounds(int32_t lower_x,
-		int32_t upper_x,
-		int32_t lower_y,
-		int32_t upper_y) {
+	void Sprite::bounds(float lower_x,
+		float upper_x,
+		float lower_y,
+		float upper_y) {
 
 		m_enable_bounds_checking = true;
 
@@ -158,8 +166,32 @@ namespace arkade {
 		m_z_order = z_order;
 	}
 
+	uint8_t Sprite::flip() {
+		return m_flip;
+	}
+
+	void Sprite::flip(uint8_t flip) {
+		m_flip = flip;
+	}
+
 	uint32_t Sprite::type() {
 		return SPRITE_TYPE_UNKNOWN;
+	}
+
+	Rect* Sprite::renderable_source_rect() {
+		return nullptr;
+	}
+
+	Rect* Sprite::renderable_destination_rect() {
+		return nullptr;
+	}
+
+	Rect* Sprite::renderable_clip_rect() {
+		return nullptr;
+	}
+
+	PointF* Sprite::renderable_center_frame() {
+		return nullptr;
 	}
 
 	void Sprite::on_setup() {

@@ -1,9 +1,9 @@
 #pragma once
-#include "Sprite.h"
 #include <vector>
 #include <queue>
 #include <forward_list>
 #include <memory>
+#include "Sprite.h"
 
 namespace arkade {
 

@@ -5,8 +5,6 @@
 #include <string>
 #include "Graphics.h"
 
-using namespace std;
-
 namespace arkade {
 
 	class TextureCache {
@@ -14,12 +12,12 @@ namespace arkade {
 		~TextureCache();
 
 		static TextureCache*						instance();
-		Texture*									obtain(const string& name);
-		void										push(const string& name, RGB rgb);
+		Texture*									obtain(std::string& name);
+		void										push(std::string& name, RGB rgb);
 
 	private:
 		static TextureCache*						m_ptr_instance;
-		map<const string&, SDL_Texture*>			m_texture_map;
+		std::map<std::string, SDL_Texture*>			m_texture_map;
 
 		TextureCache();
 	};

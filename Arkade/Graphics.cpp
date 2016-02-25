@@ -125,8 +125,8 @@ namespace arkade {
 		float camera_x = m_ptr_camera->position_x();
 		float camera_y = m_ptr_camera->position_y();
 
-		dest_rect->x = coordinate_x - camera_x;
-		dest_rect->y = coordinate_y - camera_y;
+		dest_rect->x = (int)(coordinate_x - camera_x);
+		dest_rect->y = (int)(coordinate_y - camera_y);
 
 		if (clip_rect)
 			if (!clip(src_rect, dest_rect, clip_rect))

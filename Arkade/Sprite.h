@@ -1,14 +1,13 @@
 #pragma once
 #include <SDL.h>
 #include <string>
+#include "RGB.h"
 #include "Point.h"
 #include "PointF.h"
-#include "TextureCache.h"
 #include "Animator.h"
 #include "MessageSink.h"
 #include "MessageBroadcaster.h"
-
-using namespace std;
+#include "ArkadeTypes.h"
 
 #define SPRITE_TYPE_UNKNOWN 0
 
@@ -21,11 +20,10 @@ namespace arkade {
 	class Sprite : public MessageSink, public MessageBroadcaster {
 	public:
 		Sprite();
-		Sprite(const string& filename);
+		Sprite(string& filename);
 		~Sprite();
 
-		void					texture(const string& filename);
-		void					texture(const string& filename, RGB back_color);
+		void					texture(std::string& filename, RGB back_color = RGB::Magenta);
 		Texture*				texture();
 		void					animator(Animator* ptr_animator);
 		Animator*				animator();
@@ -36,8 +34,8 @@ namespace arkade {
 		void					position_y(float y);
 		void					position(float x, float y);
 		void					move_relative_y(float relative_y);
-		uint32_t				rotation();
-		void					rotation(uint32_t rotation);
+		float					rotation();
+		void					rotation(float rotation);
 		void					scale(float x, float y);
 		void					scale(PointF& point);
 		PointF					scale();
@@ -51,10 +49,11 @@ namespace arkade {
 		void					flip(uint8_t flip);
 		bool					is_visible();
 		void					is_visible(bool visible);
-		void					bounds(	int32_t lower_x, 
-										int32_t upper_x, 
-										int32_t lower_y, 
-										int32_t upper_y);
+		void					bounds(
+									float lower_x,
+									float upper_x,
+									float lower_y,
+									float upper_y);
 		
 		virtual Rect*			renderable_source_rect();
 		virtual Rect*			renderable_destination_rect();
@@ -76,8 +75,6 @@ namespace arkade {
 
 		float					m_x;
 		float					m_y;
-		uint32_t				m_size_x;
-		uint32_t				m_size_y;
 		float					m_bounds_lower_x;
 		float					m_bounds_lower_y;
 		float					m_bounds_upper_x;
@@ -85,7 +82,10 @@ namespace arkade {
 		float					m_rotation;
 		float					m_scale_x;
 		float					m_scale_y;
+		uint32_t				m_size_x;
+		uint32_t				m_size_y;
 		uint32_t				m_z_order;
+		uint8_t					m_flip;
 		bool					m_is_visible;
 		bool					m_enable_bounds_checking;
 		Texture*				m_ptr_texture;
