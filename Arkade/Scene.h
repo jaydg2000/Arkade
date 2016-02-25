@@ -15,6 +15,7 @@ namespace arkade {
 
 		void							run();
 		void							stop();
+		void							enable_auto_collision_detection(bool enabled);
 
 	protected:
 		virtual void					on_setup();
@@ -35,6 +36,7 @@ namespace arkade {
 
 	private:
 		bool							m_scene_is_ended;
+		bool							m_auto_collision_detection_enabled;
 		CollisionDetector*				m_collision_detector;
 	};
 

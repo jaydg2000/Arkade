@@ -152,10 +152,12 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MessageBroadcaster.h" />
+    <ClInclude Include="MessagePool.h" />
     <ClInclude Include="MessageRouter.h" />
     <ClInclude Include="MessageSink.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointF.h" />
+    <ClInclude Include="Pool.h" />
     <ClInclude Include="RGB.h" />
     <ClInclude Include="Scale.h" />
     <ClInclude Include="Scene.h" />
@@ -177,8 +179,10 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="MessageBroadcaster.cpp" />
+    <ClCompile Include="MessagePool.cpp" />
     <ClCompile Include="MessageRouter.cpp" />
     <ClCompile Include="MessageSink.cpp" />
+    <ClCompile Include="Pool.cpp" />
     <ClCompile Include="RGB.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sprite.cpp" />

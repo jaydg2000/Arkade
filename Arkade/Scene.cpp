@@ -2,20 +2,18 @@
 
 namespace arkade {
 
-	Scene::Scene()
-	{
-		m_scene_is_ended = false;
-		m_collision_detector = new BoundingBoxCollisionDetector();
+	Scene::Scene() {
+		Scene(new BoundingBoxCollisionDetector());
 	}
 
 	Scene::Scene(CollisionDetector* collision_detector) {
 		m_scene_is_ended = false;
 		m_collision_detector = collision_detector;
+		m_auto_collision_detection_enabled = false;
 	}
 
 
-	Scene::~Scene()
-	{
+	Scene::~Scene() {		
 	}
 
 	void Scene::run() {
@@ -37,6 +35,10 @@ namespace arkade {
 
 	void Scene::stop() {
 		m_scene_is_ended = true;
+	}
+
+	void Scene::enable_auto_collision_detection(bool enabled) {
+		m_auto_collision_detection_enabled = enabled;
 	}
 
 	void Scene::on_setup() {
