@@ -31,6 +31,7 @@ namespace arkade {
 		void							update_sprites();
 		void							render_sprites();
 		void							handle_messages();
+		void							auto_detect_collisions(CollisionDetector* detector);
 
 	private:
 		bool							m_scene_is_ended;

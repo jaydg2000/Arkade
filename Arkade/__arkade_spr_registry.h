@@ -5,6 +5,8 @@
 #include <memory>
 #include "Sprite.h"
 
+#define ACQUIRE_SPR_REG(x) __arkade_spr_registry* x = __arkade_spr_registry::instance()
+
 namespace arkade {
 
 	bool __arkade_spr_compare(Sprite* ptr_s1, Sprite* ptr_s2) { return ptr_s1->z_order() < ptr_s2->z_order(); }

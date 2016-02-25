@@ -63,27 +63,36 @@ namespace arkade {
 
 	}
 
+	void Scene::auto_detect_collisions(CollisionDetector* detector) {
+		ACQUIRE_SPR_REG(ptr_sprite_reg);
+		ptr_sprite_reg->for_each([detector, ptr_sprite_reg](Sprite* s1) {
+			ptr_sprite_reg->for_each([detector, s1](Sprite* s2) {
+				detector->detect(s1, s2);
+			});
+		});
+	}
+
 	void Scene::on_detect_collisions(CollisionDetector* detector) {				
 	}
 
 	void Scene::setup_sprites() {
-		__arkade_spr_registry* ptr_sprite_reg = __arkade_spr_registry::instance();
+		ACQUIRE_SPR_REG(ptr_sprite_reg);
 		ptr_sprite_reg->for_each([](Sprite* s){ s->on_setup(); });
 	}
 
 	void Scene::cleanup_sprites() {
-		__arkade_spr_registry* ptr_sprite_reg = __arkade_spr_registry::instance();
+		ACQUIRE_SPR_REG(ptr_sprite_reg);
 		ptr_sprite_reg->for_each([](Sprite* s){ s->on_cleanup(); });
 	}
 
 	void Scene::update_sprites() {
-		__arkade_spr_registry* ptr_sprite_reg = __arkade_spr_registry::instance();
+		ACQUIRE_SPR_REG(ptr_sprite_reg);
 		ptr_sprite_reg->for_each([](Sprite* s){ s->on_update(); });
 	}
 
 	void Scene::render_sprites() {
 		Graphics* graphics = Graphics::instance();
-		__arkade_spr_registry* ptr_sprite_reg = __arkade_spr_registry::instance();
+		ACQUIRE_SPR_REG(ptr_sprite_reg);
 		
 		graphics->begin_render();
 
@@ -97,7 +106,7 @@ namespace arkade {
 	}
 
 	void Scene::handle_messages() {
-		__arkade_spr_registry* ptr_sprite_reg = __arkade_spr_registry::instance();
+		ACQUIRE_SPR_REG(ptr_sprite_reg);
 		ptr_sprite_reg->for_each([](Sprite* sprite) {
 			sprite->flush();
 		});
