@@ -13,22 +13,22 @@ namespace arkade {
 
 	TextureCache* TextureCache::instance() {
 		if (!m_ptr_instance)
-			m_ptr_instance = unique_ptr<TextureCache>(new TextureCache());
-		return m_ptr_instance.get();
+			m_ptr_instance = new TextureCache();
+		return m_ptr_instance;
 	}
 
-	weak_ptr<SDL_Texture> TextureCache::obtain(const string& name) {
+	Texture* TextureCache::obtain(const string& name) {
 		if (m_texture_map.count(name)<1) {
-			shared_ptr<SDL_Texture> ptr_texture(Graphics::instance().load_texture(name));
+			Texture* ptr_texture(Graphics::instance()->load_texture(name));
 			auto pair = make_pair(name, ptr_texture);
 			m_texture_map.insert(pair);
 		}
 
-		return weak_ptr<SDL_Texture>(m_texture_map.at(name));
+		return m_texture_map.at(name);
 	}
 
 	void TextureCache::push(const string& name, RGB rgb) {
-		shared_ptr<SDL_Texture> ptr_texture(Graphics::instance().load_texture(name, rgb));
+		Texture* ptr_texture = Graphics::instance()->load_texture(name, rgb);
 		auto pair = make_pair(name, ptr_texture);
 		m_texture_map.insert(pair);
 	}

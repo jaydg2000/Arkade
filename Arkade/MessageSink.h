@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <memory>
 #include <queue>
+#include <deque>
 #include "Message.h"
 
 using namespace std;
@@ -18,7 +19,7 @@ namespace arkade {
 		void				flush();
 
 	protected:
-		virtual void		on_message(uint32_t message_type, weak_ptr<MessageSink> ptr_sender, weak_ptr<void> ptr_data);
+		virtual void		on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 	private:
 		queue<Message*>		m_message_queue;

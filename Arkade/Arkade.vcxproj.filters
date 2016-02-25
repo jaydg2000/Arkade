@@ -72,9 +72,6 @@
     <ClInclude Include="SpritePool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteBehavior.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="__arkade_spr_registry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -129,9 +126,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpritePool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="__arkade_spr_registry.cpp">

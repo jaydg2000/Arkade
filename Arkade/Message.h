@@ -1,27 +1,26 @@
 #pragma once
 #include <SDL.h>
 #include <memory>
-#include "MessageSink.h"
 
 using namespace std;
 
 namespace arkade {
-
+	class MessageSink;
 	class Message {
 	public:
 		Message(uint32_t message_type);
-		Message(uint32_t message_type, weak_ptr<MessageSink> ptr_sender);
-		Message(uint32_t message_type, weak_ptr<MessageSink> ptr_sender, weak_ptr<void> data);
+		Message(uint32_t message_type, MessageSink* ptr_sender);
+		Message(uint32_t message_type, MessageSink* ptr_sender, void* data);
 		~Message();
 
 		uint32_t								message_type();
-		weak_ptr<MessageSink>					sender();
-		weak_ptr<void>							data();
+		MessageSink*							sender();
+		void*									data();
 
 	private:
 		uint32_t								m_message_type;
-		weak_ptr<MessageSink>					m_ptr_sender;
-		weak_ptr<void>							m_ptr_data;
+		MessageSink*							m_ptr_sender;
+		void*									m_ptr_data;
 
 	};
 

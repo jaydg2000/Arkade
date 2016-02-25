@@ -161,7 +161,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Size.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SpriteBehavior.h" />
     <ClInclude Include="SpritePool.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Timer.h" />
@@ -183,7 +182,6 @@
     <ClCompile Include="RGB.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteBehavior.cpp" />
     <ClCompile Include="SpritePool.cpp" />
     <ClCompile Include="TextureCache.cpp" />
     <ClCompile Include="Timer.cpp" />

@@ -28,7 +28,8 @@ namespace arkade {
 
 	template<typename F>
 	void __arkade_spr_registry::for_each(F op) {
-		for(Sprite* sprite : (*m_ptr_sprites)) {
+		for (Sprite* sprite : (*m_ptr_sprites)) {
 			op(sprite);
+		}
 	}
 }

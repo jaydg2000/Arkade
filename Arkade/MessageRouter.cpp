@@ -25,7 +25,7 @@ namespace arkade {
 	}
 
 	void MessageRouter::broadcast(Message* ptr_message) {
-		list<MessageSink*>* ptr_sinks = get_message_type_list(ptr_message->message_type);
+		list<MessageSink*>* ptr_sinks = get_message_type_list(ptr_message->message_type());
 		if (!ptr_sinks)
 			return;
 		for (MessageSink* sink : *ptr_sinks) {

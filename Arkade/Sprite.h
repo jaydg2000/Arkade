@@ -88,7 +88,7 @@ namespace arkade {
 		uint32_t				m_z_order;
 		bool					m_is_visible;
 		bool					m_enable_bounds_checking;
-		weak_ptr<SDL_Texture>	m_ptr_texture;
+		Texture*				m_ptr_texture;
 		Animator*				m_ptr_animator;
 
 		void					check_bounds();
