@@ -41,7 +41,7 @@ namespace arkade {
 		PointF					scale();
 		uint32_t				size_x();
 		uint32_t				size_y();
-		Point					size();
+		Point*					size();
 		void					size(Point& size);
 		uint32_t				z_order();
 		void					z_order(uint32_t z_order);
@@ -55,10 +55,11 @@ namespace arkade {
 									float lower_y,
 									float upper_y);
 		
-		virtual Rect*			renderable_source_rect();
-		virtual Rect*			renderable_destination_rect();
-		virtual Rect*			renderable_clip_rect();
-		virtual PointF*			renderable_center_frame();
+		virtual Rect*			source_rect();
+		virtual Rect*			destination_rect();
+		virtual Rect*			clip_rect();
+		void					clip_rect(Rect* rect);
+		virtual Point*			center_frame();
 		
 		virtual uint32_t		type();
 		
@@ -82,14 +83,17 @@ namespace arkade {
 		float					m_rotation;
 		float					m_scale_x;
 		float					m_scale_y;
-		uint32_t				m_size_x;
-		uint32_t				m_size_y;
+		Point					m_frame_size;
 		uint32_t				m_z_order;
 		uint8_t					m_flip;
 		bool					m_is_visible;
 		bool					m_enable_bounds_checking;
 		Texture*				m_ptr_texture;
 		Animator*				m_ptr_animator;
+		Rect					m_source_rect;
+		Rect					m_destination_rect;
+		Rect					m_clip_rect;
+		Point					m_frame_center;
 
 		void					check_bounds();
 	};

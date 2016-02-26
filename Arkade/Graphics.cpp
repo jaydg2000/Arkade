@@ -113,9 +113,9 @@ namespace arkade {
 	}
 
 	void Graphics::render(Sprite* sprite) {
-		Rect* src_rect = sprite->renderable_source_rect();
-		Rect* dest_rect = sprite->renderable_destination_rect();
-		Rect* clip_rect = sprite->renderable_clip_rect();
+		Rect* src_rect = sprite->source_rect();
+		Rect* dest_rect = sprite->destination_rect();
+		Rect* clip_rect = sprite->clip_rect();
 		float rotation = sprite->rotation();
 		PointF scale = sprite->scale();
 		uint8_t flip = sprite->flip();

@@ -138,24 +138,23 @@ namespace arkade {
 			m_y = m_bounds_upper_y;
 	}
 
-	Point Sprite::size() {
-		Point size_point;
-		size_point.x = m_size_x;
-		size_point.y = m_size_y;
-		return size_point;
+	Point* Sprite::size() {
+		return &m_frame_size;
 	}
 
 	uint32_t Sprite::size_x() {
-		return m_size_x;
+		return m_frame_size.x;
 	}
 
 	uint32_t Sprite::size_y() {
-		return m_size_y;
+		return m_frame_size.y;
 	}
 
 	void Sprite::size(Point& size_point) {
-		m_size_x = size_point.x;
-		m_size_y = size_point.y;
+		m_frame_size.x = size_point.x;
+		m_frame_size.y = size_point.y;
+		m_frame_center.x = m_frame_size.x / 2;
+		m_frame_center.y = m_frame_size.y / 2;
 	}
 
 	uint32_t Sprite::z_order() {
@@ -178,20 +177,33 @@ namespace arkade {
 		return SPRITE_TYPE_UNKNOWN;
 	}
 
-	Rect* Sprite::renderable_source_rect() {
-		return nullptr;
+	Rect* Sprite::source_rect() {
+		uint32_t cframe = m_ptr_animator ? m_ptr_animator->current_frame() : 0;
+		m_source_rect.x = cframe * m_frame_size.x;
+		return &m_source_rect;
 	}
 
-	Rect* Sprite::renderable_destination_rect() {
-		return nullptr;
+	Rect* Sprite::destination_rect() {
+		m_destination_rect.x = (int)m_x;
+		m_destination_rect.y = (int)m_y;
+		m_destination_rect.w = m_frame_size.x;
+		m_destination_rect.h = m_frame_size.y;
+		return &m_destination_rect;
 	}
 
-	Rect* Sprite::renderable_clip_rect() {
-		return nullptr;
+	Rect* Sprite::clip_rect() {
+		return &m_clip_rect;
 	}
 
-	PointF* Sprite::renderable_center_frame() {
-		return nullptr;
+	void Sprite::clip_rect(Rect* rect) {
+		m_clip_rect.x = rect->x;
+		m_clip_rect.y = rect->y;
+		m_clip_rect.w = rect->w;
+		m_clip_rect.h = rect->h;
+	}
+
+	Point* Sprite::center_frame() {
+		return &m_frame_center;
 	}
 
 	void Sprite::on_setup() {

@@ -11,21 +11,21 @@ namespace arkade {
 		Level();
 		~Level();
 
-		void			run();
-		void			stop();
-		void			add_scene(Scene* scene);
+		void						run();
+		void						stop();
+		void						add_scene(Scene* scene);
 
 	protected:
-		virtual void	on_setup();
-		virtual void	on_begin();
-		virtual void	on_end();
-		virtual void	on_cleanup();
+		virtual void				on_setup();
+		virtual void				on_begin();
+		virtual void				on_end();
+		virtual void				on_cleanup();
 
 	private:
-		bool			m_level_is_ended;
-		queue<Scene*>	m_scenes;
+		bool						m_level_is_ended;
+		queue<Scene*>				m_scenes;
 
-		void			run_scene();
+		void						run_scene();
 	};
 
 }

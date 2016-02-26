@@ -1,6 +1,13 @@
 #include "Message.h"
+#include "MessagePool.h"
 
 namespace arkade {
+
+	Message::Message() {
+		m_message_type = 0;
+		m_ptr_sender = nullptr;
+		m_ptr_data = nullptr;
+	}
 
 	Message::Message(uint32_t message_type)
 	{
@@ -29,6 +36,12 @@ namespace arkade {
 	{
 	}
 
+	void Message::set(uint32_t type, MessageSink* sender, void* data) {
+		m_message_type = type;
+		m_ptr_sender = sender;
+		m_ptr_data = data;
+	}
+
 	uint32_t Message::message_type() {
 		return m_message_type;
 	}
@@ -39,5 +52,10 @@ namespace arkade {
 
 	void* Message::data() {
 		return m_ptr_data;
+	}
+
+	void Message::release() {
+		MessagePool* pool = MessagePool::instance();
+		pool->release(this);
 	}
 }
