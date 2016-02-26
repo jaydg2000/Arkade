@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="ArkadeTypes.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="BoundingBoxCollisionDetector.h" />
     <ClInclude Include="Camera.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Scale.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Size.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpritePool.h" />
     <ClInclude Include="TextureCache.h" />
@@ -169,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="BoundingBoxCollisionDetector.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -183,6 +186,7 @@
     <ClCompile Include="MessageSink.cpp" />
     <ClCompile Include="RGB.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpritePool.cpp" />
     <ClCompile Include="TextureCache.cpp" />
