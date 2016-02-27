@@ -22,7 +22,8 @@ namespace arkade {
 		return m_instance;
 	}
 
-	uint8_t Graphics::init(Camera* camera, bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption) {
+	uint8_t Graphics::initialize(bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption) {
+		m_ptr_camera = Camera::instance();
 		m_full_screen = full_screen;
 		m_window_width = width;
 		m_window_height = height;
@@ -63,7 +64,12 @@ namespace arkade {
 		pen_color(RGB(0x00, 0x00, 0x00, 0xFF));
 
 		return 0;
+	}
 
+	void Graphics::uninitialize() {
+		SDL_DestroyWindow(m_ptr_window);
+		SDL_DestroyRenderer(m_ptr_renderer);
+		SDL_QUIT;
 	}
 
 	void Graphics::pen_color(RGB rgb) {

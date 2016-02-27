@@ -8,6 +8,7 @@ namespace arkade {
 		Camera();
 		~Camera();
 
+		static Camera*		instance();
 		float				position_x();
 		void				position_x(float x);
 		float				position_y();
@@ -21,6 +22,7 @@ namespace arkade {
 		void				to_screen(Rect* rect, float x, float y);
 
 	private:
+		static Camera*		m_ptr_instance;
 		float				m_x;
 		float				m_y;
 	};

@@ -14,14 +14,14 @@ namespace arkade {
 		Graphics* ptr_graphics = Graphics::instance();
 		Audio* ptr_audio = Audio::instance();
 		TextureCache* ptr_texture_cache = TextureCache::instance();
+		Keyboard* ptr_keyboard = new Keyboard();
 
 		on_setup();
 		setup_sprites();
 		on_begin();
 		while (!m_scene_is_ended) {
-			check_keyboard_input();
 			check_mouse_input();
-			on_keyboard_input();
+			on_check_keyboard_input(ptr_keyboard);
 			on_mouse_input();
 			handle_messages();
 			on_update();
@@ -56,7 +56,7 @@ namespace arkade {
 	void Scene::on_begin() {
 	}
 
-	void Scene::on_keyboard_input() {
+	void Scene::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 	}
 
 	void Scene::on_mouse_input() {
@@ -75,9 +75,6 @@ namespace arkade {
 	void Scene::on_cleanup() {
 	}
 
-	void Scene::check_keyboard_input() {
-	}
-	
 	void Scene::check_mouse_input() {
 	}
 

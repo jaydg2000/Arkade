@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL.h>
-#include <string>
 #include "RGB.h"
 #include "Point.h"
 #include "PointF.h"
@@ -16,10 +15,10 @@ namespace arkade {
 	class Sprite : public MessageSink, public MessageBroadcaster {
 	public:
 		Sprite();
-		Sprite(string& filename);
+		Sprite(const char* filename);
 		~Sprite();
 
-		void					texture(std::string& filename, RGB back_color = RGB::Magenta);
+		void					texture(const char* filename, RGB back_color = RGB::Magenta);
 		Texture*				texture();
 		void					animator(Animator* ptr_animator);
 		Animator*				animator();

@@ -10,7 +10,7 @@ public:
 
 	virtual void					on_setup();
 	virtual void					on_begin();
-	virtual void					on_keyboard_input();
+	virtual void					on_check_keyboard_input(Keyboard* ptr_keyboard);
 	virtual void					on_mouse_input();
 	virtual void					on_update();
 	virtual void					on_render(Graphics* ptr_graphics);

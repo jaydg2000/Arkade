@@ -12,5 +12,7 @@ protected:
 	virtual void			on_setup();
 	virtual void			on_cleanup();
 
+private:
+	Level					m_level_1;
 };
 

@@ -17,8 +17,11 @@ void LevelOneGameScene::on_begin()
 {
 }
 
-void LevelOneGameScene::on_keyboard_input()
+void LevelOneGameScene::on_check_keyboard_input(Keyboard* ptr_keyboard)
 {
+	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_ESCAPE)) {
+		stop();
+	}
 }
 
 void LevelOneGameScene::on_mouse_input()
@@ -31,6 +34,7 @@ void LevelOneGameScene::on_update()
 
 void LevelOneGameScene::on_render(Graphics* ptr_graphics)
 {
+	ptr_graphics->render(m_ptr_background_image);
 }
 
 void LevelOneGameScene::on_end()

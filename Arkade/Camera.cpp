@@ -2,6 +2,8 @@
 
 namespace arkade {
 
+	Camera* Camera::m_ptr_instance = nullptr;
+
 	Camera::Camera()
 	{
 		m_x = m_y = 0;
@@ -10,6 +12,12 @@ namespace arkade {
 
 	Camera::~Camera()
 	{
+	}
+
+	Camera* Camera::instance() {
+		if (!m_ptr_instance)
+			m_ptr_instance = new Camera();
+		return m_ptr_instance;
 	}
 
 	float Camera::position_x() {

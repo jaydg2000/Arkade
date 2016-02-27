@@ -6,6 +6,7 @@
 #include "SpritePool.h"
 #include "TextureCache.h"
 #include "Audio.h"
+#include "Keyboard.h"
 
 namespace arkade {
 
@@ -22,7 +23,7 @@ namespace arkade {
 	protected:
 		virtual void					on_setup();
 		virtual void					on_begin();
-		virtual void					on_keyboard_input();
+		virtual void					on_check_keyboard_input(Keyboard* keyboard);
 		virtual void					on_mouse_input();
 		virtual void					on_update();
 		virtual void					on_render(Graphics* ptr_graphics);
@@ -34,7 +35,6 @@ namespace arkade {
 		bool							m_scene_is_ended;
 		list<Sprite*>					m_sprite_list;
 
-		void							check_keyboard_input();
 		void							check_mouse_input();
 		void							setup_sprites();
 		void							cleanup_sprites();

@@ -20,7 +20,7 @@ namespace arkade {
 	}
 
 	Texture* TextureCache::obtain(const char* name) {
-		if (m_texture_map.count(name)<1) {
+		if (m_texture_map.empty() || m_texture_map.count(name)<1) {
 			SDL_Texture* ptr_texture(Graphics::instance()->load_texture(name));
 			auto pair = std::make_pair(name, ptr_texture);
 			m_texture_map.insert(pair);

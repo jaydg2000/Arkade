@@ -14,7 +14,7 @@ namespace arkade {
 		m_flip = FLIP_NONE;
 	}
 
-	Sprite::Sprite(string& filename) {
+	Sprite::Sprite(const char* filename) {
 		Sprite();
 		texture(filename);
 	}
@@ -31,10 +31,10 @@ namespace arkade {
 		return m_ptr_animator;
 	}
 
-	void Sprite::texture(string& filename, RGB back_color) {
+	void Sprite::texture(const char* filename, RGB back_color) {
 		TextureCache* cache = TextureCache::instance();
-		cache->push(filename.c_str(), back_color);
-		m_ptr_texture = cache->obtain(filename.c_str());
+		cache->push(filename, back_color);
+		m_ptr_texture = cache->obtain(filename);
 	}
 
 	Texture* Sprite::texture() {

@@ -2,10 +2,14 @@
 //
 
 #include "stdafx.h"
+#include <SDL.h>
+#include "AsteroidsGame.h"
 
-
-int main()
+int main(int argc, char* argv[])
 {
+	AsteroidsGame game;
+
+	game.run();
 
     return 0;
 }

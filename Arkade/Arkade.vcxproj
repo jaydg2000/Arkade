@@ -84,6 +84,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,8 +155,10 @@ copy /Y $(OutputPath)*.pdb C:\Arkade\1.0\lib</Command>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameAttributes.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MessageBroadcaster.h" />
@@ -176,6 +179,7 @@ copy /Y $(OutputPath)*.pdb C:\Arkade\1.0\lib</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="ArkadeTypes.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="BoundingBoxCollisionDetector.cpp" />
@@ -184,6 +188,7 @@ copy /Y $(OutputPath)*.pdb C:\Arkade\1.0\lib</Command>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="MessageBroadcaster.cpp" />
