@@ -2,6 +2,8 @@
 
 namespace arkade {
 
+	TextureCache* TextureCache::m_ptr_instance = nullptr;
+
 	TextureCache::TextureCache()
 	{
 	}
@@ -17,7 +19,7 @@ namespace arkade {
 		return m_ptr_instance;
 	}
 
-	Texture* TextureCache::obtain(std::string& name) {
+	Texture* TextureCache::obtain(const char* name) {
 		if (m_texture_map.count(name)<1) {
 			SDL_Texture* ptr_texture(Graphics::instance()->load_texture(name));
 			auto pair = std::make_pair(name, ptr_texture);
@@ -27,7 +29,7 @@ namespace arkade {
 		return m_texture_map.at(name);
 	}
 
-	void TextureCache::push(std::string& name, RGB rgb) {
+	void TextureCache::push(const char* name, RGB rgb) {
 		Texture* ptr_texture = Graphics::instance()->load_texture(name, rgb);
 		auto pair = std::make_pair(name, ptr_texture);
 		m_texture_map.insert(pair);

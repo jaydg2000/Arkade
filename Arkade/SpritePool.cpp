@@ -32,10 +32,14 @@ namespace arkade {
 		m_allocated_sprites.push_back(new Sprite());
 	}
 
-	template<typename F>
+	/*template<typename F>
 	void SpritePool::for_each(F op) {
 		for(Sprite* sprite : (*m_allocated_sprites)) {
 			op(sprite);
 		}
+	}*/
+
+	list<Sprite*>* SpritePool::get_sprite_list() {
+		return &m_allocated_sprites;
 	}
 }

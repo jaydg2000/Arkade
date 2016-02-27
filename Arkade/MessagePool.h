@@ -5,7 +5,7 @@
 #define MESSAGE_POOL_INITIAL_SIZE 10
 
 namespace arkade {
-
+	class Message;
 	class MessagePool
 	{
 	public:

@@ -1,12 +1,12 @@
 #include "Sound.h"
+#include "Audio.h"
 
 namespace arkade {
 
-	Sound::Sound(Mix_Chunk* ptr_mix_chunk)
+	Sound::Sound(std::string& filename)
 	{
-		m_ptr_mix_chunk = ptr_mix_chunk;
+		m_ptr_mix_chunk = Audio::instance()->load_sound(filename);
 	}
-
 
 	Sound::~Sound()
 	{
@@ -16,8 +16,8 @@ namespace arkade {
 		Mix_HaltChannel(channel);
 	}
 
-	int Sound::play_sound(Mix_Chunk* sound, bool loop = false) {
-		return Mix_PlayChannel(-1, sound, loop ? -1 : 0);
+	int Sound::play_sound(bool loop) {
+		return Mix_PlayChannel(-1, m_ptr_mix_chunk, loop ? -1 : 0);
 	}
 
 }

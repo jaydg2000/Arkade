@@ -1,8 +1,9 @@
 #pragma once
 #include "CollisionDetector.h"
 
-namespace arkade {
 
+namespace arkade {
+	class SpritePool;
 	class BoundingBoxCollisionDetector : public CollisionDetector
 	{
 	public:

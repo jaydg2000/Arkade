@@ -45,4 +45,19 @@ namespace arkade {
 		m_x += x;
 		m_y += y;
 	}
+
+	int Camera::x_to_screen(float x)
+	{
+		return (int)(x - m_x);
+	}
+
+	int Camera::y_to_screen(float y)
+	{
+		return (int)(y - m_y);
+	}
+
+	void Camera::to_screen(Rect* rect, float x, float y) {
+		rect->x = (int)(x - m_x);
+		rect->y = (int)(y - m_y);
+	}
 }

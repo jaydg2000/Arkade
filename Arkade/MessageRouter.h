@@ -2,12 +2,13 @@
 #include <SDL.h>
 #include <list>
 #include <map>
-#include "MessageSink.h"
+
 
 using namespace std;
 
 namespace arkade {
-
+	class Message;
+	class MessageSink;
 	class MessageRouter {
 	public:
 		~MessageRouter();

@@ -3,12 +3,14 @@
 #include <iostream>
 #include <memory>
 #include "ArkadeTypes.h"
-#include "Camera.h"
 #include "RGB.h"
+#include "Camera.h"
 #include "Sprite.h"
+#include "Image.h"
 
 namespace arkade
 {
+	struct RGB;
 	class Graphics {
 	public:
 
@@ -22,14 +24,15 @@ namespace arkade
 		SDL_Texture*							load_texture(const std::string& path, RGB back_color = RGB(128, 0, 128)) const;
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
-		void									render(Sprite* sprite);
+		void									render(Sprite* ptr_sprite);
+		void									render(Image* ptr_image);
 		void									begin_render();
 		void									end_render();
 		void									background_color(RGB rgb);
 
 	private:
 
-		static unique_ptr<Graphics>				m_instance;
+		static Graphics*						m_instance;
 		SDL_Window*								m_ptr_window;
 		SDL_Renderer*							m_ptr_renderer;
 		Camera*									m_ptr_camera;

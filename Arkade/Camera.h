@@ -1,4 +1,5 @@
 #pragma once
+#include "ArkadeTypes.h"
 
 namespace arkade {
 
@@ -15,6 +16,9 @@ namespace arkade {
 		void				move_relative_x(float x);
 		void				move_relative_y(float y);
 		void				move_relative(float x, float y);
+		int					x_to_screen(float x);
+		int					y_to_screen(float y);
+		void				to_screen(Rect* rect, float x, float y);
 
 	private:
 		float				m_x;

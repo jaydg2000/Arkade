@@ -3,7 +3,6 @@
 #include <string>
 
 namespace arkade {
-	class Sound;
 	class Audio {
 	public:
 		Audio();
@@ -13,7 +12,7 @@ namespace arkade {
 		void				initialize();
 		void				initialize(int audio_rate, Uint16 audio_format, int audio_channels, int audio_buffers);
 		void				uninitialize();
-		Sound*				load_sound(std::string& filename);
+		Mix_Chunk*			load_sound(std::string& filename);
 		void				stop_all_sound();
 
 	private:

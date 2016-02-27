@@ -12,12 +12,12 @@ namespace arkade {
 		~TextureCache();
 
 		static TextureCache*						instance();
-		Texture*									obtain(std::string& name);
-		void										push(std::string& name, RGB rgb);
+		Texture*									obtain(const char* name);
+		void										push(const char* name, RGB rgb);
 
 	private:
 		static TextureCache*						m_ptr_instance;
-		std::map<std::string, SDL_Texture*>			m_texture_map;
+		std::map<const char*, SDL_Texture*>			m_texture_map;
 
 		TextureCache();
 	};

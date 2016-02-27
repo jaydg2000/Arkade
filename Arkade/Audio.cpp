@@ -4,6 +4,8 @@
 
 namespace arkade {
 
+	Audio* Audio::m_instance = nullptr;
+
 	Audio::Audio()
 	{
 		initialize();
@@ -17,6 +19,8 @@ namespace arkade {
 	Audio* Audio::instance() {
 		if (!m_instance)
 			m_instance = new Audio();
+
+		return m_instance;
 	}
 
 	void Audio::initialize() {
@@ -34,15 +38,17 @@ namespace arkade {
 		Mix_CloseAudio();
 	}
 
-	Sound* Audio::load_sound(std::string& filename) {
+	Mix_Chunk* Audio::load_sound(std::string& filename) {
 		Mix_Chunk* ptr_mix = Mix_LoadWAV(filename.c_str());
 		if (!ptr_mix) {
 			exit(22);
 		}
 
-		Sound* ptr_sound = new Sound(ptr_mix);
+		return ptr_mix;
+	}
 
-		return ptr_sound;
+	void Audio::stop_all_sound() {
+		Mix_HaltChannel(-1);
 	}
 
 }

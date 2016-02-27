@@ -17,8 +17,9 @@ namespace arkade {
 		Sprite*									obtain();
 		void									release(Sprite*);
 
-		template<typename F>
-		void									for_each(F op);
+		//template<typename F>
+		//void									for_each(F op);
+		list<Sprite*>*							get_sprite_list();
 
 	private:
 		queue<Sprite*>							m_available_sprites;

@@ -11,10 +11,6 @@
 
 #define SPRITE_TYPE_UNKNOWN 0
 
-#define SPRITE_FLIP_NONE SDL_FLIP_NONE
-#define SPRITE_FLIP_HORIZONTAL SDL_FLIP_HORIZONTAL
-#define SPRITE_FLIP_VERTICAL SDL_FLIP_VERTICAL
-
 namespace arkade {
 
 	class Sprite : public MessageSink, public MessageBroadcaster {
@@ -36,17 +32,17 @@ namespace arkade {
 		void					move_relative_y(float relative_y);
 		float					rotation();
 		void					rotation(float rotation);
-		void					scale(float x, float y);
-		void					scale(PointF& point);
-		PointF					scale();
+		//void					scale(float x, float y);
+		//void					scale(PointF& point);
+		//PointF					scale();
 		uint32_t				size_x();
 		uint32_t				size_y();
 		Point*					size();
 		void					size(Point& size);
 		uint32_t				z_order();
 		void					z_order(uint32_t z_order);
-		uint8_t					flip();
-		void					flip(uint8_t flip);
+		Flip					flip();
+		void					flip(Flip flip);
 		bool					is_visible();
 		void					is_visible(bool visible);
 		void					bounds(
@@ -85,7 +81,7 @@ namespace arkade {
 		float					m_scale_y;
 		Point					m_frame_size;
 		uint32_t				m_z_order;
-		uint8_t					m_flip;
+		Flip					m_flip;
 		bool					m_is_visible;
 		bool					m_enable_bounds_checking;
 		Texture*				m_ptr_texture;

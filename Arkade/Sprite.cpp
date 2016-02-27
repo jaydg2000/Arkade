@@ -1,5 +1,4 @@
 #include "Sprite.h"
-#include "__arkade_spr_registry.h"
 #include "TextureCache.h"
 
 namespace arkade {
@@ -12,9 +11,7 @@ namespace arkade {
 			m_bounds_upper_y = -1;
 
 		m_enable_bounds_checking = false;
-
-		__arkade_spr_registry* sprite_registry = __arkade_spr_registry::instance();
-		sprite_registry->add(this);
+		m_flip = FLIP_NONE;
 	}
 
 	Sprite::Sprite(string& filename) {
@@ -36,8 +33,8 @@ namespace arkade {
 
 	void Sprite::texture(string& filename, RGB back_color) {
 		TextureCache* cache = TextureCache::instance();
-		cache->push(filename, back_color);
-		m_ptr_texture = cache->obtain(filename);
+		cache->push(filename.c_str(), back_color);
+		m_ptr_texture = cache->obtain(filename.c_str());
 	}
 
 	Texture* Sprite::texture() {
@@ -94,22 +91,22 @@ namespace arkade {
 		m_is_visible = visible;
 	}
 
-	PointF Sprite::scale() {
-		PointF pointF;
-		pointF.x = m_scale_x;
-		pointF.y = m_scale_y;
-		return pointF;
-	}
+	//PointF Sprite::scale() {
+	//	PointF pointF;
+	//	pointF.x = m_scale_x;
+	//	pointF.y = m_scale_y;
+	//	return pointF;
+	//}
 
-	void Sprite::scale(float x, float y) {
-		m_scale_x = x;
-		m_scale_y = y;
-	}
+	//void Sprite::scale(float x, float y) {
+	//	m_scale_x = x;
+	//	m_scale_y = y;
+	//}
 
-	void Sprite::scale(PointF& scale) {
-		m_scale_x = scale.x;
-		m_scale_y = scale.y;
-	}
+	//void Sprite::scale(PointF& scale) {
+	//	m_scale_x = scale.x;
+	//	m_scale_y = scale.y;
+	//}
 
 	void Sprite::bounds(float lower_x,
 		float upper_x,
@@ -165,11 +162,11 @@ namespace arkade {
 		m_z_order = z_order;
 	}
 
-	uint8_t Sprite::flip() {
+	Flip Sprite::flip() {
 		return m_flip;
 	}
 
-	void Sprite::flip(uint8_t flip) {
+	void Sprite::flip(Flip flip) {
 		m_flip = flip;
 	}
 
