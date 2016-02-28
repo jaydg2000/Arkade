@@ -1,5 +1,6 @@
 #include "MessageBroadcaster.h"
 #include "MessageRouter.h"
+#include "MessagePool.h"
 
 namespace arkade {
 
@@ -10,6 +11,10 @@ namespace arkade {
 
 	MessageBroadcaster::~MessageBroadcaster()
 	{
+	}
+
+	Message* MessageBroadcaster::obtain_message() {
+		return MessagePool::instance()->obtain();
 	}
 
 	void MessageBroadcaster::send_message(Message* message) {

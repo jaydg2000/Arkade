@@ -20,6 +20,7 @@ namespace arkade {
 
 		void					texture(const char* filename, RGB back_color = RGB::Magenta);
 		Texture*				texture();
+		Texture*				texture(Texture* ptr_texture);
 		void					animator(Animator* ptr_animator);
 		Animator*				animator();
 		void					animate();

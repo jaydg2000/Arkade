@@ -23,7 +23,7 @@ namespace arkade
 		void									uninitialize();
 		void									pen_color(RGB rgb);
 		RGB										pen_color();
-		SDL_Texture*							load_texture(const std::string& path, RGB back_color = RGB(128, 0, 128)) const;
+		SDL_Texture*							load_texture(const std::string& path, RGB back_color = RGB(0xFF, 0x00, 0xFF)) const;
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
 		void									render(Sprite* ptr_sprite);

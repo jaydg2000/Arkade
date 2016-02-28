@@ -10,7 +10,7 @@
 
 namespace arkade {
 
-	class Scene {
+	class Scene : public MessageSink {
 	public:
 		Scene();
 		~Scene();
@@ -31,6 +31,7 @@ namespace arkade {
 		virtual void					on_end();
 		virtual void					on_cleanup();
 		virtual void					on_detect_collisions();
+		virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 	private:
 		bool							m_scene_is_ended;

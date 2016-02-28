@@ -86,6 +86,9 @@ namespace arkade {
 	void Scene::on_detect_collisions() {				
 	}
 
+	void Scene::on_message(uint32_t message_type, MessageSink * ptr_sender, void * ptr_data) {
+	}
+
 	void Scene::setup_sprites() {
 		for (Sprite* sprite : m_sprite_list) {
 			sprite->on_setup();
@@ -105,6 +108,7 @@ namespace arkade {
 	}
 
 	void Scene::handle_messages() {
+		flush();
 		for (Sprite* sprite : m_sprite_list) {
 			sprite->flush();
 		}

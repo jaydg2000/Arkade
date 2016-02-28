@@ -27,6 +27,9 @@ namespace arkade {
 			game_attributes.audio_format,
 			game_attributes.audio_channels,
 			game_attributes.audio_buffers);
+
+		if (game_attributes.hide_cursor)
+			SDL_ShowCursor(0);
 	}
 
 	void Game::run() {
@@ -41,6 +44,8 @@ namespace arkade {
 		m_game_is_ended = true;
 		Graphics::instance()->uninitialize();
 		Audio::instance()->uninitialize();
+		if (SDL_ShowCursor(-1) == 0)
+			SDL_ShowCursor(1);
 	}
 
 	void Game::add_level(Level* level) {

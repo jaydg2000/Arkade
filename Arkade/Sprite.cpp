@@ -65,6 +65,12 @@ namespace arkade {
 		return m_ptr_texture;
 	}
 
+	Texture* Sprite::texture(Texture* ptr_texture) {
+		Texture* ptr_existing_texture = m_ptr_texture;
+		m_ptr_texture = ptr_texture;
+		return ptr_existing_texture;
+	}
+
 	float Sprite::position_x() {
 		return m_x;
 	}

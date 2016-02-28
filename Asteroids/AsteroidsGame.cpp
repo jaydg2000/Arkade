@@ -5,6 +5,7 @@ AsteroidsGame::AsteroidsGame()
 {
 	GameAttributes attr;
 	attr.full_screen = true;
+	attr.hide_cursor = false;
 	attr.width = RES_WIDTH;
 	attr.height = RES_HEIGHT;
 
