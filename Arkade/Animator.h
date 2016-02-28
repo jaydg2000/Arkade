@@ -18,7 +18,7 @@ namespace arkade {
 		bool					is_done();
 
 	protected:
-		int32_t					m_current_frame;
+		uint32_t				m_current_frame;
 		bool					m_started;
 		uint32_t				m_number_of_frames;
 		uint32_t				m_delay_millis;

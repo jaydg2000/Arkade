@@ -60,8 +60,8 @@ namespace arkade {
 		virtual Rect*			clip_rect();
 		void					clip_rect(Rect& rect);
 		virtual Point*			center_frame();
-		
-		virtual uint32_t		type();
+		void					type(uint32_t type);
+		uint32_t				type();
 		
 		virtual void			on_setup();
 		virtual void			on_cleanup();
@@ -73,7 +73,7 @@ namespace arkade {
 		virtual void			on_pool_release();
 
 	private:
-
+		uint32_t				m_type;
 		float					m_x;
 		float					m_y;
 		float					m_bounds_lower_x;

@@ -77,11 +77,25 @@ namespace arkade {
 		return &m_source_rect;
 	}
 
+	void Image::source_rect(Rect& rect) {
+		m_source_rect.x = rect.x;
+		m_source_rect.y = rect.y;
+		m_source_rect.w = rect.w;
+		m_source_rect.h = rect.h;
+	}
+
 	Rect * Image::destination_rect()
 	{
-		m_destination_rect.x = m_x;
-		m_destination_rect.y = m_y;
+		m_destination_rect.x = (int)m_x;
+		m_destination_rect.y = (int)m_y;
 		return &m_destination_rect;
+	}
+
+	void Image::destination_rect(Rect& rect) {
+		m_destination_rect.x = rect.x;
+		m_destination_rect.y = rect.y;
+		m_destination_rect.w = rect.w;
+		m_destination_rect.h = rect.h;
 	}
 
 }

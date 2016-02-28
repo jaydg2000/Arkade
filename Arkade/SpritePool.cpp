@@ -3,7 +3,7 @@
 namespace arkade {
 
 	SpritePool::SpritePool()
-	{
+	{		
 	}
 
 	SpritePool::~SpritePool()

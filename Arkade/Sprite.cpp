@@ -6,6 +6,8 @@ namespace arkade {
 
 	Sprite::Sprite()
 	{
+		m_type = SPRITE_TYPE_UNKNOWN;
+
 		m_bounds_lower_x =
 			m_bounds_lower_y =
 			m_bounds_upper_x =
@@ -209,7 +211,11 @@ namespace arkade {
 	}
 
 	uint32_t Sprite::type() {
-		return SPRITE_TYPE_UNKNOWN;
+		return m_type;
+	}
+
+	void Sprite::type(uint32_t type) {
+		m_type = type;
 	}
 
 	Rect* Sprite::source_rect() {

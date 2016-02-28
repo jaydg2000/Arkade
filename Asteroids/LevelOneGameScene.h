@@ -1,8 +1,11 @@
 #pragma once
 #include <Scene.h>
+#include <BoundingBoxCollisionDetector.h>
 #include "SpaceShipSprite.h"
 #include "AsteroidSprite.h"
 #include "LaserSprite.h"
+#include "ExplosionSprite.h"
+#include "BoundsChecker.h"
 
 using namespace arkade;
 
@@ -26,11 +29,15 @@ private:
 	Image*							m_ptr_background;
 	SpaceShipSprite*				m_ptr_spaceship;
 	SpritePool*						m_ptr_asteroid_pool;
-	SpritePool*						m_ptr_laser_pool;
+	SpritePool*						m_ptr_explosion_pool;
 	Timer							m_asteroid_creation_timer;
+	BoundsChecker*					m_bounds_checker;
+	BoundingBoxCollisionDetector	m_collision_detector;
 
 	void							init_asteroid_pool();
-	void							init_laser_pool();
+	void							init_explosion_pool();
 	void							add_asteroid();
+	void							add_laser();
+	void							add_explosion(PointF* position);
 };
 

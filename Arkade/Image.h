@@ -19,7 +19,9 @@ namespace arkade {
 		void					flip(Flip flip);
 
 		Rect*					source_rect();
+		void					source_rect(Rect& rect);
 		Rect*					destination_rect();
+		void					destination_rect(Rect& rect);
 
 	private:
 		float					m_x;

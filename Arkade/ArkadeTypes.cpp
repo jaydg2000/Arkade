@@ -5,4 +5,9 @@ namespace arkade {
 		Size s; s.x = x; s.y = y;
 		return s;
 	}
+
+	Rect make_rect(int32_t x, int32_t y, int32_t w, int32_t h) {
+		Rect r; r.x = x; r.y = y; r.w = w; r.h = h;
+		return r;
+	}
 }

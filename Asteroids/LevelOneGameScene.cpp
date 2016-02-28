@@ -13,29 +13,37 @@ LevelOneGameScene::~LevelOneGameScene()
 
 void LevelOneGameScene::on_setup()
 {
-	register_for_messages(MESSAGE_TYPE_ASTEROID_OUT_OF_BOUNDS);
+	register_for_messages(MESSAGE_TYPE_ASTEROID_DEAD);
+	register_for_messages(MESSAGE_TYPE_LASER_DEAD);
+	register_for_messages(MESSAGE_TYPE_EXPLOSION_DEAD);
+	register_for_messages(MESSAGE_TYPE_CREATE_EXPLOSION);
 
-	m_ptr_background = new Image("res/images/space-background.png", make_size(1920,1200));
-	m_ptr_spaceship = new SpaceShipSprite();	
+	m_bounds_checker = new BoundsChecker(-500, -500, RES_WIDTH + 500, RES_HEIGHT + 500);
+
+	m_ptr_background = new Image("res/images/space-background.png", make_size(1920,1280));
+	m_ptr_background->destination_rect(make_rect(0, 0, 1366, 768));
+	m_ptr_spaceship = new SpaceShipSprite(RES_WIDTH, RES_HEIGHT, m_bounds_checker);	
 	register_sprite(m_ptr_spaceship);
 
 	init_asteroid_pool();
+	init_explosion_pool();
 }
 
 void LevelOneGameScene::init_asteroid_pool() {
 	m_ptr_asteroid_pool = new SpritePool();
 
 	for (uint8_t count = 0; count < 10; count++) {
-		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid1.bmp", make_size(49, 59), RES_WIDTH, RES_HEIGHT));
-		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid2.bmp", make_size(29, 33), RES_WIDTH, RES_HEIGHT));
-		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid3.bmp", make_size(35, 39), RES_WIDTH, RES_HEIGHT));
+		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid1.bmp", make_size(49, 59), m_bounds_checker));
+		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid2.bmp", make_size(29, 33), m_bounds_checker));
+		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid3.bmp", make_size(35, 39), m_bounds_checker));
 	}
 }
 
-void LevelOneGameScene::init_laser_pool() {
-	m_ptr_laser_pool = new SpritePool();
-	for (uint8_t count = 0; count < 30; count++) {
-		m_ptr_laser_pool->add(new LaserSprite());
+void LevelOneGameScene::init_explosion_pool() {
+	m_ptr_explosion_pool = new SpritePool();
+	
+	for (uint8_t count = 0; count < 10; count++) {
+		m_ptr_explosion_pool->add(new ExplosionSprite());
 	}
 }
 
@@ -47,8 +55,17 @@ void LevelOneGameScene::on_begin()
 
 void LevelOneGameScene::on_check_keyboard_input(Keyboard* ptr_keyboard)
 {
+//ifdef _DEBUG
+//	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_F1)) {
+//		__debugbreak();
+//	}
+//endif
+
 	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_ESCAPE)) {
 		stop();
+	}
+	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_SPACE)) {
+		add_laser();
 	}
 	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_LEFT))
 		m_ptr_spaceship->rotate_left(5);
@@ -77,8 +94,10 @@ void LevelOneGameScene::on_update()
 void LevelOneGameScene::on_render(Graphics* ptr_graphics)
 {
 	ptr_graphics->render(m_ptr_background);
+	ptr_graphics->render(m_ptr_spaceship->laser_sprite_pool());
 	ptr_graphics->render(m_ptr_spaceship);
 	ptr_graphics->render(m_ptr_asteroid_pool);
+	ptr_graphics->render(m_ptr_explosion_pool);
 }
 
 void LevelOneGameScene::on_end()
@@ -93,13 +112,36 @@ void LevelOneGameScene::on_cleanup()
 
 void LevelOneGameScene::on_detect_collisions()
 {
+	m_collision_detector.detect(m_ptr_spaceship->laser_sprite_pool(), m_ptr_asteroid_pool);
 }
 
 void LevelOneGameScene::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
-	if (message_type == MESSAGE_TYPE_ASTEROID_OUT_OF_BOUNDS) {
-		AsteroidSprite* sprite = (AsteroidSprite*)ptr_data;
-		unregister_sprite(sprite);
-		m_ptr_asteroid_pool->release(sprite);
+
+	PointF* position = nullptr;
+	AsteroidSprite* sprite = nullptr;
+	
+	switch (message_type) {
+
+		case MESSAGE_TYPE_CREATE_EXPLOSION:
+			position = (PointF*)ptr_data;
+			add_explosion(position);
+			break;
+
+		case MESSAGE_TYPE_LASER_DEAD:
+			unregister_sprite((LaserSprite*)ptr_data);
+			break;
+
+		case MESSAGE_TYPE_ASTEROID_DEAD:
+			sprite = (AsteroidSprite*)ptr_data;
+			unregister_sprite(sprite);
+			m_ptr_asteroid_pool->release(sprite);
+			break;
+
+		case MESSAGE_TYPE_EXPLOSION_DEAD:
+			ExplosionSprite* exp_sprite = (ExplosionSprite*)ptr_data;
+			unregister_sprite(exp_sprite);
+			m_ptr_explosion_pool->release(exp_sprite);
+			break;
 	}
 }
 
@@ -139,4 +181,23 @@ void LevelOneGameScene::add_asteroid() {
 	asteroid->position(x, y);
 	asteroid->heading(heading);
 	register_sprite(asteroid);
+}
+
+void LevelOneGameScene::add_laser() {
+	LaserSprite* sprite = m_ptr_spaceship->fire();
+	if (!sprite)
+		return;
+
+	register_sprite(sprite);
+}
+
+void LevelOneGameScene::add_explosion(PointF* position) {
+	ExplosionSprite* sprite = (ExplosionSprite*)m_ptr_explosion_pool->obtain();
+	if (!sprite)
+		return;
+
+	register_sprite(sprite);
+
+	sprite->position(position->x, position->y);
+	sprite->animator()->start();
 }

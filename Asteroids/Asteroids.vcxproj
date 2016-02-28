@@ -152,6 +152,8 @@
     <ClInclude Include="Asteroids.h" />
     <ClInclude Include="AsteroidsGame.h" />
     <ClInclude Include="AsteroidSprite.h" />
+    <ClInclude Include="BoundsChecker.h" />
+    <ClInclude Include="ExplosionSprite.h" />
     <ClInclude Include="LaserSprite.h" />
     <ClInclude Include="LevelOne.h" />
     <ClInclude Include="LevelOneGameScene.h" />
@@ -163,6 +165,8 @@
     <ClCompile Include="Asteroids.cpp" />
     <ClCompile Include="AsteroidsGame.cpp" />
     <ClCompile Include="AsteroidSprite.cpp" />
+    <ClCompile Include="BoundsChecker.cpp" />
+    <ClCompile Include="ExplosionSprite.cpp" />
     <ClCompile Include="LaserSprite.cpp" />
     <ClCompile Include="LevelOne.cpp" />
     <ClCompile Include="LevelOneGameScene.cpp" />

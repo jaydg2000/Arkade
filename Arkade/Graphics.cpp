@@ -120,6 +120,9 @@ namespace arkade {
 	}
 
 	void Graphics::render(Sprite* sprite) {
+		if (!sprite->is_visible())
+			return;
+
 		Rect* src_rect = sprite->source_rect();
 		Rect* dest_rect = sprite->destination_rect();
 		Rect* clip_rect = sprite->clip_rect();
