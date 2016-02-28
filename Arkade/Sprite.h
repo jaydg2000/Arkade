@@ -15,13 +15,14 @@ namespace arkade {
 	class Sprite : public MessageSink, public MessageBroadcaster {
 	public:
 		Sprite();
-		Sprite(const char* filename);
+		Sprite(const char* filename, Size& frame_size);
 		~Sprite();
 
 		void					texture(const char* filename, RGB back_color = RGB::Magenta);
 		Texture*				texture();
 		void					animator(Animator* ptr_animator);
 		Animator*				animator();
+		void					animate();
 		float					position_x();
 		void					position_x(float x);
 		void					move_relative_x(float relative_x);
@@ -29,14 +30,17 @@ namespace arkade {
 		void					position_y(float y);
 		void					position(float x, float y);
 		void					move_relative_y(float relative_y);
+		void					move_at_heading(float heading, float distance);
 		float					rotation();
 		void					rotation(float rotation);
+		void					rotate_left(float degrees);
+		void					rotate_right(float degrees);
 		//void					scale(float x, float y);
 		//void					scale(PointF& point);
 		//PointF					scale();
 		uint32_t				size_x();
 		uint32_t				size_y();
-		Point*					size();
+		Size*					size();
 		void					size(Point& size);
 		uint32_t				z_order();
 		void					z_order(uint32_t z_order);
@@ -53,7 +57,7 @@ namespace arkade {
 		virtual Rect*			source_rect();
 		virtual Rect*			destination_rect();
 		virtual Rect*			clip_rect();
-		void					clip_rect(Rect* rect);
+		void					clip_rect(Rect& rect);
 		virtual Point*			center_frame();
 		
 		virtual uint32_t		type();
@@ -78,7 +82,7 @@ namespace arkade {
 		float					m_rotation;
 		float					m_scale_x;
 		float					m_scale_y;
-		Point					m_frame_size;
+		Size					m_frame_size;
 		uint32_t				m_z_order;
 		Flip					m_flip;
 		bool					m_is_visible;
@@ -87,7 +91,7 @@ namespace arkade {
 		Animator*				m_ptr_animator;
 		Rect					m_source_rect;
 		Rect					m_destination_rect;
-		Rect					m_clip_rect;
+		Rect*					m_ptr_clip_rect;
 		Point					m_frame_center;
 
 		void					check_bounds();

@@ -149,17 +149,22 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asteroids.h" />
     <ClInclude Include="AsteroidsGame.h" />
+    <ClInclude Include="AsteroidSprite.h" />
     <ClInclude Include="LevelOne.h" />
     <ClInclude Include="LevelOneGameScene.h" />
+    <ClInclude Include="SpaceShipSprite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Asteroids.cpp" />
     <ClCompile Include="AsteroidsGame.cpp" />
+    <ClCompile Include="AsteroidSprite.cpp" />
     <ClCompile Include="LevelOne.cpp" />
     <ClCompile Include="LevelOneGameScene.cpp" />
+    <ClCompile Include="SpaceShipSprite.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

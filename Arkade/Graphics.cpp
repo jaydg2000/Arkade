@@ -148,6 +148,15 @@ namespace arkade {
 			);
 
 		sprite->on_post_render();
+		sprite->animate();
+	}
+
+	void Graphics::render(SpritePool* ptr_sprite_pool) {
+		list<Sprite*>* sprite_list = ptr_sprite_pool->get_sprite_list();
+
+		for (Sprite* sprite : *sprite_list) {
+			render(sprite);
+		}
 	}
 
 	void Graphics::render(Image* image) {

@@ -44,6 +44,7 @@ namespace arkade {
 			return false;
 
 		uint32_t current_time = SDL_GetTicks();
+		
 		if((m_last_check_time + m_delay_millis)<current_time) {
 			m_last_check_time = current_time;
 			return true;

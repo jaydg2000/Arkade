@@ -1,8 +1,13 @@
 #include "AsteroidsGame.h"
+#include "Asteroids.h"
 
 AsteroidsGame::AsteroidsGame()
 {
-	GameAttributes attr;	
+	GameAttributes attr;
+	attr.full_screen = true;
+	attr.width = RES_WIDTH;
+	attr.height = RES_HEIGHT;
+
 	initialize(attr);
 }
 

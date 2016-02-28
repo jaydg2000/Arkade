@@ -6,6 +6,7 @@
 #include "RGB.h"
 #include "Camera.h"
 #include "Sprite.h"
+#include "SpritePool.h"
 #include "Image.h"
 
 namespace arkade
@@ -26,6 +27,7 @@ namespace arkade
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
 		void									render(Sprite* ptr_sprite);
+		void									render(SpritePool* ptr_sprite_pool);
 		void									render(Image* ptr_image);
 		void									begin_render();
 		void									end_render();

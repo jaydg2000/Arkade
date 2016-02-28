@@ -1,12 +1,13 @@
 #include "Game.h"
+#include "Random.h"
 
 namespace arkade {
 
 	Game::Game()
 	{
 		m_game_is_ended = false;
+		Random::seed();
 	}
-
 
 	Game::~Game()
 	{

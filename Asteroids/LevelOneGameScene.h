@@ -1,6 +1,7 @@
 #pragma once
 #include <Scene.h>
-
+#include "SpaceShipSprite.h"
+#include "AsteroidSprite.h"
 using namespace arkade;
 
 class LevelOneGameScene : public Scene {
@@ -19,6 +20,11 @@ public:
 	virtual void					on_detect_collisions();
 
 private:
-	Image*							m_ptr_background_image;
+	Image*							m_ptr_background;
+	SpaceShipSprite*				m_ptr_spaceship;
+	SpritePool*						m_ptr_asteroid_pool;
+	Timer							m_asteroid_creation_timer;
+
+	void							add_asteroid();
 };
 

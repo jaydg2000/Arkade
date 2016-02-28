@@ -1,5 +1,6 @@
 #pragma once
 #include <Game.h>
+#include "LevelOne.h"
 
 using namespace arkade;
 
@@ -13,6 +14,6 @@ protected:
 	virtual void			on_cleanup();
 
 private:
-	Level					m_level_1;
+	LevelOne				m_level_1;
 };
 

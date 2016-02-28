@@ -4,9 +4,14 @@ namespace arkade {
 
 	Animator::Animator(uint32_t number_of_frames, uint32_t delay_millis, bool started)
 	{
+		m_current_frame = 0;
 		m_number_of_frames = number_of_frames;
 		m_delay_millis = delay_millis;
 		m_started = started;
+		m_is_done = false;
+
+		if (started)
+			start();
 	}
 
 
@@ -15,6 +20,7 @@ namespace arkade {
 	}
 
 	void Animator::start() {
+		m_timer.delay(m_delay_millis);
 		m_started = true;
 		m_timer.start_or_resume();
 	}
@@ -24,6 +30,10 @@ namespace arkade {
 		m_timer.pause();
 		if(reset_frame)
 			on_reset();
+	}
+
+	bool Animator::is_done() {
+		return m_is_done;
 	}
 
 	void Animator::on_reset() {

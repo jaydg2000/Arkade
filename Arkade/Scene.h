@@ -18,6 +18,7 @@ namespace arkade {
 		void							run();
 		void							stop();
 		void							register_sprite(Sprite* ptr_sprite);
+		void							unregister_sprite(Sprite* ptr_sprite);
 		void							register_sprite_pool(SpritePool* ptr_sprite_pool);
 
 	protected:

@@ -10,6 +10,8 @@ namespace arkade {
 		m_x = x;
 		m_y = y;
 
+		m_rotation = 0.0f;
+
 		m_source_rect.x = 0;
 		m_source_rect.y = 0;
 		m_source_rect.w = texture_size.x;

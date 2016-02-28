@@ -11,21 +11,18 @@ namespace arkade {
 
 	class SpritePool {
 	public:
-		SpritePool(uint32_t initial_size);
+		SpritePool();
 		~SpritePool();
 
+		void									add(Sprite* sprite);
 		Sprite*									obtain();
 		void									release(Sprite*);
 
-		//template<typename F>
-		//void									for_each(F op);
 		list<Sprite*>*							get_sprite_list();
 
 	private:
 		queue<Sprite*>							m_available_sprites;
 		list<Sprite*>							m_allocated_sprites;
-
-		void									expand_pool();
 	};
 
 }

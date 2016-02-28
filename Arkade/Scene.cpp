@@ -20,6 +20,7 @@ namespace arkade {
 		setup_sprites();
 		on_begin();
 		while (!m_scene_is_ended) {
+			SDL_PumpEvents();
 			check_mouse_input();
 			on_check_keyboard_input(ptr_keyboard);
 			on_mouse_input();
@@ -41,6 +42,10 @@ namespace arkade {
 
 	void Scene::register_sprite(Sprite* sprite) {
 		m_sprite_list.push_back(sprite);
+	}
+
+	void Scene::unregister_sprite(Sprite* sprite) {
+		m_sprite_list.remove(sprite);
 	}
 
 	void Scene::register_sprite_pool(SpritePool* ptr_sprite_pool) {

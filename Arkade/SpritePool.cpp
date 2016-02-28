@@ -2,22 +2,24 @@
 
 namespace arkade {
 
-	SpritePool::SpritePool(uint32_t initial_size)
+	SpritePool::SpritePool()
 	{
-		while (initial_size-- > 0) {
-			expand_pool();
-		}
 	}
 
 	SpritePool::~SpritePool()
 	{
 	}
 
+	void SpritePool::add(Sprite* sprite) {
+		m_available_sprites.push(sprite);
+	}
+
 	Sprite* SpritePool::obtain() {
-		if (m_available_sprites.empty()) {
-			expand_pool();
-		}
+		if (m_available_sprites.empty())
+			return nullptr;
 		Sprite* ptr_sprite = m_available_sprites.front();
+		m_allocated_sprites.push_back(ptr_sprite);
+		m_available_sprites.pop();
 		ptr_sprite->on_pool_obtain();
 		return ptr_sprite;
 	}
@@ -27,17 +29,6 @@ namespace arkade {
 		m_available_sprites.push(ptr_sprite);
 		m_allocated_sprites.remove(ptr_sprite);
 	}
-
-	void SpritePool::expand_pool() {
-		m_allocated_sprites.push_back(new Sprite());
-	}
-
-	/*template<typename F>
-	void SpritePool::for_each(F op) {
-		for(Sprite* sprite : (*m_allocated_sprites)) {
-			op(sprite);
-		}
-	}*/
 
 	list<Sprite*>* SpritePool::get_sprite_list() {
 		return &m_allocated_sprites;
