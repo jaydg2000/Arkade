@@ -3,13 +3,7 @@
 namespace arkade {
 
 	Scene::Scene() {
-		Scene(new BoundingBoxCollisionDetector());
-	}
-
-	Scene::Scene(CollisionDetector* collision_detector) {
 		m_scene_is_ended = false;
-		m_collision_detector = collision_detector;
-		m_auto_collision_detection_enabled = false;
 	}
 
 
@@ -17,17 +11,26 @@ namespace arkade {
 	}
 
 	void Scene::run() {
+		Graphics* ptr_graphics = Graphics::instance();
+		Audio* ptr_audio = Audio::instance();
+		TextureCache* ptr_texture_cache = TextureCache::instance();
+		Keyboard* ptr_keyboard = new Keyboard();
+
 		on_setup();
 		setup_sprites();
 		on_begin();
 		while (!m_scene_is_ended) {
-			check_keyboard_input();
+			SDL_PumpEvents();
 			check_mouse_input();
-			on_loop();
-			on_detect_collisions(m_collision_detector);
+			on_check_keyboard_input(ptr_keyboard);
+			on_mouse_input();
 			handle_messages();
+			on_update();
+			on_detect_collisions();
 			update_sprites();
-			render_sprites();
+			ptr_graphics->begin_render();
+			on_render(ptr_graphics);
+			ptr_graphics->end_render();
 		}
 		cleanup_sprites();
 		on_cleanup();
@@ -37,18 +40,38 @@ namespace arkade {
 		m_scene_is_ended = true;
 	}
 
-	void Scene::enable_auto_collision_detection(bool enabled) {
-		m_auto_collision_detection_enabled = enabled;
+	void Scene::register_sprite(Sprite* sprite) {
+		m_sprite_list.push_back(sprite);
+	}
+
+	void Scene::unregister_sprite(Sprite* sprite) {
+		m_sprite_list.remove(sprite);
+	}
+
+	void Scene::register_sprite_pool(SpritePool* ptr_sprite_pool) {
+		list<Sprite*>* sprite_list = ptr_sprite_pool->get_sprite_list();
+		for (Sprite* sprite : *sprite_list) {
+			register_sprite(sprite);
+		}
 	}
 
 	void Scene::on_setup() {
-
 	}
 
 	void Scene::on_begin() {
 	}
 
-	void Scene::on_loop() {
+	void Scene::on_check_keyboard_input(Keyboard* ptr_keyboard) {
+	}
+
+	void Scene::on_mouse_input() {
+	}
+
+	void Scene::on_update() {
+
+	}
+
+	void Scene::on_render(Graphics* ptr_graphics) {
 	}
 
 	void Scene::on_end() {
@@ -57,62 +80,38 @@ namespace arkade {
 	void Scene::on_cleanup() {
 	}
 
-	void Scene::check_keyboard_input() {
-
-	}
-	
 	void Scene::check_mouse_input() {
-
 	}
 
-	void Scene::auto_detect_collisions(CollisionDetector* detector) {
-		ACQUIRE_SPR_REG(ptr_sprite_reg);
-		ptr_sprite_reg->for_each([detector, ptr_sprite_reg](Sprite* s1) {
-			ptr_sprite_reg->for_each([detector, s1](Sprite* s2) {
-				if(s1!=s2)
-					detector->detect(s1, s2);
-			});
-		});
+	void Scene::on_detect_collisions() {				
 	}
 
-	void Scene::on_detect_collisions(CollisionDetector* detector) {				
+	void Scene::on_message(uint32_t message_type, MessageSink * ptr_sender, void * ptr_data) {
 	}
 
 	void Scene::setup_sprites() {
-		ACQUIRE_SPR_REG(ptr_sprite_reg);
-		ptr_sprite_reg->for_each([](Sprite* s){ s->on_setup(); });
+		for (Sprite* sprite : m_sprite_list) {
+			sprite->on_setup();
+		}
 	}
 
 	void Scene::cleanup_sprites() {
-		ACQUIRE_SPR_REG(ptr_sprite_reg);
-		ptr_sprite_reg->for_each([](Sprite* s){ s->on_cleanup(); });
+		for (Sprite* sprite : m_sprite_list) {
+			sprite->on_cleanup();
+		}
 	}
 
 	void Scene::update_sprites() {
-		ACQUIRE_SPR_REG(ptr_sprite_reg);
-		ptr_sprite_reg->for_each([](Sprite* s){ s->on_update(); });
-	}
-
-	void Scene::render_sprites() {
-		Graphics* graphics = Graphics::instance();
-		ACQUIRE_SPR_REG(ptr_sprite_reg);
-		
-		graphics->begin_render();
-
-		ptr_sprite_reg->for_each([graphics](Sprite* sprite) {
-			sprite->on_pre_render();
-			graphics->render(sprite);
-			sprite->on_post_render();
-		});
-
-		graphics->end_render();
+		for (Sprite* sprite : m_sprite_list) {
+			sprite->on_update();
+		}
 	}
 
 	void Scene::handle_messages() {
-		ACQUIRE_SPR_REG(ptr_sprite_reg);
-		ptr_sprite_reg->for_each([](Sprite* sprite) {
+		flush();
+		for (Sprite* sprite : m_sprite_list) {
 			sprite->flush();
-		});
+		}
 	}
 
 }

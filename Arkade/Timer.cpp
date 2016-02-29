@@ -6,6 +6,7 @@ namespace arkade {
 		m_delay_millis = delay_millis;
 		m_is_started = false;
 		m_has_ever_been_started = false;
+		m_pause_difference = 0;
 	}
 	
 	Timer::~Timer(void) {
@@ -44,6 +45,7 @@ namespace arkade {
 			return false;
 
 		uint32_t current_time = SDL_GetTicks();
+		
 		if((m_last_check_time + m_delay_millis)<current_time) {
 			m_last_check_time = current_time;
 			return true;

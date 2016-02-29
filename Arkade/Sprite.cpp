@@ -1,29 +1,52 @@
 #include "Sprite.h"
-#include "__arkade_spr_registry.h"
 #include "TextureCache.h"
+#include "MathUtil.h"
 
 namespace arkade {
 
 	Sprite::Sprite()
 	{
+		m_type = SPRITE_TYPE_UNKNOWN;
+
 		m_bounds_lower_x =
 			m_bounds_lower_y =
 			m_bounds_upper_x =
 			m_bounds_upper_y = -1;
 
-		m_enable_bounds_checking = false;
+		m_rotation = 0;
 
-		__arkade_spr_registry* sprite_registry = __arkade_spr_registry::instance();
-		sprite_registry->add(this);
+		m_enable_bounds_checking = false;
+		m_flip = FLIP_NONE;
+		m_ptr_animator = nullptr;
+		m_ptr_texture = nullptr;
+
+		m_source_rect.x = 0;
+		m_source_rect.y = 0;
+		m_source_rect.w = 0;
+		m_source_rect.h = 0;
+
+		m_ptr_clip_rect = nullptr;
+
+		m_x = 0;
+		m_y = 0;
 	}
 
-	Sprite::Sprite(string& filename) {
-		Sprite();
+	Sprite::Sprite(const char* filename, Size& frame_size) : Sprite() {		
 		texture(filename);
+		m_frame_size.x = frame_size.x;
+		m_frame_size.y = frame_size.y;
+
+		m_source_rect.w = frame_size.x;
+		m_source_rect.h = frame_size.y;
 	}
 
 	Sprite::~Sprite()
 	{
+	}
+
+	void Sprite::animate() {
+		if (m_ptr_animator)
+			m_ptr_animator->animate();
 	}
 
 	void Sprite::animator(Animator* ptr_animator) {
@@ -34,14 +57,20 @@ namespace arkade {
 		return m_ptr_animator;
 	}
 
-	void Sprite::texture(string& filename, RGB back_color) {
+	void Sprite::texture(const char* filename, RGB back_color) {
 		TextureCache* cache = TextureCache::instance();
 		cache->push(filename, back_color);
-		m_ptr_texture = cache->obtain(filename);
+		m_ptr_texture = cache->obtain(filename);		
 	}
 
 	Texture* Sprite::texture() {
 		return m_ptr_texture;
+	}
+
+	Texture* Sprite::texture(Texture* ptr_texture) {
+		Texture* ptr_existing_texture = m_ptr_texture;
+		m_ptr_texture = ptr_texture;
+		return ptr_existing_texture;
 	}
 
 	float Sprite::position_x() {
@@ -78,6 +107,19 @@ namespace arkade {
 		check_bounds();
 	}
 
+	void Sprite::move_at_heading(float heading, float distance) {
+		double positionX = m_x;
+		double positionY = m_y;
+		double orientationInRadians = MathUtil::degrees_to_radians(heading);
+		double xVector = sin(orientationInRadians);
+		double yVector = cos(orientationInRadians);
+		double magnitude = sqrt(xVector * xVector + yVector * yVector);
+		double unitVectorX = xVector / magnitude;
+		double unitVectorY = yVector / magnitude;
+		m_x = (float)(positionX + unitVectorX * (distance));
+		m_y = (float)(positionY + unitVectorY * (distance * -1));
+	}
+
 	float Sprite::rotation() {
 		return m_rotation;
 	}
@@ -86,29 +128,24 @@ namespace arkade {
 		m_rotation = rotation;
 	}
 
+	void Sprite::rotate_left(float degrees) {
+		m_rotation -= degrees;
+		if (m_rotation < 0)
+			m_rotation += 365;
+	}
+
+	void Sprite::rotate_right(float degrees) {
+		m_rotation += degrees;
+		if (m_rotation > 365)
+			m_rotation -= 365;
+	}
+
 	bool Sprite::is_visible() {
 		return m_is_visible;
 	}
 
 	void Sprite::is_visible(bool visible) {
 		m_is_visible = visible;
-	}
-
-	PointF Sprite::scale() {
-		PointF pointF;
-		pointF.x = m_scale_x;
-		pointF.y = m_scale_y;
-		return pointF;
-	}
-
-	void Sprite::scale(float x, float y) {
-		m_scale_x = x;
-		m_scale_y = y;
-	}
-
-	void Sprite::scale(PointF& scale) {
-		m_scale_x = scale.x;
-		m_scale_y = scale.y;
 	}
 
 	void Sprite::bounds(float lower_x,
@@ -138,7 +175,7 @@ namespace arkade {
 			m_y = m_bounds_upper_y;
 	}
 
-	Point* Sprite::size() {
+	Size* Sprite::size() {
 		return &m_frame_size;
 	}
 
@@ -165,20 +202,31 @@ namespace arkade {
 		m_z_order = z_order;
 	}
 
-	uint8_t Sprite::flip() {
+	Flip Sprite::flip() {
 		return m_flip;
 	}
 
-	void Sprite::flip(uint8_t flip) {
+	void Sprite::flip(Flip flip) {
 		m_flip = flip;
 	}
 
 	uint32_t Sprite::type() {
-		return SPRITE_TYPE_UNKNOWN;
+		return m_type;
+	}
+
+	void Sprite::type(uint32_t type) {
+		m_type = type;
 	}
 
 	Rect* Sprite::source_rect() {
-		uint32_t cframe = m_ptr_animator ? m_ptr_animator->current_frame() : 0;
+		uint32_t cframe;
+		Animator* ptr_animator = m_ptr_animator;
+		
+		if (ptr_animator)
+			cframe = m_ptr_animator->current_frame();
+		else
+			cframe = 0;
+
 		m_source_rect.x = cframe * m_frame_size.x;
 		return &m_source_rect;
 	}
@@ -192,14 +240,14 @@ namespace arkade {
 	}
 
 	Rect* Sprite::clip_rect() {
-		return &m_clip_rect;
+		return m_ptr_clip_rect;
 	}
 
-	void Sprite::clip_rect(Rect* rect) {
-		m_clip_rect.x = rect->x;
-		m_clip_rect.y = rect->y;
-		m_clip_rect.w = rect->w;
-		m_clip_rect.h = rect->h;
+	void Sprite::clip_rect(Rect& rect) {
+		m_ptr_clip_rect->x = rect.x;
+		m_ptr_clip_rect->y = rect.y;
+		m_ptr_clip_rect->w = rect.w;
+		m_ptr_clip_rect->h = rect.h;
 	}
 
 	Point* Sprite::center_frame() {

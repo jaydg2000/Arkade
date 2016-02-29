@@ -3,12 +3,15 @@
 #include <iostream>
 #include <memory>
 #include "ArkadeTypes.h"
-#include "Camera.h"
 #include "RGB.h"
+#include "Camera.h"
 #include "Sprite.h"
+#include "SpritePool.h"
+#include "Image.h"
 
 namespace arkade
 {
+	struct RGB;
 	class Graphics {
 	public:
 
@@ -16,20 +19,23 @@ namespace arkade
 		~Graphics();
 
 		static Graphics*						instance();
-		uint8_t									init(Camera* camera, bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption);
+		uint8_t									initialize(bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption);
+		void									uninitialize();
 		void									pen_color(RGB rgb);
 		RGB										pen_color();
-		SDL_Texture*							load_texture(const std::string& path, RGB back_color = RGB(128, 0, 128)) const;
+		SDL_Texture*							load_texture(const std::string& path, RGB back_color = RGB(0xFF, 0x00, 0xFF)) const;
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
-		void									render(Sprite* sprite);
+		void									render(Sprite* ptr_sprite);
+		void									render(SpritePool* ptr_sprite_pool);
+		void									render(Image* ptr_image);
 		void									begin_render();
 		void									end_render();
 		void									background_color(RGB rgb);
 
 	private:
 
-		static unique_ptr<Graphics>				m_instance;
+		static Graphics*						m_instance;
 		SDL_Window*								m_ptr_window;
 		SDL_Renderer*							m_ptr_renderer;
 		Camera*									m_ptr_camera;

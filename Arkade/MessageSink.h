@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include <memory>
 #include <queue>
-#include <deque>
 #include "Message.h"
 
 using namespace std;

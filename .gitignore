@@ -6,6 +6,8 @@
 *.opendb
 *.opensdf
 
+*.psess
+
 # Precompiled Headers
 *.gch
 *.pch

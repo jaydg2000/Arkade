@@ -9,6 +9,7 @@ namespace arkade {
 		MessageBroadcaster();
 		~MessageBroadcaster();
 
+		Message*						obtain_message();
 		void							send_message(Message* message);
 	};
 

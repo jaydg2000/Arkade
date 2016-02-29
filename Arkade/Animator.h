@@ -12,19 +12,22 @@ namespace arkade {
 
 		void					start();
 		void					stop(bool reset_frame = false);
+		void					reset();
 		uint32_t				animate();
 		uint32_t				current_frame();
 		void					current_frame(uint32_t frame_number);
-	protected:
-		virtual void			on_animate() = 0;
-		virtual void			on_reset();
+		bool					is_done();
 
-	private:
+	protected:
+		uint32_t				m_current_frame;
 		bool					m_started;
 		uint32_t				m_number_of_frames;
 		uint32_t				m_delay_millis;
-		uint32_t				m_current_frame;
 		Timer					m_timer;
+		bool					m_is_done;
+
+		virtual void			on_animate() = 0;
+		virtual void			on_reset();
 	};
 
 }

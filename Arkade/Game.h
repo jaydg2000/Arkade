@@ -1,6 +1,7 @@
 #pragma once
-#include "Level.h"
 #include <queue>
+#include "Level.h"
+#include "GameAttributes.h"
 
 using namespace std;
 
@@ -11,6 +12,7 @@ namespace arkade {
 		Game();
 		~Game();
 
+		void			initialize(GameAttributes& game_attributes);
 		void			run();
 		void			stop();
 		void			add_level(Level*);

@@ -1,6 +1,10 @@
 #include "MessageRouter.h"
+#include "MessageSink.h"
+#include "Message.h"
 
 namespace arkade {
+
+	MessageRouter* MessageRouter::m_ptr_instance = nullptr;
 
 	MessageRouter::MessageRouter()
 	{

@@ -1,15 +1,35 @@
 #include "Game.h"
+#include "Random.h"
 
 namespace arkade {
 
 	Game::Game()
 	{
 		m_game_is_ended = false;
+		Random::seed();
 	}
-
 
 	Game::~Game()
 	{
+	}
+
+	void Game::initialize(GameAttributes & game_attributes)
+	{
+		Graphics::instance()->initialize(
+			game_attributes.full_screen,
+			game_attributes.width,
+			game_attributes.height,
+			game_attributes.color_depth,
+			game_attributes.psz_caption);
+
+		Audio::instance()->initialize(
+			game_attributes.audio_rate,
+			game_attributes.audio_format,
+			game_attributes.audio_channels,
+			game_attributes.audio_buffers);
+
+		if (game_attributes.hide_cursor)
+			SDL_ShowCursor(0);
 	}
 
 	void Game::run() {
@@ -22,6 +42,10 @@ namespace arkade {
 
 	void Game::stop() {
 		m_game_is_ended = true;
+		Graphics::instance()->uninitialize();
+		Audio::instance()->uninitialize();
+		if (SDL_ShowCursor(-1) == 0)
+			SDL_ShowCursor(1);
 	}
 
 	void Game::add_level(Level* level) {

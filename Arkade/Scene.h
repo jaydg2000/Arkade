@@ -1,43 +1,46 @@
 #pragma once
 #include <SDL.h>
-#include "__arkade_spr_registry.h"
+#include <list>
 #include "Graphics.h"
-#include "CollisionDetector.h"
-#include "BoundingBoxCollisionDetector.h"
+#include "Sprite.h"
+#include "SpritePool.h"
+#include "TextureCache.h"
+#include "Audio.h"
+#include "Keyboard.h"
 
 namespace arkade {
 
-	class Scene {
+	class Scene : public MessageSink {
 	public:
 		Scene();
-		Scene(CollisionDetector* collision_detector);
 		~Scene();
 
 		void							run();
 		void							stop();
-		void							enable_auto_collision_detection(bool enabled);
+		void							register_sprite(Sprite* ptr_sprite);
+		void							unregister_sprite(Sprite* ptr_sprite);
+		void							register_sprite_pool(SpritePool* ptr_sprite_pool);
 
 	protected:
 		virtual void					on_setup();
 		virtual void					on_begin();
-		virtual void					on_loop();
+		virtual void					on_check_keyboard_input(Keyboard* keyboard);
+		virtual void					on_mouse_input();
+		virtual void					on_update();
+		virtual void					on_render(Graphics* ptr_graphics);
 		virtual void					on_end();
 		virtual void					on_cleanup();
-		virtual void					on_detect_collisions(CollisionDetector* detector);
-
-		void							check_keyboard_input();
-		void							check_mouse_input();		
-		void							setup_sprites();
-		void							cleanup_sprites();
-		void							update_sprites();
-		void							render_sprites();
-		void							handle_messages();
-		void							auto_detect_collisions(CollisionDetector* detector);
+		virtual void					on_detect_collisions();
+		virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 	private:
 		bool							m_scene_is_ended;
-		bool							m_auto_collision_detection_enabled;
-		CollisionDetector*				m_collision_detector;
-	};
+		list<Sprite*>					m_sprite_list;
 
+		void							check_mouse_input();
+		void							setup_sprites();
+		void							cleanup_sprites();
+		void							update_sprites();
+		void							handle_messages();
+	};
 }

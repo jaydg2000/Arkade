@@ -3,6 +3,8 @@
 
 namespace arkade {
 
+	Graphics* Graphics::m_instance = nullptr;
+
 	Graphics::Graphics()
 	{
 	}
@@ -16,12 +18,12 @@ namespace arkade {
 
 	Graphics* Graphics::instance() {
 		if (!m_instance)
-			m_instance = unique_ptr<Graphics>();
-		return m_instance.get();
+			m_instance = new Graphics();
+		return m_instance;
 	}
 
-	uint8_t Graphics::init(Camera* camera, bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption) {
-
+	uint8_t Graphics::initialize(bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption) {
+		m_ptr_camera = Camera::instance();
 		m_full_screen = full_screen;
 		m_window_width = width;
 		m_window_height = height;
@@ -62,7 +64,12 @@ namespace arkade {
 		pen_color(RGB(0x00, 0x00, 0x00, 0xFF));
 
 		return 0;
+	}
 
+	void Graphics::uninitialize() {
+		SDL_DestroyWindow(m_ptr_window);
+		SDL_DestroyRenderer(m_ptr_renderer);
+		SDL_QUIT;
 	}
 
 	void Graphics::pen_color(RGB rgb) {
@@ -113,32 +120,25 @@ namespace arkade {
 	}
 
 	void Graphics::render(Sprite* sprite) {
+		if (!sprite->is_visible())
+			return;
+
 		Rect* src_rect = sprite->source_rect();
 		Rect* dest_rect = sprite->destination_rect();
 		Rect* clip_rect = sprite->clip_rect();
 		float rotation = sprite->rotation();
-		PointF scale = sprite->scale();
 		uint8_t flip = sprite->flip();
 		Texture* texture = sprite->texture();
 		float coordinate_x = sprite->position_x();
 		float coordinate_y = sprite->position_y();
-		float camera_x = m_ptr_camera->position_x();
-		float camera_y = m_ptr_camera->position_y();
 
-		dest_rect->x = (int)(coordinate_x - camera_x);
-		dest_rect->y = (int)(coordinate_y - camera_y);
+		m_ptr_camera->to_screen(dest_rect, coordinate_x, coordinate_y);
 
 		if (clip_rect)
 			if (!clip(src_rect, dest_rect, clip_rect))
 				return;
 
-		//bool scale_is_normal = Scale::is_normal(scale);
-		//float previous_scale_x, previous_scale_y;
-
-		//if (!scale_is_normal) {
-		//	SDL_RenderGetScale(m_ptr_renderer, &previous_scale_x, &previous_scale_y);
-		//	SDL_RenderSetScale(m_ptr_renderer, scale->x, scale->y);
-		//}
+		sprite->on_pre_render();
 
 		SDL_RenderCopyEx(
 			m_ptr_renderer,
@@ -148,6 +148,33 @@ namespace arkade {
 			rotation,
 			NULL,
 			SDL_FLIP_NONE
+			);
+
+		sprite->on_post_render();
+		sprite->animate();
+	}
+
+	void Graphics::render(SpritePool* ptr_sprite_pool) {
+		list<Sprite*>* sprite_list = ptr_sprite_pool->get_sprite_list();
+
+		for (Sprite* sprite : *sprite_list) {
+			render(sprite);
+		}
+	}
+
+	void Graphics::render(Image* image) {
+		Rect* destination_rect = image->destination_rect();
+
+		m_ptr_camera->to_screen(destination_rect, image->x(), image->y());
+
+		SDL_RenderCopyEx(
+			m_ptr_renderer,
+			image->texture(),
+			image->source_rect(),
+			destination_rect,
+			image->rotation(),
+			NULL,
+			image->flip()
 			);
 	}
 

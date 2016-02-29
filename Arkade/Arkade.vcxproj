@@ -84,11 +84,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y $(MSBuildProjectDirectory)\*.h C:\Arkade\1.0\include
+copy /Y $(OutputPath)*.lib C:\Arkade\1.0\lib
+copy /Y $(OutputPath)*.pdb C:\Arkade\1.0\lib</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -143,51 +149,73 @@
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="ArkadeTypes.h" />
-    <ClInclude Include="Behavior.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="BackwardAnimator.h" />
+    <ClInclude Include="BackwardOnceAnimator.h" />
     <ClInclude Include="BoundingBoxCollisionDetector.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetector.h" />
+    <ClInclude Include="ForwardAnimator.h" />
+    <ClInclude Include="ForwardOnceAnimator.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameAttributes.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="MathUtil.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MessageBroadcaster.h" />
     <ClInclude Include="MessagePool.h" />
     <ClInclude Include="MessageRouter.h" />
     <ClInclude Include="MessageSink.h" />
+    <ClInclude Include="OscillatingAnimator.h" />
+    <ClInclude Include="PhysicsBasedSprite.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointF.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="RGB.h" />
     <ClInclude Include="Scale.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Size.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpritePool.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="__arkade_spr_registry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
-    <ClCompile Include="Behavior.cpp" />
+    <ClCompile Include="ArkadeTypes.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="BackwardAnimator.cpp" />
+    <ClCompile Include="BackwardOnceAnimator.cpp" />
     <ClCompile Include="BoundingBoxCollisionDetector.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
+    <ClCompile Include="ForwardAnimator.cpp" />
+    <ClCompile Include="ForwardOnceAnimator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="MathUtil.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="MessageBroadcaster.cpp" />
     <ClCompile Include="MessagePool.cpp" />
     <ClCompile Include="MessageRouter.cpp" />
     <ClCompile Include="MessageSink.cpp" />
+    <ClCompile Include="OscillatingAnimator.cpp" />
+    <ClCompile Include="PhysicsBasedSprite.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="RGB.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpritePool.cpp" />
     <ClCompile Include="TextureCache.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="__arkade_spr_registry.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

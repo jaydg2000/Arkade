@@ -2,9 +2,11 @@
 
 namespace arkade {
 
+	MessagePool* MessagePool::m_instance = nullptr;
+
 	MessagePool::MessagePool(uint32_t initial_size)
 	{
-		while (initial_size > 0)
+		while (initial_size-- > 0)
 			m_messages.push(new Message());
 	}
 
