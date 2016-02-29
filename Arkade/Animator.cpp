@@ -20,8 +20,9 @@ namespace arkade {
 	}
 
 	void Animator::start() {
-		m_timer.delay(m_delay_millis);
 		m_started = true;
+		m_is_done = false; 
+		m_timer.delay(m_delay_millis);
 		m_timer.start_or_resume();
 	}
 
@@ -30,6 +31,12 @@ namespace arkade {
 		m_timer.pause();
 		if(reset_frame)
 			on_reset();
+	}
+
+	void Animator::reset() {
+		m_is_done = false;
+		on_reset();
+		m_timer.start();
 	}
 
 	bool Animator::is_done() {

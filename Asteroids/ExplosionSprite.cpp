@@ -17,11 +17,15 @@ ExplosionSprite::~ExplosionSprite()
 void ExplosionSprite::on_update() {
 	if (!m_is_dead && animator()->is_done()) {
 		send_dead_message();
+		m_is_dead = true;
+		is_visible(false);
 	}
 }
 
 void ExplosionSprite::on_pool_obtain() {
 	m_is_dead = false;
+	animator()->reset();
+	is_visible(true);
 }
 
 void ExplosionSprite::send_dead_message() {

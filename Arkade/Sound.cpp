@@ -3,7 +3,7 @@
 
 namespace arkade {
 
-	Sound::Sound(std::string& filename)
+	Sound::Sound(const char* filename)
 	{
 		m_ptr_mix_chunk = Audio::instance()->load_sound(filename);
 	}

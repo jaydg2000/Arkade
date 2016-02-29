@@ -20,9 +20,12 @@ void LevelOneGameScene::on_setup()
 
 	m_bounds_checker = new BoundsChecker(-500, -500, RES_WIDTH + 500, RES_HEIGHT + 500);
 
+	m_ptr_asteroid_explosion_sound = new Sound("res/wav/implosion2.wav");
+	m_ptr_laser_sound = new Sound("res/wav/laserfire3.wav");
+
 	m_ptr_background = new Image("res/images/space-background.png", make_size(1920,1280));
 	m_ptr_background->destination_rect(make_rect(0, 0, 1366, 768));
-	m_ptr_spaceship = new SpaceShipSprite(RES_WIDTH, RES_HEIGHT, m_bounds_checker);	
+	m_ptr_spaceship = new SpaceShipSprite(RES_WIDTH, RES_HEIGHT, m_bounds_checker, m_ptr_laser_sound);	
 	register_sprite(m_ptr_spaceship);
 
 	init_asteroid_pool();
@@ -32,10 +35,10 @@ void LevelOneGameScene::on_setup()
 void LevelOneGameScene::init_asteroid_pool() {
 	m_ptr_asteroid_pool = new SpritePool();
 
-	for (uint8_t count = 0; count < 10; count++) {
-		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid1.bmp", make_size(49, 59), m_bounds_checker));
-		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid2.bmp", make_size(29, 33), m_bounds_checker));
-		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid3.bmp", make_size(35, 39), m_bounds_checker));
+	for (uint8_t count = 0; count < 15; count++) {
+		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid1.bmp", make_size(49, 59), m_bounds_checker, m_ptr_asteroid_explosion_sound));
+		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid2.bmp", make_size(29, 33), m_bounds_checker, m_ptr_asteroid_explosion_sound));
+		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid3.bmp", make_size(35, 39), m_bounds_checker, m_ptr_asteroid_explosion_sound));
 	}
 }
 
@@ -50,7 +53,7 @@ void LevelOneGameScene::init_explosion_pool() {
 void LevelOneGameScene::on_begin()
 {
 	m_ptr_spaceship->position(RES_WIDTH / 2, RES_HEIGHT / 2);
-	m_asteroid_creation_timer.start(3000);
+	m_asteroid_creation_timer.start(750);
 }
 
 void LevelOneGameScene::on_check_keyboard_input(Keyboard* ptr_keyboard)
@@ -113,12 +116,14 @@ void LevelOneGameScene::on_cleanup()
 void LevelOneGameScene::on_detect_collisions()
 {
 	m_collision_detector.detect(m_ptr_spaceship->laser_sprite_pool(), m_ptr_asteroid_pool);
+	m_collision_detector.detect(m_ptr_spaceship, m_ptr_asteroid_pool);
 }
 
 void LevelOneGameScene::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
 
 	PointF* position = nullptr;
 	AsteroidSprite* sprite = nullptr;
+	ExplosionSprite* exp_sprite = nullptr;
 	
 	switch (message_type) {
 
@@ -138,7 +143,7 @@ void LevelOneGameScene::on_message(uint32_t message_type, MessageSink* ptr_sende
 			break;
 
 		case MESSAGE_TYPE_EXPLOSION_DEAD:
-			ExplosionSprite* exp_sprite = (ExplosionSprite*)ptr_data;
+			exp_sprite = (ExplosionSprite*)ptr_data;
 			unregister_sprite(exp_sprite);
 			m_ptr_explosion_pool->release(exp_sprite);
 			break;

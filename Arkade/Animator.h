@@ -12,6 +12,7 @@ namespace arkade {
 
 		void					start();
 		void					stop(bool reset_frame = false);
+		void					reset();
 		uint32_t				animate();
 		uint32_t				current_frame();
 		void					current_frame(uint32_t frame_number);

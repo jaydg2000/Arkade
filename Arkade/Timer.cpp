@@ -6,6 +6,7 @@ namespace arkade {
 		m_delay_millis = delay_millis;
 		m_is_started = false;
 		m_has_ever_been_started = false;
+		m_pause_difference = 0;
 	}
 	
 	Timer::~Timer(void) {

@@ -25,7 +25,8 @@ namespace arkade {
 
 	void Audio::initialize() {
 		// 11000,22050, 44100,     AUDIO_S16SYS
-		initialize(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+		//initialize(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+		initialize(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 	}
 
 	void Audio::initialize(int audioRate, Uint16 audioFormat, int audioChannels, int audioBuffers) {
@@ -38,8 +39,8 @@ namespace arkade {
 		Mix_CloseAudio();
 	}
 
-	Mix_Chunk* Audio::load_sound(std::string& filename) {
-		Mix_Chunk* ptr_mix = Mix_LoadWAV(filename.c_str());
+	Mix_Chunk* Audio::load_sound(const char* filename) {
+		Mix_Chunk* ptr_mix = Mix_LoadWAV(filename);
 		if (!ptr_mix) {
 			exit(22);
 		}

@@ -2,7 +2,7 @@
 #include "Asteroids.h"
 #include <Random.h>
 
-AsteroidSprite::AsteroidSprite(const char* filename, Size texture_size, BoundsChecker* ptr_bounds_checker)
+AsteroidSprite::AsteroidSprite(const char* filename, Size texture_size, BoundsChecker* ptr_bounds_checker, Sound* ptr_sound_explosion)
 	:Sprite(filename, texture_size)
 {
 	type(SPRITE_TYPE_ASTEROID);
@@ -11,6 +11,7 @@ AsteroidSprite::AsteroidSprite(const char* filename, Size texture_size, BoundsCh
 	m_heading = 0;
 	m_is_out_of_bounds = false;
 	m_ptr_bounds_checker = ptr_bounds_checker;
+	m_ptr_sound_explosion = ptr_sound_explosion;
 }
 
 
@@ -36,6 +37,10 @@ void AsteroidSprite::on_update() {
 		send_dead_message();
 }
 
+void AsteroidSprite::on_pool_obtain() {
+	m_is_out_of_bounds = false;
+}
+
 void AsteroidSprite::send_dead_message() {
 	Message* message = obtain_message();
 	message->set(MESSAGE_TYPE_ASTEROID_DEAD, nullptr, this);
@@ -57,5 +62,6 @@ void AsteroidSprite::on_collision(Sprite* ptr_colliding_sprite) {
 	if (ptr_colliding_sprite->type() == SPRITE_TYPE_LASER) {
 		send_dead_message();
 		send_explosion_message();
+		m_ptr_sound_explosion->play_sound();
 	}
 }

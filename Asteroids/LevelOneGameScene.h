@@ -33,6 +33,8 @@ private:
 	Timer							m_asteroid_creation_timer;
 	BoundsChecker*					m_bounds_checker;
 	BoundingBoxCollisionDetector	m_collision_detector;
+	Sound*							m_ptr_asteroid_explosion_sound;
+	Sound*							m_ptr_laser_sound;
 
 	void							init_asteroid_pool();
 	void							init_explosion_pool();

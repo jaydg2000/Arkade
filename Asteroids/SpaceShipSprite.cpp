@@ -6,7 +6,7 @@
 #include "MathUtil.h"
 #include "Asteroids.h"
 
-SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker)
+SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker, Sound* ptr_laser_sound)
 	: PhysicsBasedSprite("res/images/PlayerSheet.png", arkade::make_size(66, 52))
 {
 	type(SPRITE_TYPE_PLAYER);
@@ -20,7 +20,8 @@ SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, 
 
 	m_bounds_checker = bounds_checker;
 
-	m_laser_fire_timer.start(500);
+	m_laser_fire_timer.start(200);
+	m_laser_sound = ptr_laser_sound;
 }
 
 
@@ -44,8 +45,27 @@ void SpaceShipSprite::on_message(uint32_t message_type, MessageSink* ptr_sender,
 void SpaceShipSprite::on_update() {
 	
 	PhysicsBasedSprite::on_update();
+
+	if (!is_visible()) {
+		if (m_death_timer.has_elapsed()) {
+			m_death_timer.stop();
+			is_visible(true);
+			reset_position();
+		}
+	}
+
 	apply_texture();
 	check_bounds();
+}
+
+void SpaceShipSprite::on_collision(Sprite* ptr_colliding_sprite) {
+	if (!is_visible())
+		return;
+	if (ptr_colliding_sprite->type() == SPRITE_TYPE_ASTEROID) {
+		send_explosion_message();
+		is_visible(false);
+		m_death_timer.start(3000);
+	}
 }
 
 void SpaceShipSprite::apply_texture() {
@@ -78,7 +98,7 @@ void SpaceShipSprite::thrust(bool is_on) {
 }
 
 LaserSprite* SpaceShipSprite::fire() {
-	if (!m_laser_fire_timer.has_elapsed())
+	if (!is_visible() || !m_laser_fire_timer.has_elapsed())
 		return nullptr;
 
 	Sprite* ptr_sprite = m_ptr_laser_pool->obtain();
@@ -92,6 +112,8 @@ LaserSprite* SpaceShipSprite::fire() {
 	ptr_laser_sprite->position_y(position_y()+19);
 	ptr_laser_sprite->move_at_heading(rotation(), 26);
 
+	m_laser_sound->play_sound();
+
 	return ptr_laser_sprite;
 }
 
@@ -104,4 +126,14 @@ void SpaceShipSprite::init_laser_pool() {
 
 SpritePool* SpaceShipSprite::laser_sprite_pool() {
 	return m_ptr_laser_pool;
+}
+
+void SpaceShipSprite::send_explosion_message() {
+	Message* message = obtain_message();
+
+	PointF* position = new PointF();
+	position->x = position_x();
+	position->y = position_y();
+	message->set(MESSAGE_TYPE_CREATE_EXPLOSION, nullptr, position);
+	send_message(message);
 }

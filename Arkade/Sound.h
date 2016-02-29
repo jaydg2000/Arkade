@@ -6,7 +6,7 @@ namespace arkade {
 
 	class Sound {
 	public:
-		Sound(std::string& filename);
+		Sound(const char* filename);
 		~Sound();
 
 		int					play_sound(bool loop = false);
