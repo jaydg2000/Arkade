@@ -9,7 +9,7 @@ using namespace arkade;
 class LaserSprite;
 class SpaceShipSprite : public PhysicsBasedSprite {
 public:
-	SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker, Sound* ptr_laser_sound);
+	SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker, Sound* ptr_laser_sound/*, Sound* ptr_scream_sound, Sound* ptr_exploion_sound*/);
 	~SpaceShipSprite();
 
 	virtual void					on_setup();
@@ -29,6 +29,8 @@ private:
 	Timer							m_death_timer;
 	BoundsChecker*					m_bounds_checker;
 	Sound*							m_laser_sound;
+	Sound*							m_explosion_sound;
+	Sound*							m_scream_sound;
 
 	Size							m_frame_size;
 	bool							m_thrust_on;

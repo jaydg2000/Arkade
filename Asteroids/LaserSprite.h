@@ -18,6 +18,7 @@ protected:
 
 private:
 	BoundsChecker*		m_ptr_bounds_checker;
+	Timer				m_timer;
 	bool				m_is_out_of_bounds;
 
 	void				send_dead_message();

@@ -6,7 +6,7 @@
 #include "MathUtil.h"
 #include "Asteroids.h"
 
-SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker, Sound* ptr_laser_sound)
+SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker, Sound* ptr_laser_sound /*, Sound* ptr_scream_sound, Sound* ptr_exploion_sound*/)
 	: PhysicsBasedSprite("res/images/PlayerSheet.png", arkade::make_size(66, 52))
 {
 	type(SPRITE_TYPE_PLAYER);
@@ -20,8 +20,11 @@ SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, 
 
 	m_bounds_checker = bounds_checker;
 
-	m_laser_fire_timer.start(200);
 	m_laser_sound = ptr_laser_sound;
+	//m_scream_sound = ptr_scream_sound;
+	//m_explosion_sound = ptr_exploion_sound;
+
+	m_laser_fire_timer.start(200);
 }
 
 
@@ -65,6 +68,8 @@ void SpaceShipSprite::on_collision(Sprite* ptr_colliding_sprite) {
 		send_explosion_message();
 		is_visible(false);
 		m_death_timer.start(3000);
+		m_scream_sound->play_sound();
+		m_explosion_sound->play_sound();
 	}
 }
 
