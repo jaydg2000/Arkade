@@ -22,10 +22,12 @@ void LevelOneGameScene::on_setup()
 
 	m_ptr_asteroid_explosion_sound = new Sound("res/wav/implosion2.wav");
 	m_ptr_laser_sound = new Sound("res/wav/laserfire3.wav");
+	//m_ptr_spaceship_explosion_sound = new Sound("res/wav/explosion2.wav");
+	//m_ptr_scream_sound = new Sound("res/wav/scream1.wav");
 
 	m_ptr_background = new Image("res/images/space-background.png", make_size(1920,1280));
 	m_ptr_background->destination_rect(make_rect(0, 0, 1366, 768));
-	m_ptr_spaceship = new SpaceShipSprite(RES_WIDTH, RES_HEIGHT, m_bounds_checker, m_ptr_laser_sound);	
+	m_ptr_spaceship = new SpaceShipSprite(RES_WIDTH, RES_HEIGHT, m_bounds_checker, m_ptr_laser_sound/*, m_ptr_scream_sound, m_ptr_spaceship_explosion_sound*/);	
 	register_sprite(m_ptr_spaceship);
 
 	init_asteroid_pool();

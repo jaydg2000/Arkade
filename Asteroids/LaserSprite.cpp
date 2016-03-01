@@ -18,15 +18,22 @@ LaserSprite::~LaserSprite()
 
 void LaserSprite::on_pool_obtain() {
 	m_is_out_of_bounds = false;
+	m_timer.start(500);
 }
 
 void LaserSprite::on_update()
 {
-	if (m_ptr_bounds_checker->is_out_of_bounds(position_x(), position_y()))
-		send_dead_message();
-
 	if (m_is_out_of_bounds)
 		return;
+
+	if (m_timer.has_elapsed()) {
+		send_dead_message();
+	}
+
+	if (m_ptr_bounds_checker->is_out_of_bounds(position_x(), position_y())) {
+		send_dead_message();
+		return;
+	}
 
 	move_at_heading(rotation(), LASER_SPEED);
 }
