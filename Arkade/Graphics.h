@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "SpritePool.h"
 #include "Image.h"
+#include "Font.h"
 
 namespace arkade
 {
@@ -28,6 +29,7 @@ namespace arkade
 		void									pop_pen_color();
 		void									render(Sprite* ptr_sprite);
 		void									render(SpritePool* ptr_sprite_pool);
+		void									render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font);
 		void									render(Image* ptr_image);
 		void									begin_render();
 		void									end_render();

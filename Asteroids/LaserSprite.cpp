@@ -18,7 +18,7 @@ LaserSprite::~LaserSprite()
 
 void LaserSprite::on_pool_obtain() {
 	m_is_out_of_bounds = false;
-	m_timer.start(500);
+	m_timer.start(1000);
 }
 
 void LaserSprite::on_update()

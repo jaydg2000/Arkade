@@ -10,4 +10,9 @@ namespace arkade {
 		Rect r; r.x = x; r.y = y; r.w = w; r.h = h;
 		return r;
 	}
+
+	Vector2 make_vector2(int32_t x, int32_t y) {
+		Vector2 v; v.x = x; v.y = y;
+		return v;
+	}
 }

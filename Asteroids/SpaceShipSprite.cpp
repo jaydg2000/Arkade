@@ -68,8 +68,8 @@ void SpaceShipSprite::on_collision(Sprite* ptr_colliding_sprite) {
 		send_explosion_message();
 		is_visible(false);
 		m_death_timer.start(3000);
-		m_scream_sound->play_sound();
-		m_explosion_sound->play_sound();
+		//m_scream_sound->play_sound();
+		//m_explosion_sound->play_sound();
 	}
 }
 

@@ -178,6 +178,32 @@ namespace arkade {
 			);
 	}
 
+	void Graphics::render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font) {
+		Texture* ptr_texture = ptr_font->texture();
+		Rect destination_rect;
+		destination_rect.x = screen_x;
+		destination_rect.y = screen_y;
+		destination_rect.w = ptr_font->cell_size()->x;
+		destination_rect.h = ptr_font->cell_size()->y;
+		uint16_t pos = 0;
+		do {
+			Rect* source_rect = ptr_font->source_rect_for_character(psz_text[0]);
+			destination_rect.x = (destination_rect.w * pos);
+			pos++;
+
+			SDL_RenderCopyEx(
+				m_ptr_renderer,
+				ptr_texture,
+				source_rect,
+				&destination_rect,
+				0,
+				NULL,
+				SDL_FLIP_NONE
+				);
+
+		} while (psz_text);
+	}
+
 	uint8_t Graphics::clip(Rect* srcRect, Rect* destRect, Rect* clipRect) {
 		// at this point, destRect has been converted to screen coordinates.
 

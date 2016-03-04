@@ -6,6 +6,7 @@
 #include "LaserSprite.h"
 #include "ExplosionSprite.h"
 #include "BoundsChecker.h"
+#include "Font.h"
 
 using namespace arkade;
 
@@ -37,6 +38,7 @@ private:
 	Sound*							m_ptr_spaceship_explosion_sound;
 	Sound*							m_ptr_laser_sound;
 	Sound*							m_ptr_scream_sound;
+	Font*							m_ptr_font;
 
 	void							init_asteroid_pool();
 	void							init_explosion_pool();

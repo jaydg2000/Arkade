@@ -103,6 +103,7 @@ void LevelOneGameScene::on_render(Graphics* ptr_graphics)
 	ptr_graphics->render(m_ptr_spaceship);
 	ptr_graphics->render(m_ptr_asteroid_pool);
 	ptr_graphics->render(m_ptr_explosion_pool);
+	//ptr_graphics->render("SCORE", 10, 10, m_ptr_font);
 }
 
 void LevelOneGameScene::on_end()

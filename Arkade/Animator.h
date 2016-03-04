@@ -4,6 +4,9 @@
 
 namespace arkade {
 
+	/// <summary>
+	/// This is a test.
+	/// </summary>
 	class Animator
 	{
 	public:
