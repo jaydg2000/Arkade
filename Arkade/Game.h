@@ -18,11 +18,11 @@ namespace arkade {
 		void			add_level(Level*);
 
 	protected:
-		virtual void	on_setup() = 0;
-		virtual void	on_cleanup() = 0;
+		virtual void		on_setup() = 0;
+		virtual void		on_cleanup() = 0;
 
 	private:
-		queue<Level*>	m_levels;
+		queue<Level*>		m_levels;
 		bool			m_game_is_ended;
 	
 		void			run_level();
