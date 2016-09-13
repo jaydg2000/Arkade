@@ -178,6 +178,24 @@ namespace arkade {
 			);
 	}
 
+	void Graphics::render(Image* image, Size size) {
+		Rect* destination_rect = image->destination_rect();
+		destination_rect->w = size.x;
+		destination_rect->h = size.y;
+
+		m_ptr_camera->to_screen(destination_rect, image->x(), image->y());
+
+		SDL_RenderCopyEx(
+			m_ptr_renderer,
+			image->texture(),
+			image->source_rect(),
+			destination_rect,
+			image->rotation(),
+			NULL,
+			image->flip()
+			);
+	}
+
 	void Graphics::render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font) {
 		Texture* ptr_texture = ptr_font->texture();
 		Rect destination_rect;

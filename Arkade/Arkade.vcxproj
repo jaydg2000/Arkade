@@ -180,6 +180,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="MessagePool.h" />
     <ClInclude Include="MessageRouter.h" />
     <ClInclude Include="MessageSink.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="OscillatingAnimator.h" />
     <ClInclude Include="PhysicsBasedSprite.h" />
     <ClInclude Include="Point.h" />

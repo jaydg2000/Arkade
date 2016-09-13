@@ -1,0 +1,6 @@
+#pragma once
+#define LEFT_MOUSE_BUTTON_DOWN  0x01
+#define RIGHT_MOUSE_BUTTON_DOWN 0x02
+#define LEFT_MOUSE_BUTTON_UP    0x03
+#define RIGHT_MOUSE_BUTTON_UP   0x04
+

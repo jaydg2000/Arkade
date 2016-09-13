@@ -1,7 +1,7 @@
 #pragma once
 
-#define RES_WIDTH  1366
-#define RES_HEIGHT 768
+#define RES_WIDTH  3440 //1366
+#define RES_HEIGHT 1440 //768
 
 #define SPRITE_TYPE_PLAYER   4096001
 #define SPRITE_TYPE_ASTEROID 4096002

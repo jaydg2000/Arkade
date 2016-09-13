@@ -60,7 +60,7 @@ namespace arkade {
 	void Sprite::texture(const char* filename, RGB back_color) {
 		TextureCache* cache = TextureCache::instance();
 		cache->push(filename, back_color);
-		m_ptr_texture = cache->obtain(filename);		
+		m_ptr_texture = cache->obtain(filename);			
 	}
 
 	Texture* Sprite::texture() {

@@ -11,10 +11,10 @@ namespace arkade {
 	}
 
 	void Scene::run() {
-		Graphics* ptr_graphics = Graphics::instance();
-		Audio* ptr_audio = Audio::instance();
-		TextureCache* ptr_texture_cache = TextureCache::instance();
-		Keyboard* ptr_keyboard = new Keyboard();
+		Graphics*		ptr_graphics = Graphics::instance();
+		Audio*			ptr_audio = Audio::instance();
+		TextureCache*	ptr_texture_cache = TextureCache::instance();
+		Keyboard*		ptr_keyboard = new Keyboard();
 
 		on_setup();
 		setup_sprites();
@@ -22,8 +22,7 @@ namespace arkade {
 		while (!m_scene_is_ended) {
 			SDL_PumpEvents();
 			check_mouse_input();
-			on_check_keyboard_input(ptr_keyboard);
-			on_mouse_input();
+			on_check_keyboard_input(ptr_keyboard);			
 			handle_messages();
 			on_update();
 			on_detect_collisions();
@@ -64,7 +63,7 @@ namespace arkade {
 	void Scene::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 	}
 
-	void Scene::on_mouse_input() {
+	void Scene::on_mouse_button(uint32_t button_event_type) {
 	}
 
 	void Scene::on_update() {
@@ -81,6 +80,17 @@ namespace arkade {
 	}
 
 	void Scene::check_mouse_input() {
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_MOUSEBUTTONDOWN) {
+				if (event.button.button == SDL_BUTTON_LMASK) {
+					on_mouse_button(LEFT_MOUSE_BUTTON_DOWN);
+				} 
+				else if (event.button.button == SDL_BUTTON_RMASK) {
+					on_mouse_button(RIGHT_MOUSE_BUTTON_DOWN);
+				}
+			}
+		}
 	}
 
 	void Scene::on_detect_collisions() {				

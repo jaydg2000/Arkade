@@ -7,6 +7,7 @@
 #include "TextureCache.h"
 #include "Audio.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 
 namespace arkade {
 
@@ -25,7 +26,7 @@ namespace arkade {
 		virtual void					on_setup();
 		virtual void					on_begin();
 		virtual void					on_check_keyboard_input(Keyboard* keyboard);
-		virtual void					on_mouse_input();
+		virtual void					on_mouse_button(uint32_t button_event_type);
 		virtual void					on_update();
 		virtual void					on_render(Graphics* ptr_graphics);
 		virtual void					on_end();

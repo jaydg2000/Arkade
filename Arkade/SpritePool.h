@@ -20,6 +20,14 @@ namespace arkade {
 
 		list<Sprite*>*							get_sprite_list();
 
+		template<typename Functor>
+		void									for_each(Functor functor) {
+			for each (Sprite* sprite in m_allocated_sprites)
+			{
+				functor(sprite);
+			}
+		}
+
 	private:
 		queue<Sprite*>							m_available_sprites;
 		list<Sprite*>							m_allocated_sprites;

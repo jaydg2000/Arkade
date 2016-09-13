@@ -98,7 +98,7 @@ void LevelOneGameScene::on_update()
 
 void LevelOneGameScene::on_render(Graphics* ptr_graphics)
 {
-	ptr_graphics->render(m_ptr_background);
+	ptr_graphics->render(m_ptr_background, make_size(RES_WIDTH, RES_HEIGHT));
 	ptr_graphics->render(m_ptr_spaceship->laser_sprite_pool());
 	ptr_graphics->render(m_ptr_spaceship);
 	ptr_graphics->render(m_ptr_asteroid_pool);
