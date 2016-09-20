@@ -3,11 +3,26 @@
 #include <Scene.h>
 #include <Mouse.h>
 #include <SpritePool.h>
+#include <BoundingBoxCollisionDetector.h>
+#include <RandomAnimator.h>
 #include "FrankySprite.h"
 #include "SharkSprite.h"
 #include "FishGame.h"
+#include "SceneRepository.h"
+#include "MessageTypes.h"
 
 using namespace arkade;
+
+#define SCENE_STATE_NOT_READY        0
+#define SCENE_STATE_READY_PLAYER_ONE 1
+#define SCENE_STATE_PLAYING          2
+#define SCENE_STATE_GAME_OVER        3
+
+#define FRANKY_START_Y               800
+#define FRANKY_START_X               125
+#define WAVE_SPRITE_Y_POSITION       278
+#define CAMERA_NORMAL_Y_POSITION     200
+#define CAMERA_FOLLOW_THRESHOLD_TOP  450
 
 class SceneFrankysFirstSwim :
 	public Scene
@@ -29,14 +44,29 @@ protected:
 	virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 private:
+	CollisionDetector*				m_ptr_collision_detector;
+	SceneRepository*				m_scene_repository;
 	FrankySprite*					m_ptr_franky;
-	Image*							m_ptr_sky;
+	Image*							m_ptr_ground;
+	Sprite*							m_ptr_wave1;
+	Sprite*							m_ptr_wave2;
+	Sprite*							m_ptr_wave3;
+	Image*							m_ptr_background;
+	Image*							m_ptr_ready;
+
+	list<Sprite*>					m_predators;
+	list<Sprite*>					m_rewards;
+	list<Sprite*>					m_clouds;
 
 	RGB								m_water_color_rgb;
 
 	int32_t							m_franky_start_x;
 	int32_t							m_franky_start_y;
+	uint32_t						m_scene_state;
+	uint32_t						m_score;
+	bool							m_can_move_to_next_state;
 
-	SpritePool*						m_spritepool_predators;
+	void							set_stage();
+	bool							is_no_touch_happening(Keyboard* ptr_keyboard);
 };
 

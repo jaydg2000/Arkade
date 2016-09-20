@@ -2,19 +2,19 @@
 #include <ForwardAnimator.h>
 #include <MathUtil.h>
 #include "FishGame.h"
+#include "AwardSprite.h"
 
 FrankySprite::FrankySprite():
-	Sprite("res/sprites/sprite_freddy_swim_right.png", make_size(126, 86))
+	GameSprite("res/sprites/sprite_franky_swim_right.png", make_size(128, 128))
 {
-	this->animator(new ForwardAnimator(6, 150));
-	this->m_momentum = 0.0f;
-	this->m_is_jumping = false;
+	this->animator(new ForwardAnimator(6, 80));
+	this->reset();
 }
 
 FrankySprite::~FrankySprite() {}
 
 void FrankySprite::swim() {
-	if (m_is_jumping) {
+	if (m_is_jumping || m_is_dead) {
 		idle();
 		return;
 	}
@@ -48,24 +48,27 @@ void FrankySprite::tilt_straight() {
 
 void FrankySprite::tilt_up() {
 	float r = rotation();
-	r -= 5;
-	if (r < -45)
-		r = -45;
+	r -= 3;
+	if (r < -25)
+		r = -25;
 	rotation(r);
 }
 
 void FrankySprite::tilt_down() {
 	float r = rotation();
-	r+=2;
-	if (r > 45)
-		r = 45;
+	//float rotation_max = m_is_jumping ? 45 : 15;
+	float rotation_inc = m_is_jumping ? 3.0f : 1.5f;
+
+	r += rotation_inc;
+	if (r > 15)
+		r = 15;
 	rotation(r);
 }
 
 void FrankySprite::jump() {
 	m_is_jumping = true;
 	rotation(-45);
-	m_momentum = MAX_MOMENTUM;
+	m_momentum = 14.0f;//MAX_MOMENTUM;
 }
 
 void FrankySprite::on_update() {
@@ -77,7 +80,36 @@ void FrankySprite::on_update() {
 			m_is_jumping = false;
 		}
 	}
-	else if (position_y() < MIN_Y_POSITION-10) {
+	else if (position_y() < MIN_Y_JUMP_POSITION) {
 		jump();
 	}
+}
+
+bool FrankySprite::can_restart() {
+	return m_is_dead && position_y() == MAX_Y_POSITION;
+}
+
+void FrankySprite::on_collision(Sprite* sprite) {
+	if (sprite->type() == SPRITE_TYPE_REWARD) {
+		uint32_t points = ((AwardSprite*)sprite)->points();
+		Message* message = obtain_message();
+		message->set(MESSAGE_TYPE_SCORE, this, &points);
+		send_message(message);
+	}
+	if (sprite->type() == SPRITE_TYPE_PREDATOR) {
+		m_is_dead = true;
+		m_momentum = MIN_MOMENTUM*2;
+		rotation(90);
+		Message* message = obtain_message();
+		message->set(MESSAGE_TYPE_DEAD, this);
+		send_message(message);
+	}
+}
+
+void FrankySprite::reset() {
+	m_is_dead = false;
+	this->rotation(0);
+	this->m_momentum = 0.0f;
+	this->m_is_jumping = false;
+	this->m_is_dead = false;
 }

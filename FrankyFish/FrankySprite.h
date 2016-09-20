@@ -1,24 +1,26 @@
 #pragma once
-#include <Sprite.h>
+#include "GameSprite.h"
+#include "SpriteTypes.h"
+#include "MessageTypes.h"
 
 using namespace arkade;
 
-#define MIN_MOMENTUM              -7.0f
-#define MAX_MOMENTUM              12.0f
-#define MOMENTUM_STEP_UP          5.5f
-#define MOMENTUM_STEP_DN           0.75f
-#define MOMENTUM_AIR_STEP_DN       .25f
+#define MIN_MOMENTUM            -12.0f
+#define MAX_MOMENTUM              8.0f
+#define MOMENTUM_STEP_UP          1.5f
+#define MOMENTUM_STEP_DN         0.45f
+#define MOMENTUM_AIR_STEP_DN      .25f
 
-#define MIN_Y_POSITION          400.0f
-#define MIN_Y_JUMP_POSITION     450.0f
-#define MAX_Y_POSITION          1190.0f
+#define MIN_Y_POSITION          100.0f
+#define MIN_Y_JUMP_POSITION     390.0f
+#define MAX_Y_POSITION          1370.0f
 
 #define MAX_ROTATION_UP         -355.0f
 #define MAX_ROTATION_DOWN          5.0f
 
-#define END_JUMP_DEPTH          1190.0f
+#define END_JUMP_DEPTH          450.0
 
-class FrankySprite : public Sprite
+class FrankySprite : public GameSprite
 {
 public:
 	FrankySprite();
@@ -27,11 +29,15 @@ public:
 	void				swim();
 	void				idle();
 	void				jump();
+	bool				can_restart();
 	virtual void		on_update() override;
+	virtual void		on_collision(Sprite* sprite);
+	void				reset();
 
 private:
 	float				m_momentum;	
 	bool				m_is_jumping;
+	bool				m_is_dead;
 
 	void				tilt_down();
 	void				tilt_up();

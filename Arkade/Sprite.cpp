@@ -29,6 +29,8 @@ namespace arkade {
 
 		m_x = 0;
 		m_y = 0;
+
+		m_use_screen_positioning = false;
 	}
 
 	Sprite::Sprite(const char* filename, Size& frame_size) : Sprite() {		
@@ -148,6 +150,14 @@ namespace arkade {
 		m_is_visible = visible;
 	}
 
+	bool Sprite::use_screen_positioning() {
+		return m_use_screen_positioning;
+	}
+
+	void Sprite::use_screen_positioning(bool enabled) {
+		m_use_screen_positioning = enabled;
+	}
+	
 	void Sprite::bounds(float lower_x,
 		float upper_x,
 		float lower_y,

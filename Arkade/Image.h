@@ -17,16 +17,19 @@ namespace arkade {
 		void					rotation(float rotation);		
 		Flip					flip();
 		void					flip(Flip flip);
+		bool					use_screen_positioning();
+		void					use_screen_positioning(bool enabled);
 
-		Rect*					source_rect();
+		virtual Rect*			source_rect();
 		void					source_rect(Rect& rect);
-		Rect*					destination_rect();
+		virtual Rect*			destination_rect();
 		void					destination_rect(Rect& rect);
 
 	private:
 		float					m_x;
 		float					m_y;
 		float					m_rotation;
+		bool					m_use_screen_positioning;
 		Flip					m_flip;
 		Size					m_size;
 		Texture*				m_ptr_texture;

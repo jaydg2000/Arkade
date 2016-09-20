@@ -1,0 +1,21 @@
+v1.0.1
+sourceimage:D:\Projects\Arkade\FrankyFish\res\sprites\work_bird.png
+framewidth:300
+frameheight:370
+animationtechnique:Forward
+animationspeed:150
+rotation:0
+BEGIN FRAMES
+0;299;174
+1;690;174
+2;1081;174
+3;1472;175
+4;301;643
+5;708;635
+6;1095;598
+7;1516;612
+8;292;1024
+9;699;1015
+10;1086;978
+11;1507;991
+END FRAMES

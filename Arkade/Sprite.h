@@ -49,6 +49,8 @@ namespace arkade {
 		void					flip(Flip flip);
 		bool					is_visible();
 		void					is_visible(bool visible);
+		bool					use_screen_positioning();
+		void					use_screen_positioning(bool enabled);
 		void					bounds(
 									float lower_x,
 									float upper_x,
@@ -88,6 +90,7 @@ namespace arkade {
 		Flip					m_flip;
 		bool					m_is_visible;
 		bool					m_enable_bounds_checking;
+		bool					m_use_screen_positioning;
 		Texture*				m_ptr_texture;
 		Animator*				m_ptr_animator;
 		Rect					m_source_rect;

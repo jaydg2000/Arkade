@@ -1,0 +1,13 @@
+v1.0.1
+sourceimage:D:\Projects\Arkade\FrankyFish\res\sprites\waves.png
+framewidth:255
+frameheight:258
+animationtechnique:Forward
+animationspeed:500
+rotation:0
+BEGIN FRAMES
+0;72;49
+1;361;47
+2;639;44
+3;921;39
+END FRAMES

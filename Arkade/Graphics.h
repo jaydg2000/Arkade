@@ -35,6 +35,7 @@ namespace arkade
 		void									begin_render();
 		void									end_render();
 		void									background_color(RGB rgb);
+		void									animation_on(bool should_animate);
 
 	private:
 
@@ -51,6 +52,7 @@ namespace arkade
 		bool									m_showBoundingBox;
 		bool									m_showTileBoundingBox;
 		bool									m_showClippingRegion;
+		bool									m_is_animating;
 		RGB										m_boundingBoxColor;
 		RGB										m_clipRegionColor;
 		RGB										m_stored_pen_color;

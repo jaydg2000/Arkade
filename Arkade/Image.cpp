@@ -21,6 +21,7 @@ namespace arkade {
 		m_destination_rect.h = texture_size.y;
 
 		m_flip = FLIP_NONE;
+		m_use_screen_positioning = false;
 	}
 
 	Image::~Image()
@@ -98,4 +99,11 @@ namespace arkade {
 		m_destination_rect.h = rect.h;
 	}
 
+	bool Image::use_screen_positioning() {
+		return m_use_screen_positioning;
+	}
+
+	void Image::use_screen_positioning(bool enabled) {
+		m_use_screen_positioning = enabled;
+	}
 }

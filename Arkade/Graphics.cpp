@@ -7,6 +7,7 @@ namespace arkade {
 
 	Graphics::Graphics()
 	{
+		m_is_animating = true;
 	}
 
 	Graphics::~Graphics()
@@ -119,6 +120,10 @@ namespace arkade {
 		SDL_SetRenderDrawColor(m_ptr_renderer, rgb.r, rgb.g, rgb.b, rgb.a);
 	}
 
+	void Graphics::animation_on(bool should_animate) {
+		m_is_animating = should_animate;
+	}
+
 	void Graphics::render(Sprite* sprite) {
 		if (!sprite->is_visible())
 			return;
@@ -132,7 +137,9 @@ namespace arkade {
 		float coordinate_x = sprite->position_x();
 		float coordinate_y = sprite->position_y();
 
-		m_ptr_camera->to_screen(dest_rect, coordinate_x, coordinate_y);
+		if (!sprite->use_screen_positioning()) {
+			m_ptr_camera->to_screen(dest_rect, coordinate_x, coordinate_y);
+		}
 
 		if (clip_rect)
 			if (!clip(src_rect, dest_rect, clip_rect))
@@ -151,7 +158,8 @@ namespace arkade {
 			);
 
 		sprite->on_post_render();
-		sprite->animate();
+		if(m_is_animating)
+			sprite->animate();
 	}
 
 	void Graphics::render(SpritePool* ptr_sprite_pool) {
@@ -165,7 +173,9 @@ namespace arkade {
 	void Graphics::render(Image* image) {
 		Rect* destination_rect = image->destination_rect();
 
-		m_ptr_camera->to_screen(destination_rect, image->x(), image->y());
+		if (!image->use_screen_positioning()) {
+			m_ptr_camera->to_screen(destination_rect, image->x(), image->y());
+		}
 
 		SDL_RenderCopyEx(
 			m_ptr_renderer,
@@ -183,7 +193,9 @@ namespace arkade {
 		destination_rect->w = size.x;
 		destination_rect->h = size.y;
 
-		m_ptr_camera->to_screen(destination_rect, image->x(), image->y());
+		if (!image->use_screen_positioning()) {
+			m_ptr_camera->to_screen(destination_rect, image->x(), image->y());
+		}
 
 		SDL_RenderCopyEx(
 			m_ptr_renderer,
