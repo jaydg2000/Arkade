@@ -1,0 +1,7 @@
+#pragma once
+
+#define SCREEN_WIDTH					720
+#define SCREEN_HEIGHT					1280
+
+#define PLAYER_POSITION_X				SCREEN_WIDTH / 5
+#define PLAYER_POSITION_Y				SCREEN_HEIGHT / 2

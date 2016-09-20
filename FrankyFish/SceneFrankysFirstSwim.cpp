@@ -25,14 +25,10 @@ void SceneFrankysFirstSwim::on_setup() {
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
 	m_scene_repository = new SceneRepository("res/scene/scene1.fsh");
 	set_stage();
-
-	m_franky_start_x = FRANKY_START_X;
-	m_franky_start_y = FRANKY_START_Y;
-
+	
 	m_ptr_ground = new Image("res/sprites/sprite_ground.png", make_size(1536,137));
 	m_ptr_ground->x(0);
 	m_ptr_ground->y(1344);
-	//m_ptr_ground->use_screen_positioning(true);
 
 	m_ptr_franky = new FrankySprite();	
 
@@ -48,8 +44,8 @@ void SceneFrankysFirstSwim::on_setup() {
 	
 
 	m_ptr_background = new Image("res/sprites/background.png", make_size(720,1480), 0.0f, 0.0f);
-	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), m_franky_start_x + 50, m_franky_start_y-125);
-	
+	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y-125);
+
 	register_sprite(m_ptr_franky);
 	register_sprite(m_ptr_wave1);
 	register_sprite(m_ptr_wave2);
@@ -69,11 +65,15 @@ void SceneFrankysFirstSwim::set_stage() {
 	for each (Sprite* sprite in m_rewards) {
 		unregister_sprite(sprite);
 	}
+	for each(Sprite* sprite in m_coins) {
+		unregister_sprite(sprite);
+	}
 	
 	m_scene_repository->reload_fish();
 
 	m_predators = m_scene_repository->load_bad_fish();
 	m_rewards = m_scene_repository->load_rewards();
+	m_coins = m_scene_repository->load_coins();
 	
 	for each (Sprite* sprite in m_predators) {
 		register_sprite(sprite);
@@ -81,11 +81,15 @@ void SceneFrankysFirstSwim::set_stage() {
 	for each (Sprite* sprite in m_rewards) {
 		register_sprite(sprite);
 	}
+	for each(Sprite* sprite in m_coins) {
+		register_sprite(sprite);
+	}
 }
 
 void SceneFrankysFirstSwim::on_begin() {
+	m_swim_timer.start(20);
 	m_ptr_franky->reset();
-	m_ptr_franky->position(m_franky_start_x, m_franky_start_y);
+	m_ptr_franky->position(FRANKY_START_X, FRANKY_START_Y);
 	m_score = 0;
 	m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
 	Graphics::instance()->animation_on(true);
@@ -141,6 +145,17 @@ void SceneFrankysFirstSwim::on_update() {
 	if (m_scene_state != SCENE_STATE_PLAYING)
 		return;
 
+	Camera* ptr_camera = Camera::instance();
+
+	if (m_swim_timer.has_elapsed()) {
+		ptr_camera->move_relative_x(CAMERA_SPEED);
+		m_ptr_franky->move_relative_x(CAMERA_SPEED);
+		m_ptr_background->x(m_ptr_background->x() + CAMERA_SPEED);
+		m_ptr_wave1->move_relative_x(CAMERA_SPEED);
+		m_ptr_wave2->move_relative_x(CAMERA_SPEED);
+		m_ptr_wave3->move_relative_x(CAMERA_SPEED);
+	}
+
 	for each (Sprite* sprite in m_predators) {
 		((PredatorSprite*)sprite)->swim();
 	}
@@ -148,15 +163,13 @@ void SceneFrankysFirstSwim::on_update() {
 		((SwimmingSprite*)sprite)->swim();
 	}
 
-	Camera* ptr_camera = Camera::instance();
+	
 	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
 		float franky_y = m_ptr_franky->position_y();
 		float new_y = CAMERA_NORMAL_Y_POSITION - (CAMERA_FOLLOW_THRESHOLD_TOP - franky_y);
 		if (new_y < 0.0f)
 			new_y = 0.0f;
 		ptr_camera->position_y(new_y);
-		
-
 	}
 	else {
 		ptr_camera->position_y(CAMERA_NORMAL_Y_POSITION);
@@ -177,6 +190,10 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 	for each (Sprite* sprite in m_rewards) {
 		ptr_graphics->render(sprite);
 	}
+	for each(Sprite* sprite in m_coins) {
+		ptr_graphics->render(sprite);
+	}
+
 	ptr_graphics->render(m_ptr_franky);
 
 	if (m_scene_state == SCENE_STATE_READY_PLAYER_ONE) {

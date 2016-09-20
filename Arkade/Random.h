@@ -9,7 +9,8 @@ namespace arkade {
 		~Random();
 
 		static void			seed();
-		static int32_t			rand_int(int32_t low, int32_t high);
+		static int32_t		rand_int(int32_t low, int32_t high);
+		static float		rand_float(float low, float high);
 	};
 
 }

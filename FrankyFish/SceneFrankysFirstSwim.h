@@ -5,6 +5,8 @@
 #include <SpritePool.h>
 #include <BoundingBoxCollisionDetector.h>
 #include <RandomAnimator.h>
+#include <Timer.h>
+#include "Geometry.h"
 #include "FrankySprite.h"
 #include "SharkSprite.h"
 #include "FishGame.h"
@@ -18,11 +20,13 @@ using namespace arkade;
 #define SCENE_STATE_PLAYING          2
 #define SCENE_STATE_GAME_OVER        3
 
-#define FRANKY_START_Y               800
-#define FRANKY_START_X               125
+#define FRANKY_START_Y               PLAYER_POSITION_Y
+#define FRANKY_START_X               PLAYER_POSITION_X
 #define WAVE_SPRITE_Y_POSITION       278
 #define CAMERA_NORMAL_Y_POSITION     200
 #define CAMERA_FOLLOW_THRESHOLD_TOP  450
+
+#define CAMERA_SPEED                 8.0f
 
 class SceneFrankysFirstSwim :
 	public Scene
@@ -44,6 +48,7 @@ protected:
 	virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 private:
+	Timer							m_swim_timer;
 	CollisionDetector*				m_ptr_collision_detector;
 	SceneRepository*				m_scene_repository;
 	FrankySprite*					m_ptr_franky;
@@ -56,12 +61,11 @@ private:
 
 	list<Sprite*>					m_predators;
 	list<Sprite*>					m_rewards;
+	list<Sprite*>					m_coins;
 	list<Sprite*>					m_clouds;
 
 	RGB								m_water_color_rgb;
 
-	int32_t							m_franky_start_x;
-	int32_t							m_franky_start_y;
 	uint32_t						m_scene_state;
 	uint32_t						m_score;
 	bool							m_can_move_to_next_state;

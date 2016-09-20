@@ -37,10 +37,14 @@ void SceneRepository::read_file(const char* filename) {
 
 			if (item_type == ITEM_BUG_1
 				|| item_type == ITEM_BUG_2
-				|| item_type == ITEM_BUG_3
-				|| item_type == ITEM_COIN) {
+				|| item_type == ITEM_BUG_3) {
+
 				Sprite* rewardSprite = make_reward(item_type, item_x, item_y);
 				m_list_rewards_sprites.push_back(rewardSprite);
+			}
+			else if (item_type == ITEM_COIN) {
+				Sprite* coin = make_coin(item_type, item_x, item_y);
+				m_list_coin_sprites.push_back(coin);
 			}
 			else {
 				Sprite* predatorSprite = make_predator(item_type, item_x, item_y);
@@ -64,6 +68,12 @@ void SceneRepository::reload_fish() {
 		delete sprite;
 	}
 
+	while (!m_list_coin_sprites.empty()) {
+		Sprite* sprite = m_list_coin_sprites.front();
+		m_list_coin_sprites.pop_front();
+		delete sprite;
+	}
+
 	read_file(m_psz_filename);
 }
 
@@ -73,6 +83,10 @@ list<Sprite*> SceneRepository::load_bad_fish() {
 
 list<Sprite*> SceneRepository::load_rewards() {
 	return m_list_rewards_sprites;
+}
+
+list<Sprite*> SceneRepository::load_coins() {
+	return m_list_coin_sprites;
 }
 
 Sprite* SceneRepository::make_predator(int type, int x, int y) {
@@ -156,13 +170,14 @@ Sprite* SceneRepository::make_reward(int type, int x, int y) {
 			sprite->animator(new ForwardAnimator(7, 50));
 			sprite->animator()->current_frame(Random::rand_int(0, 6));
 			break;
-		case ITEM_COIN:
-			sprite = new SwimmingSprite("res/sprites/sprite_coin.png", make_size(66, 65));
-			sprite->animator(new ForwardAnimator(6, 90));
-			//sprite->animator()->current_frame(Random::rand_int(0, 5));
-			break;
 	}
 
 	sprite->position(x, y);
 	return sprite;
 }
+
+Sprite* SceneRepository::make_coin(int type, int x, int y) {
+	Sprite* sprite = new CoinSprite("res/sprites/sprite_coin.png", make_size(66, 65));
+	return sprite;
+}
+

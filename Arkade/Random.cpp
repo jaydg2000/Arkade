@@ -20,4 +20,8 @@ namespace arkade {
 	int32_t Random::rand_int(int32_t min, int32_t max) {
 		return rand() % (max - min) + min;
 	}
+
+	float Random::rand_float(float low, float high) {
+		return low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));
+	}
 }

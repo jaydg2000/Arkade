@@ -1,8 +1,9 @@
 #include "FishGame.h"
 #include <Random.h>
+#include "Geometry.h"
 
-int32_t FishGame::res_width = 720;
-int32_t FishGame::res_height = 1280;
+int32_t FishGame::res_width = SCREEN_WIDTH;
+int32_t FishGame::res_height = SCREEN_HEIGHT;
 
 
 FishGame::FishGame()

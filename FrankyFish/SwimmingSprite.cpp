@@ -5,7 +5,8 @@
 SwimmingSprite::SwimmingSprite(const char* filename, Size& frame_size)
 	: Sprite(filename, frame_size)
 {
-	this->m_speed = 10.0f;
+	m_speed = Random::rand_float(1.0f,2.0f);
+	m_y_sine_amplitude = Random::rand_float(0.35f, .55f);
 	m_swim_timer.start(20);
 }
 
@@ -17,6 +18,7 @@ SwimmingSprite::~SwimmingSprite()
 void SwimmingSprite::swim() {
 	if (m_swim_timer.has_elapsed()) {
 		this->move_relative_x(-m_speed);
+		wobble_y();
 	}
 }
 
@@ -26,6 +28,11 @@ void SwimmingSprite::speed(float speed) {
 
 float SwimmingSprite::speed() {
 	return m_speed;
+}
+
+void SwimmingSprite::wobble_y() {
+	float y = m_y_sine_amplitude * sin(position_x() * M_PI / 180);
+	move_relative_y(y);
 }
 
 
