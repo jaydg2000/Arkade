@@ -1,10 +1,10 @@
 #pragma once
-#include "GameSprite.h"
+#include "RewardSprite.h"
 
-class CoinSprite : public GameSprite
+class CoinSprite : public RewardSprite
 {
 public:
-	CoinSprite(const char* file_name, Size& frame_size);
+	CoinSprite();
 	~CoinSprite();
 };
 

@@ -31,7 +31,7 @@ public:
 	void				jump();
 	bool				can_restart();
 	virtual void		on_update() override;
-	virtual void		on_collision(Sprite* sprite);
+	virtual void		on_collision(Sprite* sprite) override;
 	void				reset();
 
 private:

@@ -18,6 +18,8 @@ namespace arkade {
 
 		void							run();
 		void							stop();
+		void							disable_sprite_updates();
+		void							enable_sprite_updates();
 		void							register_sprite(Sprite* ptr_sprite);
 		void							unregister_sprite(Sprite* ptr_sprite);
 		void							register_sprite_pool(SpritePool* ptr_sprite_pool);
@@ -35,6 +37,7 @@ namespace arkade {
 		virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 	private:
+		bool							m_is_updating_sprites;
 		bool							m_scene_is_ended;
 		list<Sprite*>					m_sprite_list;
 

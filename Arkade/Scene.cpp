@@ -4,6 +4,7 @@ namespace arkade {
 
 	Scene::Scene() {
 		m_scene_is_ended = false;
+		m_is_updating_sprites = true;
 	}
 
 
@@ -79,6 +80,14 @@ namespace arkade {
 	void Scene::on_cleanup() {
 	}
 
+	void Scene::disable_sprite_updates() {
+		m_is_updating_sprites = false;
+	}
+
+	void Scene::enable_sprite_updates() {
+		m_is_updating_sprites = true;
+	}
+
 	void Scene::check_mouse_input() {
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
@@ -112,6 +121,9 @@ namespace arkade {
 	}
 
 	void Scene::update_sprites() {
+		if (!m_is_updating_sprites)
+			return;
+
 		for (Sprite* sprite : m_sprite_list) {
 			sprite->on_update();
 		}

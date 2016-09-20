@@ -5,6 +5,7 @@
 #include <ForwardAnimator.h>
 #include "PredatorSprite.h"
 #include "CoinSprite.h"
+#include "FlyingBugSprite.h"
 
 using namespace arkade;
 
@@ -25,20 +26,14 @@ public:
 	SceneRepository(const char* filename);
 	~SceneRepository();
 
-	list<Sprite*>			load_bad_fish();
-	list<Sprite*>			load_rewards();
-	list<Sprite*>			load_coins();
-	void					reload_fish();
+	list<Sprite*>			load_gameitems();
+	void					reload_gameitems();
 
 private:
 	const char*				m_psz_filename;
-	list<Sprite*>			m_list_bad_fish_sprites;
-	list<Sprite*>			m_list_rewards_sprites;
-	list<Sprite*>			m_list_coin_sprites;
+	list<Sprite*>			m_list_gamesprites;
 
 	void					read_file(const char* filename);
-	Sprite*					make_predator(int type, int x, int y);
-	Sprite*					make_reward(int type, int x, int y);
-	Sprite*					make_coin(int type, int x, int y);
+	Sprite*					make_gamesprite(int type, int x, int y);
 };
 

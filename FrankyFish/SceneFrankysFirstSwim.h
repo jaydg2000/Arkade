@@ -8,7 +8,6 @@
 #include <Timer.h>
 #include "Geometry.h"
 #include "FrankySprite.h"
-#include "SharkSprite.h"
 #include "FishGame.h"
 #include "SceneRepository.h"
 #include "MessageTypes.h"
@@ -27,6 +26,7 @@ using namespace arkade;
 #define CAMERA_FOLLOW_THRESHOLD_TOP  450
 
 #define CAMERA_SPEED                 8.0f
+#define GROUND_SPEED				 7.5f
 
 class SceneFrankysFirstSwim :
 	public Scene
@@ -59,9 +59,7 @@ private:
 	Image*							m_ptr_background;
 	Image*							m_ptr_ready;
 
-	list<Sprite*>					m_predators;
-	list<Sprite*>					m_rewards;
-	list<Sprite*>					m_coins;
+	list<Sprite*>					m_gameitems;
 	list<Sprite*>					m_clouds;
 
 	RGB								m_water_color_rgb;

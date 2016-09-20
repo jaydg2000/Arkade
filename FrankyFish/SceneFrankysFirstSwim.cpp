@@ -8,11 +8,23 @@ SceneFrankysFirstSwim::SceneFrankysFirstSwim()
 }
 
 
+
 SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 {
+	delete m_ptr_franky;
+	delete m_ptr_background;
+	// TODO: delete sprites in lists.
+	delete m_scene_repository;
+	delete m_ptr_collision_detector;
 }
 
 
+
+/*
+
+	Initialize scene, load all assets.
+
+*/
 void SceneFrankysFirstSwim::on_setup() {
 	TextureCache* ptr_texture_cache = TextureCache::instance();
 	m_can_move_to_next_state = true;
@@ -53,48 +65,61 @@ void SceneFrankysFirstSwim::on_setup() {
 
 	register_for_messages(MESSAGE_TYPE_DEAD);
 	register_for_messages(MESSAGE_TYPE_SCORE);
+	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
 
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
 }
 
+
+
+/*
+
+	Get the game sprites loaded and registered.
+	
+*/
 void SceneFrankysFirstSwim::set_stage() {
 
-	for each (Sprite* sprite in m_predators) {
-		unregister_sprite(sprite);
-	}
-	for each (Sprite* sprite in m_rewards) {
-		unregister_sprite(sprite);
-	}
-	for each(Sprite* sprite in m_coins) {
+	// unregister any existing sprites from scene.
+	for each (Sprite* sprite in m_gameitems) {
 		unregister_sprite(sprite);
 	}
 	
-	m_scene_repository->reload_fish();
+	// force a reload of the scene file and sprites.
+	m_scene_repository->reload_gameitems();
 
-	m_predators = m_scene_repository->load_bad_fish();
-	m_rewards = m_scene_repository->load_rewards();
-	m_coins = m_scene_repository->load_coins();
-	
-	for each (Sprite* sprite in m_predators) {
-		register_sprite(sprite);
-	}
-	for each (Sprite* sprite in m_rewards) {
-		register_sprite(sprite);
-	}
-	for each(Sprite* sprite in m_coins) {
+	// get the reloaded sprites.
+	m_gameitems = m_scene_repository->load_gameitems();
+
+	// register the sprites with the scene.
+	for each (Sprite* sprite in m_gameitems) {
 		register_sprite(sprite);
 	}
 }
 
+
+
+/*
+
+	Beginning of the scene. Put game items in place.
+
+*/
 void SceneFrankysFirstSwim::on_begin() {
 	m_swim_timer.start(20);
 	m_ptr_franky->reset();
 	m_ptr_franky->position(FRANKY_START_X, FRANKY_START_Y);
 	m_score = 0;
 	m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
-	Graphics::instance()->animation_on(true);
+	disable_sprite_updates();
+	Graphics::instance()->animation_on(false);
 }
 
+
+
+/*
+
+	Handle keyboard input for playing on a pc.
+
+*/
 void SceneFrankysFirstSwim::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 
 	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_ESCAPE)) {
@@ -124,13 +149,15 @@ void SceneFrankysFirstSwim::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 	if (m_scene_state == SCENE_STATE_READY_PLAYER_ONE  && m_can_move_to_next_state) {
 		if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_UP)) {
 			m_scene_state = SCENE_STATE_PLAYING;
+			enable_sprite_updates();
+			Graphics::instance()->animation_on(true);
 			return;
 		}
 	}
 
 	if (m_scene_state == SCENE_STATE_PLAYING) {
 		if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_UP)) {
-			m_ptr_franky->swim();
+			m_ptr_franky->swim();			
 		}
 		else {
 			m_ptr_franky->idle();
@@ -138,9 +165,23 @@ void SceneFrankysFirstSwim::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 	}
 }
 
+
+
+/*
+
+	Mouse handling. SDL simulates mouse clicks for mobile touches.
+
+*/
 void SceneFrankysFirstSwim::on_mouse_button(uint32_t button_event_type) {
 }
 
+
+
+/*
+
+	Frame update.
+
+*/
 void SceneFrankysFirstSwim::on_update() {
 	if (m_scene_state != SCENE_STATE_PLAYING)
 		return;
@@ -154,15 +195,8 @@ void SceneFrankysFirstSwim::on_update() {
 		m_ptr_wave1->move_relative_x(CAMERA_SPEED);
 		m_ptr_wave2->move_relative_x(CAMERA_SPEED);
 		m_ptr_wave3->move_relative_x(CAMERA_SPEED);
+		m_ptr_ground->x(m_ptr_ground->x() + GROUND_SPEED);
 	}
-
-	for each (Sprite* sprite in m_predators) {
-		((PredatorSprite*)sprite)->swim();
-	}
-	for each (Sprite* sprite in m_rewards) {
-		((SwimmingSprite*)sprite)->swim();
-	}
-
 	
 	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
 		float franky_y = m_ptr_franky->position_y();
@@ -177,20 +211,25 @@ void SceneFrankysFirstSwim::on_update() {
 	
 }
 
+
+
+/*
+
+	Render the scene for current frame.
+
+*/
 void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
+
+	// render environment.
 	ptr_graphics->render(m_ptr_background);
 	ptr_graphics->render(m_ptr_wave1);
 	ptr_graphics->render(m_ptr_wave2);
 	ptr_graphics->render(m_ptr_wave3);
 	ptr_graphics->render(m_ptr_ground);
 	
-	for each (Sprite* sprite in m_predators) {
-		ptr_graphics->render(sprite);
-	}
-	for each (Sprite* sprite in m_rewards) {
-		ptr_graphics->render(sprite);
-	}
-	for each(Sprite* sprite in m_coins) {
+
+	// render all game sprites including fish, bugs
+	for each (Sprite* sprite in m_gameitems) {
 		ptr_graphics->render(sprite);
 	}
 
@@ -206,22 +245,16 @@ void SceneFrankysFirstSwim::on_end() {
 }
 
 void SceneFrankysFirstSwim::on_cleanup() {
-	delete m_ptr_franky;
-	delete m_ptr_background;
-	// TODO: delete sprites in lists.
-	delete m_scene_repository;
-	delete m_ptr_collision_detector;
 }
 
 void SceneFrankysFirstSwim::on_detect_collisions() {
 	if (!m_scene_state == SCENE_STATE_PLAYING)
 		return;
 
-	for each (Sprite* ptr_predator in m_predators)
+	for each (Sprite* ptr_sprite in m_gameitems)
 	{
-		//m_ptr_collision_detector->detect(m_ptr_franky, ptr_predator);
+		m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
 	}
-	
 }
 
 void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
@@ -229,6 +262,11 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 		m_can_move_to_next_state = false;
 		m_scene_state = SCENE_STATE_GAME_OVER;
 		Graphics::instance()->animation_on(false);
+		return;
+	}
+	if (message_type == MESSAGE_TYPE_REWARD_COLLECTED) {
+		m_gameitems.remove((Sprite*)ptr_sender);
+		return;
 	}
 }
 

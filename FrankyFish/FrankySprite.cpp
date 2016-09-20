@@ -2,11 +2,12 @@
 #include <ForwardAnimator.h>
 #include <MathUtil.h>
 #include "FishGame.h"
-#include "AwardSprite.h"
+#include "RewardSprite.h"
 
 FrankySprite::FrankySprite():
 	GameSprite("res/sprites/sprite_franky_swim_right.png", make_size(128, 128))
 {
+	this->type(SPRITE_TYPE_PLAYER);
 	this->animator(new ForwardAnimator(6, 80));
 	this->reset();
 }
@@ -91,7 +92,7 @@ bool FrankySprite::can_restart() {
 
 void FrankySprite::on_collision(Sprite* sprite) {
 	if (sprite->type() == SPRITE_TYPE_REWARD) {
-		uint32_t points = ((AwardSprite*)sprite)->points();
+		uint32_t points = ((RewardSprite*)sprite)->points();
 		Message* message = obtain_message();
 		message->set(MESSAGE_TYPE_SCORE, this, &points);
 		send_message(message);

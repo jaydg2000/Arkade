@@ -1,22 +1,23 @@
 #pragma once
-#include <Sprite.h>
 #include <Timer.h>
 #include <Random.h>
 #include <math.h>
 #include "SpriteTypes.h"
+#include "GameSprite.h"
 
 using namespace arkade;
 
 class SwimmingSprite :
-	public Sprite
+	public GameSprite
 {
 public:
 	SwimmingSprite(const char* filename, Size& frame_size);
 	~SwimmingSprite();
 
-	void							swim();
 	void							speed(float speed);
 	float							speed();
+
+	virtual void					on_update() override;
 
 
 private:
