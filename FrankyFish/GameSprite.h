@@ -10,7 +10,10 @@ public:
 	GameSprite(const char* file_name, Size& frame_size);
 	~GameSprite();
 
-private:
+protected:
+	Rect						m_collision_rect;
+
+private:	
 	uint16_t					m_direction;
 };
 

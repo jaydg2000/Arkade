@@ -8,6 +8,7 @@ namespace arkade {
 	Graphics::Graphics()
 	{
 		m_is_animating = true;
+		m_bounding_box_color = RGB(255, 0, 255);
 	}
 
 	Graphics::~Graphics()
@@ -157,6 +158,9 @@ namespace arkade {
 			SDL_FLIP_NONE
 			);
 
+		if (m_show_bounding_box)
+			render_boundingBox(sprite->collision_rect());
+
 		sprite->on_post_render();
 		if(m_is_animating)
 			sprite->animate();
@@ -232,6 +236,18 @@ namespace arkade {
 				);
 
 		} while (psz_text);
+	}
+
+	void Graphics::render_boundingBox(Rect* ptr_rect) {
+		push_pen_color(m_bounding_box_color);
+		SDL_RenderDrawRect(
+			m_ptr_renderer,
+			ptr_rect);
+		pop_pen_color();
+	}
+
+	void Graphics::visible_bounding_box(bool is_visible) {
+		m_show_bounding_box = is_visible;
 	}
 
 	uint8_t Graphics::clip(Rect* srcRect, Rect* destRect, Rect* clipRect) {

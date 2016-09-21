@@ -68,6 +68,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
 
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
+	Graphics::instance()->visible_bounding_box(true);
 }
 
 

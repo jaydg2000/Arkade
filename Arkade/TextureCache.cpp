@@ -11,6 +11,11 @@ namespace arkade {
 
 	TextureCache::~TextureCache()
 	{
+		for (std::map<const char*, Texture*>::iterator itr = m_texture_map.begin(); itr != m_texture_map.end(); itr++) {
+			delete itr->first;
+			SDL_DestroyTexture(itr->second);
+		}
+		m_texture_map.clear();
 	}
 
 	TextureCache* TextureCache::instance() {

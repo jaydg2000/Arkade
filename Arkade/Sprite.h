@@ -61,6 +61,7 @@ namespace arkade {
 		virtual Rect*			destination_rect();
 		virtual Rect*			clip_rect();
 		void					clip_rect(Rect& rect);
+		virtual Rect*			collision_rect();
 		virtual Point*			center_frame();
 		void					type(uint32_t type);
 		uint32_t				type();

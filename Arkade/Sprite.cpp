@@ -260,6 +260,10 @@ namespace arkade {
 		m_ptr_clip_rect->h = rect.h;
 	}
 
+	Rect* Sprite::collision_rect() {
+		return destination_rect();
+	}
+
 	Point* Sprite::center_frame() {
 		return &m_frame_center;
 	}
