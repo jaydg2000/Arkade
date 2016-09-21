@@ -24,8 +24,8 @@ using namespace arkade;
 #define CAMERA_NORMAL_Y_POSITION     200
 #define CAMERA_FOLLOW_THRESHOLD_TOP  450
 
-#define CAMERA_SPEED                 6.0f
-#define GROUND_SPEED				 7.5f
+#define CAMERA_SPEED                 5.0f
+#define GROUND_SPEED				 4.75f
 
 class SceneFrankysFirstSwim :
 	public Scene

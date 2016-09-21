@@ -6,8 +6,8 @@
 using namespace arkade;
 
 #define MIN_MOMENTUM            -12.0f
-#define MAX_MOMENTUM              10.0f
-#define MOMENTUM_STEP_DN         0.25f
+#define MAX_MOMENTUM              8.0f
+#define MOMENTUM_STEP_DN         0.15f
 #define MOMENTUM_AIR_STEP_DN      .35f
 
 #define MIN_Y_POSITION          100.0f
@@ -35,11 +35,13 @@ public:
 
 private:
 	float				m_momentum;	
+	float				m_rotation_increment;
 	bool				m_is_jumping;
 	bool				m_is_dead;
 
-	void				tilt_down();
-	void				tilt_up();
-	void				tilt_straight();
+	void				tilt();
+	//void				tilt_down();
+	//void				tilt_up();
+	//void				tilt_straight();
 };
 

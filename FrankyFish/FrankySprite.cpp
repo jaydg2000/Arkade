@@ -10,6 +10,7 @@ FrankySprite::FrankySprite():
 	this->type(SPRITE_TYPE_PLAYER);
 	this->animator(new ForwardAnimator(6, 80));
 	this->reset();
+	this->m_rotation_increment = -(160.0f / (MAX_MOMENTUM - MIN_MOMENTUM));
 }
 
 FrankySprite::~FrankySprite() {}
@@ -21,7 +22,8 @@ void FrankySprite::boost() {
 	}
 
 	m_momentum = MAX_MOMENTUM; 
-	tilt_up();
+	//tilt_up();
+	tilt();
 }
 
 void FrankySprite::rest() {
@@ -34,31 +36,42 @@ void FrankySprite::rest() {
 	//if (position_y() >= MAX_Y_POSITION || m_momentum > (MIN_MOMENTUM / 2.0f))
 	//	tilt_straight();
 	//else
-	tilt_down();
+	//tilt_down();
+	tilt();
 }
 
-void FrankySprite::tilt_straight() {
-	float r = rotation();
-	if (r < 0)
-		tilt_down();
-	else if(r>0)
-		tilt_up();
-}
-
-void FrankySprite::tilt_up() {
-	rotation(-25);
-}
-
-void FrankySprite::tilt_down() {
-	float r = rotation();
-	//float rotation_max = m_is_jumping ? 45 : 15;
-	float rotation_inc = m_is_jumping ? 3.0f : 1.5f;
-
-	r += rotation_inc;
-	if (r > 25)
-		r = 25;
+void FrankySprite::tilt() {
+	float r = m_momentum * m_rotation_increment;
 	rotation(r);
 }
+
+//void FrankySprite::tilt_straight() {
+//	float r = rotation();
+//	if (r < 0)
+//		tilt_down();
+//	else if(r>0)
+//		tilt_up();
+//}
+//
+//void FrankySprite::tilt_up() {
+//	float r = rotation();
+//	r -= 1.5f;
+//	if (r < 0)
+//		r = 0;
+//
+//	rotation(r);
+//}
+//
+//void FrankySprite::tilt_down() {
+//	float r = rotation();
+//	float rotation_max = m_is_jumping ? 75.0f : 25.0f;
+//	float rotation_inc = m_is_jumping ? 3.0f : 1.5f;
+//
+//	r += rotation_inc;
+//	if (r > rotation_max)
+//		r = rotation_max;
+//	rotation(r);
+//}
 
 void FrankySprite::jump() {
 	if (m_is_jumping)
@@ -78,9 +91,6 @@ void FrankySprite::on_update() {
 			m_is_jumping = false;
 		}
 	}
-	//else if (position_y() < MIN_Y_JUMP_POSITION) {
-	//	jump();
-	//}
 }
 
 bool FrankySprite::can_restart() {
@@ -94,14 +104,14 @@ void FrankySprite::on_collision(Sprite* sprite) {
 		message->set(MESSAGE_TYPE_SCORE, this, &points);
 		send_message(message);
 	}
-	if (sprite->type() == SPRITE_TYPE_PREDATOR) {
-		m_is_dead = true;
-		m_momentum = MIN_MOMENTUM*2;
-		rotation(90);
-		Message* message = obtain_message();
-		message->set(MESSAGE_TYPE_DEAD, this);
-		send_message(message);
-	}
+	//if (sprite->type() == SPRITE_TYPE_PREDATOR) {
+	//	m_is_dead = true;
+	//	m_momentum = MIN_MOMENTUM*2;
+	//	rotation(90);
+	//	Message* message = obtain_message();
+	//	message->set(MESSAGE_TYPE_DEAD, this);
+	//	send_message(message);
+	//}
 }
 
 void FrankySprite::reset() {

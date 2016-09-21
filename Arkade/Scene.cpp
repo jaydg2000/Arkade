@@ -27,7 +27,6 @@ namespace arkade {
 		setup_sprites();
 		on_begin();
 		while (!m_scene_is_ended) {
-			//SDL_PumpEvents();
 			ptr_inputManager->update();
 			on_check_input(ptr_inputManager);
 			handle_messages();

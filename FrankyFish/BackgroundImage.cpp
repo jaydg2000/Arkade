@@ -20,5 +20,5 @@ float BackgroundImage::camera_x() {
 }
 
 void BackgroundImage::camera_x(float x) {
-	this->camera_x = x;
+	this->m_camera_x = x;
 }

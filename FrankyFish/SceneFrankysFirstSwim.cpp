@@ -263,7 +263,7 @@ void SceneFrankysFirstSwim::on_detect_collisions() {
 
 	for each (Sprite* ptr_sprite in m_gameitems)
 	{
-		//m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
+		m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
 	}
 }
 

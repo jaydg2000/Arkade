@@ -30,6 +30,7 @@ namespace arkade {
 	}
 
 	void Level::add_scene(Scene* scene) {
+		scene->millis_per_frame(m_millis_per_frame);
 		m_scenes.push(scene);
 	}
 

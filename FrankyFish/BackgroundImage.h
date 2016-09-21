@@ -1,7 +1,6 @@
 #pragma once
 #include <Image.h>
 #include <ArkadeTypes.h>
-#include <Size.h>
 
 using namespace arkade;
 
