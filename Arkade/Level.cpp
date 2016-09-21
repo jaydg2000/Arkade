@@ -12,6 +12,10 @@ namespace arkade {
 	{
 	}
 
+	void Level::millis_per_frame(uint32_t millis) {
+		m_millis_per_frame = millis;
+	}
+
 	void Level::run() {
 		on_setup();
 		on_begin();

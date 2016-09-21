@@ -1,11 +1,11 @@
 #pragma once
 #include <Random.h>
-#include "GameSprite.h"
+#include "RewardSprite.h"
 
-class FlyingBugSprite : public GameSprite
+class FlyingBugSprite : public RewardSprite
 {
 public:
-	FlyingBugSprite(const char* file_name, Size& frame_size);
+	FlyingBugSprite(const char* file_name, Size& frame_size, uint32_t points);
 	~FlyingBugSprite();
 
 	virtual void					on_update() override;

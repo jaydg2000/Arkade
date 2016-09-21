@@ -14,29 +14,27 @@ FrankySprite::FrankySprite():
 
 FrankySprite::~FrankySprite() {}
 
-void FrankySprite::swim() {
+void FrankySprite::boost() {
 	if (m_is_jumping || m_is_dead) {
-		idle();
+		rest();
 		return;
 	}
 
-	m_momentum += MOMENTUM_STEP_UP;
-	if(m_momentum > MAX_MOMENTUM)
-		m_momentum = MAX_MOMENTUM;
+	m_momentum = MAX_MOMENTUM; 
 	tilt_up();
 }
 
-void FrankySprite::idle() {
+void FrankySprite::rest() {
 	if(m_is_jumping)
 		m_momentum -= MOMENTUM_AIR_STEP_DN;
 	else
 		m_momentum -= MOMENTUM_STEP_DN;
 	if(m_momentum < MIN_MOMENTUM)
 		m_momentum = MIN_MOMENTUM;
-	if (position_y() >= MAX_Y_POSITION || m_momentum > (MIN_MOMENTUM / 2.0f))
-		tilt_straight();
-	else
-		tilt_down();
+	//if (position_y() >= MAX_Y_POSITION || m_momentum > (MIN_MOMENTUM / 2.0f))
+	//	tilt_straight();
+	//else
+	tilt_down();
 }
 
 void FrankySprite::tilt_straight() {
@@ -48,11 +46,7 @@ void FrankySprite::tilt_straight() {
 }
 
 void FrankySprite::tilt_up() {
-	float r = rotation();
-	r -= 3;
-	if (r < -25)
-		r = -25;
-	rotation(r);
+	rotation(-25);
 }
 
 void FrankySprite::tilt_down() {
@@ -61,12 +55,15 @@ void FrankySprite::tilt_down() {
 	float rotation_inc = m_is_jumping ? 3.0f : 1.5f;
 
 	r += rotation_inc;
-	if (r > 15)
-		r = 15;
+	if (r > 25)
+		r = 25;
 	rotation(r);
 }
 
 void FrankySprite::jump() {
+	if (m_is_jumping)
+		return;
+
 	m_is_jumping = true;
 	rotation(-45);
 	m_momentum = 14.0f;//MAX_MOMENTUM;
@@ -81,9 +78,9 @@ void FrankySprite::on_update() {
 			m_is_jumping = false;
 		}
 	}
-	else if (position_y() < MIN_Y_JUMP_POSITION) {
-		jump();
-	}
+	//else if (position_y() < MIN_Y_JUMP_POSITION) {
+	//	jump();
+	//}
 }
 
 bool FrankySprite::can_restart() {

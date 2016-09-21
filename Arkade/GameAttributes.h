@@ -10,6 +10,7 @@ namespace arkade {
 		uint32_t width = 1366;
 		uint32_t height = 768;
 		uint32_t color_depth = 32;
+		uint32_t frame_rate = 60;
 		uint32_t audio_rate = MIX_DEFAULT_FREQUENCY;
 		uint16_t audio_format = MIX_DEFAULT_FORMAT;
 		uint32_t audio_channels = 2; 

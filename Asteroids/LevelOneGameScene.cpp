@@ -58,7 +58,7 @@ void LevelOneGameScene::on_begin()
 	m_asteroid_creation_timer.start(750);
 }
 
-void LevelOneGameScene::on_check_keyboard_input(Keyboard* ptr_keyboard)
+void LevelOneGameScene::on_check_input(InputManager* ptr_keyboard)
 {
 //ifdef _DEBUG
 //	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_F1)) {

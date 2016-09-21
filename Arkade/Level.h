@@ -14,6 +14,7 @@ namespace arkade {
 		void						run();
 		void						stop();
 		void						add_scene(Scene* scene);
+		void						millis_per_frame(uint32_t millis);
 
 	protected:
 		virtual void				on_setup();
@@ -22,6 +23,7 @@ namespace arkade {
 		virtual void				on_cleanup();
 
 	private:
+		uint32_t					m_millis_per_frame;
 		bool						m_level_is_ended;
 		queue<Scene*>				m_scenes;
 

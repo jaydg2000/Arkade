@@ -120,14 +120,14 @@ void SceneFrankysFirstSwim::on_begin() {
 	Handle keyboard input for playing on a pc.
 
 */
-void SceneFrankysFirstSwim::on_check_keyboard_input(Keyboard* ptr_keyboard) {
+void SceneFrankysFirstSwim::on_check_input(InputManager* ptr_input_manager) {
 
-	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_ESCAPE)) {
+	if (ptr_input_manager->is_key_pressed(SDL_SCANCODE_ESCAPE)) {
 		stop();
 	}
 
-	if (!m_scene_state != SCENE_STATE_PLAYING && !m_can_move_to_next_state) {
-		m_can_move_to_next_state = is_no_touch_happening(ptr_keyboard);
+	if (m_scene_state == SCENE_STATE_PLAYING && !m_can_move_to_next_state) {
+		m_can_move_to_next_state = is_no_touch_happening(ptr_input_manager);
 		if (!m_can_move_to_next_state) {
 			return;
 		}
@@ -135,7 +135,7 @@ void SceneFrankysFirstSwim::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 
 	if (m_scene_state == SCENE_STATE_GAME_OVER) {
 		if (m_ptr_franky->can_restart() && m_can_move_to_next_state) {
-			if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_UP)) {
+			if (ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP)) {
 				m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
 				set_stage();
 				on_begin();	
@@ -147,7 +147,8 @@ void SceneFrankysFirstSwim::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 	}
 
 	if (m_scene_state == SCENE_STATE_READY_PLAYER_ONE  && m_can_move_to_next_state) {
-		if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_UP)) {
+		if (ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT) ||
+			ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP)) {
 			m_scene_state = SCENE_STATE_PLAYING;
 			enable_sprite_updates();
 			Graphics::instance()->animation_on(true);
@@ -156,11 +157,20 @@ void SceneFrankysFirstSwim::on_check_keyboard_input(Keyboard* ptr_keyboard) {
 	}
 
 	if (m_scene_state == SCENE_STATE_PLAYING) {
-		if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_UP)) {
-			m_ptr_franky->swim();			
+		if (ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT) ||
+			ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP)) {
+
+			if (m_ptr_franky->position_y() < MIN_Y_JUMP_POSITION) {
+				m_ptr_franky->jump();
+			}
+			else {
+				m_ptr_franky->boost();
+			}
+			m_can_move_to_next_state = false;
+
 		}
 		else {
-			m_ptr_franky->idle();
+			m_ptr_franky->rest();
 		}
 	}
 }
@@ -184,7 +194,7 @@ void SceneFrankysFirstSwim::on_mouse_button(uint32_t button_event_type) {
 */
 void SceneFrankysFirstSwim::on_update() {
 	if (m_scene_state != SCENE_STATE_PLAYING)
-		return;
+		return;	
 
 	Camera* ptr_camera = Camera::instance();
 
@@ -253,7 +263,7 @@ void SceneFrankysFirstSwim::on_detect_collisions() {
 
 	for each (Sprite* ptr_sprite in m_gameitems)
 	{
-		m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
+		//m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
 	}
 }
 
@@ -270,6 +280,6 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 	}
 }
 
-bool SceneFrankysFirstSwim::is_no_touch_happening(Keyboard* ptr_keyboard) {
-	return !ptr_keyboard->is_key_pressed(SDL_SCANCODE_UP);
+bool SceneFrankysFirstSwim::is_no_touch_happening(InputManager* ptr_input_manager) {
+	return !ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP);
 }

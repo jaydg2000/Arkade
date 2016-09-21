@@ -4,7 +4,7 @@
 namespace arkade {
 
 	Game::Game()
-	{
+	{		
 		m_game_is_ended = false;
 		Random::seed();
 	}
@@ -30,6 +30,8 @@ namespace arkade {
 
 		if (game_attributes.hide_cursor)
 			SDL_ShowCursor(0);
+
+		m_millis_per_frame = 1000.0f / game_attributes.frame_rate;
 	}
 
 	void Game::run() {
@@ -49,6 +51,7 @@ namespace arkade {
 	}
 
 	void Game::add_level(Level* level) {
+		level->millis_per_frame(m_millis_per_frame);
 		m_levels.push(level);
 	}
 

@@ -1,7 +1,6 @@
 #pragma once
 #include <ArkadeTypes.h>
 #include <Scene.h>
-#include <Mouse.h>
 #include <SpritePool.h>
 #include <BoundingBoxCollisionDetector.h>
 #include <RandomAnimator.h>
@@ -25,7 +24,7 @@ using namespace arkade;
 #define CAMERA_NORMAL_Y_POSITION     200
 #define CAMERA_FOLLOW_THRESHOLD_TOP  450
 
-#define CAMERA_SPEED                 8.0f
+#define CAMERA_SPEED                 6.0f
 #define GROUND_SPEED				 7.5f
 
 class SceneFrankysFirstSwim :
@@ -38,7 +37,7 @@ public:
 protected:
 	virtual void					on_setup();
 	virtual void					on_begin();
-	virtual void					on_check_keyboard_input(Keyboard* keyboard);
+	virtual void					on_check_input(InputManager* keyboard);
 	virtual void					on_mouse_button(uint32_t button_event_type);
 	virtual void					on_update();
 	virtual void					on_render(Graphics* ptr_graphics);
@@ -69,6 +68,6 @@ private:
 	bool							m_can_move_to_next_state;
 
 	void							set_stage();
-	bool							is_no_touch_happening(Keyboard* ptr_keyboard);
+	bool							is_no_touch_happening(InputManager* ptr_keyboard);
 };
 

@@ -6,10 +6,9 @@
 using namespace arkade;
 
 #define MIN_MOMENTUM            -12.0f
-#define MAX_MOMENTUM              8.0f
-#define MOMENTUM_STEP_UP          1.5f
-#define MOMENTUM_STEP_DN         0.45f
-#define MOMENTUM_AIR_STEP_DN      .25f
+#define MAX_MOMENTUM              10.0f
+#define MOMENTUM_STEP_DN         0.25f
+#define MOMENTUM_AIR_STEP_DN      .35f
 
 #define MIN_Y_POSITION          100.0f
 #define MIN_Y_JUMP_POSITION     390.0f
@@ -26,8 +25,8 @@ public:
 	FrankySprite();
 	~FrankySprite();
 
-	void				swim();
-	void				idle();
+	void				boost();
+	void				rest();
 	void				jump();
 	bool				can_restart();
 	virtual void		on_update() override;

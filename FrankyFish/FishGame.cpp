@@ -10,7 +10,7 @@ FishGame::FishGame()
 {
 	GameAttributes attr;
 	attr.full_screen = false;
-	attr.hide_cursor = true;
+	attr.hide_cursor = false;
 	attr.width = FishGame::res_width;
 	attr.height = FishGame::res_height;
 

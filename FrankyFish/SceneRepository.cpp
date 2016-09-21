@@ -92,17 +92,17 @@ Sprite* SceneRepository::make_gamesprite(int type, int x, int y) {
 			sprite->animator()->current_frame(Random::rand_int(0, 11));
 			break;
 		case ITEM_BUG_1:
-			sprite = new FlyingBugSprite("res/sprites/sprite_bug_1.png", make_size(120, 95));
+			sprite = new FlyingBugSprite("res/sprites/sprite_bug_1.png", make_size(120, 95), 10);
 			sprite->animator(new ForwardAnimator(5, 50));
 			sprite->animator()->current_frame(Random::rand_int(0, 4));
 			break;
 		case ITEM_BUG_2:
-			sprite = new FlyingBugSprite("res/sprites/sprite_bug_2.png", make_size(118, 99));
+			sprite = new FlyingBugSprite("res/sprites/sprite_bug_2.png", make_size(118, 99), 50);
 			sprite->animator(new ForwardAnimator(7, 50));
 			sprite->animator()->current_frame(Random::rand_int(0, 6));
 			break;
 		case ITEM_BUG_3:
-			sprite = new FlyingBugSprite("res/sprites/sprite_bug_3.png", make_size(79, 80));
+			sprite = new FlyingBugSprite("res/sprites/sprite_bug_3.png", make_size(79, 80), 15);
 			sprite->animator(new ForwardAnimator(7, 50));
 			sprite->animator()->current_frame(Random::rand_int(0, 6));
 			break;
