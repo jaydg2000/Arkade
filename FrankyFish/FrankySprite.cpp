@@ -10,7 +10,7 @@ FrankySprite::FrankySprite():
 	this->type(SPRITE_TYPE_PLAYER);
 	this->animator(new ForwardAnimator(6, 80));
 	this->reset();
-	this->m_rotation_increment = -(160.0f / (MAX_MOMENTUM - MIN_MOMENTUM));
+	this->m_rotation_increment = -(140.0f / (MAX_MOMENTUM - MIN_MOMENTUM));
 }
 
 FrankySprite::~FrankySprite() {
@@ -105,22 +105,22 @@ void FrankySprite::on_collision(Sprite* sprite) {
 		message->set(MESSAGE_TYPE_SCORE, this, &points);
 		send_message(message);
 	}
-	//if (sprite->type() == SPRITE_TYPE_PREDATOR) {
-	//	m_is_dead = true;
-	//	m_momentum = MIN_MOMENTUM*2;
-	//	rotation(90);
-	//	Message* message = obtain_message();
-	//	message->set(MESSAGE_TYPE_DEAD, this);
-	//	send_message(message);
-	//}
+	if (sprite->type() == SPRITE_TYPE_PREDATOR) {
+		m_is_dead = true;
+		m_momentum = MIN_MOMENTUM*2;
+		rotation(90);
+		Message* message = obtain_message();
+		message->set(MESSAGE_TYPE_DEAD, this);
+		send_message(message);
+	}
 }
 
 Rect* FrankySprite::collision_rect() {
 	Rect* ptr_rect = destination_rect();
-	m_collision_rect.x = ptr_rect->x + 5;
-	m_collision_rect.y = ptr_rect->y + 5;
-	m_collision_rect.w = ptr_rect->w - 10;
-	m_collision_rect.h = ptr_rect->h - 10;
+	m_collision_rect.x = ptr_rect->x + 15;
+	m_collision_rect.y = ptr_rect->y + 25;
+	m_collision_rect.w = ptr_rect->w - 50;
+	m_collision_rect.h = ptr_rect->h - 50;
 
 	return &m_collision_rect;
 }

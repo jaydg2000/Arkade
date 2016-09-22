@@ -62,14 +62,12 @@ Sprite* SceneRepository::make_gamesprite(int type, int x, int y) {
 
 	switch (type) {
 		case ITEM_SHARK:
-			sprite = new PredatorSprite("res/sprites/sprite_shark.png", make_size(406,227));
-			sprite->animator(new ForwardAnimator(6, 80));
-			sprite->animator()->current_frame(Random::rand_int(0,5));
+			sprite = new SharkSprite();
 			break;
 		case ITEM_TOOTHY_FISH_1:
-			sprite = new PredatorSprite("res/sprites/sprite_toothy_fish_1.png", make_size(75, 52));
-			sprite->animator(new ForwardAnimator(16, 90));
-			sprite->animator()->current_frame(Random::rand_int(0, 15));
+			sprite = new PredatorSprite("res/sprites/sprite_toothy_fish_1.png", make_size(262, 182));
+			sprite->animator(new ForwardAnimator(8, 90));
+			sprite->animator()->current_frame(Random::rand_int(0, 7));
 			break;
 		case ITEM_TOOTHY_FISH_2:
 			sprite = new PredatorSprite("res/sprites/sprite_toothy_fish_2.png", make_size(79, 68));

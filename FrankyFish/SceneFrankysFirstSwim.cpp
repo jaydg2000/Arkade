@@ -31,7 +31,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	m_scene_state = SCENE_STATE_NOT_READY;	
 	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0,0,0));
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/sprite_toothy_fish_1.png", RGB(255, 255, 255));
+	//ptr_texture_cache->push("res/sprites/sprite_toothy_fish_1.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255,255,255));
 	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));

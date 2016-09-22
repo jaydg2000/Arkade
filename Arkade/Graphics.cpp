@@ -158,8 +158,13 @@ namespace arkade {
 			SDL_FLIP_NONE
 			);
 
-		if (m_show_bounding_box)
-			render_boundingBox(sprite->collision_rect());
+		if (m_show_bounding_box) {
+			Rect* bounding_rect = sprite->collision_rect();
+			if (!sprite->use_screen_positioning()) {
+				m_ptr_camera->to_screen(bounding_rect, bounding_rect->x, bounding_rect->y);
+			}
+			render_boundingBox(bounding_rect);
+		}
 
 		sprite->on_post_render();
 		if(m_is_animating)

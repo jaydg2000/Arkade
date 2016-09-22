@@ -4,6 +4,7 @@
 #include <Sprite.h>
 #include <ForwardAnimator.h>
 #include "PredatorSprite.h"
+#include "SharkSprite.h"
 #include "CoinSprite.h"
 #include "FlyingBugSprite.h"
 
