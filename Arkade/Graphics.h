@@ -21,6 +21,7 @@ namespace arkade
 
 		static Graphics*						instance();
 		uint8_t									initialize(bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, const char* psz_caption);
+		uint8_t									initialize(bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, uint32_t logical_width, uint32_t logical_height, const char* psz_caption);
 		void									uninitialize();
 		void									pen_color(RGB rgb);
 		RGB										pen_color();

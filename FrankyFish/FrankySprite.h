@@ -31,7 +31,6 @@ public:
 	bool				can_restart();
 	virtual void		on_update() override;
 	virtual void		on_collision(Sprite* sprite) override;
-	virtual Rect*		collision_rect();
 	void				reset();
 
 private:
@@ -41,8 +40,5 @@ private:
 	bool				m_is_dead;
 
 	void				tilt();
-	//void				tilt_down();
-	//void				tilt_up();
-	//void				tilt_straight();
 };
 

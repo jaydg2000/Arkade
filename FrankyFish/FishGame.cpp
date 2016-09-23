@@ -2,8 +2,8 @@
 #include <Random.h>
 #include "Geometry.h"
 
-int32_t FishGame::res_width = SCREEN_WIDTH;
-int32_t FishGame::res_height = SCREEN_HEIGHT;
+int32_t FishGame::res_width = WINDOW_WIDTH;
+int32_t FishGame::res_height = WINDOW_HEIGHT;
 
 
 FishGame::FishGame()
@@ -11,8 +11,12 @@ FishGame::FishGame()
 	GameAttributes attr;
 	attr.full_screen = false;
 	attr.hide_cursor = false;
-	attr.width = FishGame::res_width;
-	attr.height = FishGame::res_height;
+	attr.width = WINDOW_WIDTH;
+	attr.height = WINDOW_HEIGHT;
+	
+	attr.use_logical_scale = true;
+	attr.logical_width = LOGICAL_WIDTH;
+	attr.logical_height = LOGICAL_HEIGHT;
 
 	initialize(attr);
 	Random::seed();

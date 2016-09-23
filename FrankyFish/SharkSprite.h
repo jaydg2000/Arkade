@@ -8,7 +8,5 @@ class SharkSprite : public SwimmingSprite
 public:
 	SharkSprite();
 	~SharkSprite();
-
-	virtual Rect*		collision_rect();
 };
 

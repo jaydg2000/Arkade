@@ -68,6 +68,14 @@ namespace arkade {
 		return 0;
 	}
 
+	uint8_t Graphics::initialize(bool full_screen, uint32_t width, uint32_t height, uint32_t color_depth, uint32_t logical_width, uint32_t logical_height, const char* psz_caption) {
+		uint8_t rcode = initialize(full_screen, width, height, color_depth, psz_caption);
+		if (rcode != 0)
+			return rcode;
+
+		return SDL_RenderSetLogicalSize(m_ptr_renderer, logical_width, logical_height);
+	}
+
 	void Graphics::uninitialize() {
 		SDL_DestroyWindow(m_ptr_window);
 		SDL_DestroyRenderer(m_ptr_renderer);

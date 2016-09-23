@@ -3,10 +3,15 @@
 #include <list>
 #include <Sprite.h>
 #include <ForwardAnimator.h>
-#include "PredatorSprite.h"
 #include "SharkSprite.h"
+#include "ToothyFishOneSprite.h"
+#include "ToothyFishTwoSprite.h"
+#include "ToothyFishThreeSprite.h"
+#include "BirdSprite.h"
 #include "CoinSprite.h"
-#include "FlyingBugSprite.h"
+#include "BugOneSprite.h"
+#include "BugTwoSprite.h"
+#include "BugThreeSprite.h"
 
 using namespace arkade;
 
@@ -28,13 +33,13 @@ public:
 	~SceneRepository();
 
 	list<Sprite*>			load_gameitems();
-	void					reload_gameitems();
 
 private:
 	const char*				m_psz_filename;
 	list<Sprite*>			m_list_gamesprites;
 
-	void					read_file(const char* filename);
+	void					read_file();
+	void					clear_gameitems();
 	Sprite*					make_gamesprite(int type, int x, int y);
 };
 

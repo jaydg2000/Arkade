@@ -15,12 +15,25 @@ namespace arkade {
 
 	void Game::initialize(GameAttributes & game_attributes)
 	{
-		Graphics::instance()->initialize(
-			game_attributes.full_screen,
-			game_attributes.width,
-			game_attributes.height,
-			game_attributes.color_depth,
-			game_attributes.psz_caption);
+
+		if (game_attributes.use_logical_scale) {
+			Graphics::instance()->initialize(
+				game_attributes.full_screen,
+				game_attributes.width,
+				game_attributes.height,
+				game_attributes.color_depth,
+				game_attributes.logical_width,
+				game_attributes.logical_height,
+				game_attributes.psz_caption);
+		}
+		else {
+			Graphics::instance()->initialize(
+				game_attributes.full_screen,
+				game_attributes.width,
+				game_attributes.height,
+				game_attributes.color_depth,
+				game_attributes.psz_caption);
+		}
 
 		Audio::instance()->initialize(
 			game_attributes.audio_rate,

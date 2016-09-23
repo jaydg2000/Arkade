@@ -7,6 +7,7 @@ SwimmingSprite::SwimmingSprite(const char* filename, Size& frame_size)
 {
 	m_speed = 1.5f;// Random::rand_float(1.0f, 1.25f);
 	m_y_sine_amplitude = Random::rand_float(0.55f, 2.55f);
+	m_x_sine = Random::rand_float(.05f, 50.0f);
 	m_swim_timer.start(20);
 }
 
@@ -31,8 +32,9 @@ float SwimmingSprite::speed() {
 }
 
 void SwimmingSprite::wobble_y() {
-	float x = Camera::instance()->position_x();
-	float y = m_y_sine_amplitude * sin(x * M_PI / 180);
+	//float x = Camera::instance()->position_x();
+	float y = m_y_sine_amplitude * sin(m_x_sine * M_PI / 180);
+	m_x_sine += m_speed;
 	move_relative_y(y);
 }
 

@@ -27,6 +27,9 @@ using namespace arkade;
 #define CAMERA_SPEED                 7.0f
 #define GROUND_SPEED				 4.75f
 
+#define GROUND_START_X				 0.0f
+#define GROUND_START_Y				 1344.0f
+
 class SceneFrankysFirstSwim :
 	public Scene
 {
@@ -38,7 +41,6 @@ protected:
 	virtual void					on_setup();
 	virtual void					on_begin();
 	virtual void					on_check_input(InputManager* keyboard);
-	virtual void					on_mouse_button(uint32_t button_event_type);
 	virtual void					on_update();
 	virtual void					on_render(Graphics* ptr_graphics);
 	virtual void					on_end();
@@ -65,9 +67,12 @@ private:
 
 	uint32_t						m_scene_state;
 	uint32_t						m_score;
-	bool							m_can_move_to_next_state;
+	bool							m_is_play_enabled;
 
 	void							set_stage();
 	bool							is_no_touch_happening(InputManager* ptr_keyboard);
+	void							handle_player_ready_input(bool is_up_pressed);
+	void							handle_playing_input(bool is_up_pressed);
+	void							handle_game_over_input(bool is_up_pressed);
 };
 

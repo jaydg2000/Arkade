@@ -11,6 +11,7 @@ FrankySprite::FrankySprite():
 	this->animator(new ForwardAnimator(6, 80));
 	this->reset();
 	this->m_rotation_increment = -(140.0f / (MAX_MOMENTUM - MIN_MOMENTUM));
+	this->collision_dim(15, 25, 78, 78);
 }
 
 FrankySprite::~FrankySprite() {
@@ -23,7 +24,6 @@ void FrankySprite::boost() {
 	}
 
 	m_momentum = MAX_MOMENTUM; 
-	//tilt_up();
 	tilt();
 }
 
@@ -34,10 +34,7 @@ void FrankySprite::rest() {
 		m_momentum -= MOMENTUM_STEP_DN;
 	if(m_momentum < MIN_MOMENTUM)
 		m_momentum = MIN_MOMENTUM;
-	//if (position_y() >= MAX_Y_POSITION || m_momentum > (MIN_MOMENTUM / 2.0f))
-	//	tilt_straight();
-	//else
-	//tilt_down();
+
 	tilt();
 }
 
@@ -45,34 +42,6 @@ void FrankySprite::tilt() {
 	float r = m_momentum * m_rotation_increment;
 	rotation(r);
 }
-
-//void FrankySprite::tilt_straight() {
-//	float r = rotation();
-//	if (r < 0)
-//		tilt_down();
-//	else if(r>0)
-//		tilt_up();
-//}
-//
-//void FrankySprite::tilt_up() {
-//	float r = rotation();
-//	r -= 1.5f;
-//	if (r < 0)
-//		r = 0;
-//
-//	rotation(r);
-//}
-//
-//void FrankySprite::tilt_down() {
-//	float r = rotation();
-//	float rotation_max = m_is_jumping ? 75.0f : 25.0f;
-//	float rotation_inc = m_is_jumping ? 3.0f : 1.5f;
-//
-//	r += rotation_inc;
-//	if (r > rotation_max)
-//		r = rotation_max;
-//	rotation(r);
-//}
 
 void FrankySprite::jump() {
 	if (m_is_jumping)
@@ -95,10 +64,14 @@ void FrankySprite::on_update() {
 }
 
 bool FrankySprite::can_restart() {
-	return m_is_dead && position_y() == MAX_Y_POSITION;
+	return m_is_dead && position_y() >= MAX_Y_POSITION;
 }
 
 void FrankySprite::on_collision(Sprite* sprite) {
+
+	if (m_is_dead)
+		return;
+
 	if (sprite->type() == SPRITE_TYPE_REWARD) {
 		uint32_t points = ((RewardSprite*)sprite)->points();
 		Message* message = obtain_message();
@@ -115,18 +88,7 @@ void FrankySprite::on_collision(Sprite* sprite) {
 	}
 }
 
-Rect* FrankySprite::collision_rect() {
-	Rect* ptr_rect = destination_rect();
-	m_collision_rect.x = ptr_rect->x + 15;
-	m_collision_rect.y = ptr_rect->y + 25;
-	m_collision_rect.w = ptr_rect->w - 50;
-	m_collision_rect.h = ptr_rect->h - 50;
-
-	return &m_collision_rect;
-}
-
 void FrankySprite::reset() {
-	m_is_dead = false;
 	this->rotation(0);
 	this->m_momentum = 0.0f;
 	this->m_is_jumping = false;

@@ -7,6 +7,9 @@ namespace arkade {
 	struct GameAttributes {
 		bool full_screen = true;
 		bool hide_cursor = true;
+		bool use_logical_scale = false;
+		uint32_t logical_width = 0;
+		uint32_t logical_height = 0;
 		uint32_t width = 1366;
 		uint32_t height = 768;
 		uint32_t color_depth = 32;

@@ -19,11 +19,11 @@ public:
 
 	virtual void					on_update() override;
 
-
 private:
 	Timer							m_swim_timer;
 	float							m_speed;
 	float							m_y_sine_amplitude;
+	float							m_x_sine;
 	
 	void							wobble_y();
 

@@ -27,11 +27,10 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 */
 void SceneFrankysFirstSwim::on_setup() {
 	TextureCache* ptr_texture_cache = TextureCache::instance();
-	m_can_move_to_next_state = true;
+	m_is_play_enabled = true;
 	m_scene_state = SCENE_STATE_NOT_READY;	
 	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0,0,0));
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
-	//ptr_texture_cache->push("res/sprites/sprite_toothy_fish_1.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255,255,255));
 	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
@@ -39,8 +38,8 @@ void SceneFrankysFirstSwim::on_setup() {
 	set_stage();
 	
 	m_ptr_ground = new Image("res/sprites/sprite_ground.png", make_size(1536,137));
-	m_ptr_ground->x(0);
-	m_ptr_ground->y(1344);
+	m_ptr_ground->x(GROUND_START_X);
+	m_ptr_ground->y(GROUND_START_Y);
 
 	m_ptr_franky = new FrankySprite();	
 
@@ -57,8 +56,7 @@ void SceneFrankysFirstSwim::on_setup() {
 
 	m_ptr_background = new Image("res/sprites/background.png", make_size(720,1480), 0.0f, 0.0f);
 	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y-125);
-
-	register_sprite(m_ptr_franky);
+		
 	register_sprite(m_ptr_wave1);
 	register_sprite(m_ptr_wave2);
 	register_sprite(m_ptr_wave3);
@@ -85,9 +83,6 @@ void SceneFrankysFirstSwim::set_stage() {
 		unregister_sprite(sprite);
 	}
 	
-	// force a reload of the scene file and sprites.
-	m_scene_repository->reload_gameitems();
-
 	// get the reloaded sprites.
 	m_gameitems = m_scene_repository->load_gameitems();
 
@@ -112,6 +107,14 @@ void SceneFrankysFirstSwim::on_begin() {
 	m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
 	disable_sprite_updates();
 	Graphics::instance()->animation_on(false);
+	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
+	m_ptr_background->x(0.0f);
+	m_ptr_background->y(0.0f);
+	m_ptr_ground->x(GROUND_START_X);
+	m_ptr_ground->y(GROUND_START_Y);
+	m_ptr_wave1->position(0, WAVE_SPRITE_Y_POSITION);
+	m_ptr_wave2->position(255, WAVE_SPRITE_Y_POSITION);
+	m_ptr_wave3->position(510, WAVE_SPRITE_Y_POSITION);
 }
 
 
@@ -123,69 +126,77 @@ void SceneFrankysFirstSwim::on_begin() {
 */
 void SceneFrankysFirstSwim::on_check_input(InputManager* ptr_input_manager) {
 
-	if (ptr_input_manager->is_key_pressed(SDL_SCANCODE_ESCAPE)) {
+	bool is_escape_pressed = ptr_input_manager->is_key_pressed(SDL_SCANCODE_ESCAPE);
+	bool is_up_pressed = ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT) ||
+		ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP);
+	bool is_no_input_happening = is_no_touch_happening(ptr_input_manager);
+
+	// if escape key is pressed, exit immediately.
+	if (is_escape_pressed) {
 		stop();
 	}
 
-	if (m_scene_state == SCENE_STATE_PLAYING && !m_can_move_to_next_state) {
-		m_can_move_to_next_state = is_no_touch_happening(ptr_input_manager);
-		if (!m_can_move_to_next_state) {
-			return;
-		}
+	switch (m_scene_state) {
+		case SCENE_STATE_PLAYING:
+			handle_playing_input(is_up_pressed);
+			break;
+
+		case SCENE_STATE_GAME_OVER:
+			handle_game_over_input(is_up_pressed);
+			break;
+
+		case SCENE_STATE_READY_PLAYER_ONE:
+			handle_player_ready_input(is_up_pressed);
+			break;
 	}
+}
 
-	if (m_scene_state == SCENE_STATE_GAME_OVER) {
-		if (m_ptr_franky->can_restart() && m_can_move_to_next_state) {
-			if (ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP)) {
-				m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
-				set_stage();
-				on_begin();	
-				m_ptr_franky->reset();
-				m_can_move_to_next_state = false;
-				return;
-			}
-		}
+
+
+void SceneFrankysFirstSwim::handle_player_ready_input(bool is_up_pressed) {
+	if (is_up_pressed) {
+		m_scene_state = SCENE_STATE_PLAYING;
+		enable_sprite_updates();
+		Graphics::instance()->animation_on(true);
+		return;
 	}
+}
 
-	if (m_scene_state == SCENE_STATE_READY_PLAYER_ONE  && m_can_move_to_next_state) {
-		if (ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT) ||
-			ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP)) {
-			m_scene_state = SCENE_STATE_PLAYING;
-			enable_sprite_updates();
-			Graphics::instance()->animation_on(true);
-			return;
-		}
-	}
 
-	if (m_scene_state == SCENE_STATE_PLAYING) {
-		if (ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT) ||
-			ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP)) {
-
+void SceneFrankysFirstSwim::handle_playing_input(bool is_up_pressed) {
+	
+	if (is_up_pressed) {
+		if (m_is_play_enabled) {
 			if (m_ptr_franky->position_y() < MIN_Y_JUMP_POSITION) {
 				m_ptr_franky->jump();
 			}
 			else {
 				m_ptr_franky->boost();
 			}
-			m_can_move_to_next_state = false;
-
+			m_is_play_enabled = false;
 		}
 		else {
 			m_ptr_franky->rest();
 		}
+	} else {
+		m_is_play_enabled = true;
+		m_ptr_franky->rest();
 	}
 }
 
 
-
-/*
-
-	Mouse handling. SDL simulates mouse clicks for mobile touches.
-
-*/
-void SceneFrankysFirstSwim::on_mouse_button(uint32_t button_event_type) {
+void SceneFrankysFirstSwim::handle_game_over_input(bool is_up_pressed) {
+	if (m_ptr_franky->can_restart()) {
+		if (is_up_pressed) {
+			m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
+			set_stage();
+			on_begin();
+			m_ptr_franky->reset();
+			m_is_play_enabled = true;
+			return;
+		}
+	}
 }
-
 
 
 /*
@@ -194,6 +205,9 @@ void SceneFrankysFirstSwim::on_mouse_button(uint32_t button_event_type) {
 
 */
 void SceneFrankysFirstSwim::on_update() {
+
+	m_ptr_franky->on_update();
+
 	if (m_scene_state != SCENE_STATE_PLAYING)
 		return;	
 
@@ -270,9 +284,10 @@ void SceneFrankysFirstSwim::on_detect_collisions() {
 
 void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
 	if (message_type == MESSAGE_TYPE_DEAD) {
-		m_can_move_to_next_state = false;
+		m_is_play_enabled = false;
 		m_scene_state = SCENE_STATE_GAME_OVER;
 		Graphics::instance()->animation_on(false);
+		disable_sprite_updates();
 		return;
 	}
 	if (message_type == MESSAGE_TYPE_REWARD_COLLECTED) {
