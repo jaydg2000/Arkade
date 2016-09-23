@@ -91,18 +91,6 @@ namespace arkade {
 		m_is_updating_sprites = true;
 	}
 
-	//void Scene::check_mouse_input() {
-	//	SDL_Event event;
-	//	while (SDL_PollEvent(&event)) {
-	//		if (event.type == SDL_MOUSEBUTTONDOWN) {
-	//			if (event.button.button == SDL_BUTTON_LMASK) {
-	//			} 
-	//			else if (event.button.button == SDL_BUTTON_RMASK) {
-	//			}
-	//		}
-	//	}
-	//}
-
 	void Scene::on_detect_collisions() {				
 	}
 

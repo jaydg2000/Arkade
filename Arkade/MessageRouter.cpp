@@ -13,6 +13,7 @@ namespace arkade {
 
 	MessageRouter::~MessageRouter()
 	{
+		m_sink_map.clear();
 	}
 
 	MessageRouter* MessageRouter::instance() {
@@ -26,6 +27,17 @@ namespace arkade {
 	void MessageRouter::register_sink(uint32_t message_type, MessageSink* ptr_sink) {
 		list<MessageSink*>* sink_list = get_or_add_message_type_list(message_type);
 		sink_list->push_back(ptr_sink);
+	}
+
+	void MessageRouter::unregister_sink(uint32_t message_type, MessageSink* ptr_sink) {
+		list<MessageSink*>* ptr_sinks = get_message_type_list(message_type);
+		if (!ptr_sinks)
+			return;
+		for (MessageSink* sink : *ptr_sinks) {
+			if (sink == ptr_sink) {
+				ptr_sinks->remove(ptr_sink);
+			}
+		}
 	}
 
 	void MessageRouter::broadcast(Message* ptr_message) {

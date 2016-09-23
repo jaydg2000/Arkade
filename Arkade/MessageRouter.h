@@ -15,6 +15,7 @@ namespace arkade {
 
 		static MessageRouter*						instance();
 		void										register_sink(uint32_t message_type, MessageSink* ptr_sink);
+		void										unregister_sink(uint32_t message_type, MessageSink* ptr_sink);
 		void										broadcast(Message* ptr_message);
 
 	private:

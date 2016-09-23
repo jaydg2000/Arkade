@@ -47,6 +47,7 @@ void SceneRepository::clear_gameitems() {
 		m_list_gamesprites.pop_front();
 		delete sprite;
 	}
+	m_list_gamesprites.clear();
 }
 
 list<Sprite*> SceneRepository::load_gameitems() {

@@ -191,7 +191,6 @@ void SceneFrankysFirstSwim::handle_game_over_input(bool is_up_pressed) {
 			m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
 			set_stage();
 			on_begin();
-			m_ptr_franky->reset();
 			m_is_play_enabled = true;
 			return;
 		}
@@ -291,7 +290,10 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 		return;
 	}
 	if (message_type == MESSAGE_TYPE_REWARD_COLLECTED) {
-		m_gameitems.remove((Sprite*)ptr_sender);
+		Sprite* sprite = (Sprite*)ptr_sender;
+		m_gameitems.remove(sprite);
+		unregister_sprite(sprite);
+		delete sprite;
 		return;
 	}
 }
