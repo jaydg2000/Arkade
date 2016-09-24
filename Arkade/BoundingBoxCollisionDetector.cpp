@@ -13,6 +13,9 @@ namespace arkade {
 	}
 
 	void BoundingBoxCollisionDetector::detect(Sprite* s1, Sprite* s2) {
+		if (!s1->is_visible() || !s2->is_visible())
+			return;
+
 		Rect* r1 = s1->collision_rect();
 		Rect* r2 = s2->collision_rect();
 		if (SDL_HasIntersection(r1, r2) == SDL_TRUE) {

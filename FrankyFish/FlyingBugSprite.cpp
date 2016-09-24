@@ -15,5 +15,5 @@ FlyingBugSprite::~FlyingBugSprite()
 
 void FlyingBugSprite::on_update()
 {
-	this->move_relative_x(-m_speed);
+	//this->move_relative_x(-m_speed);
 }

@@ -8,6 +8,7 @@ ToothyFishThreeSprite::ToothyFishThreeSprite()
 	animator(new ForwardAnimator(7, 100));
 	animator()->current_frame(Random::rand_int(0, 6));
 	type(SPRITE_TYPE_PREDATOR);
+	collision_dim(0, 10, 80, 50);
 }
 
 

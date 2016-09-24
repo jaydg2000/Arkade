@@ -24,11 +24,12 @@ using namespace arkade;
 #define CAMERA_NORMAL_Y_POSITION     200
 #define CAMERA_FOLLOW_THRESHOLD_TOP  450
 
-#define CAMERA_SPEED                 7.0f
-#define GROUND_SPEED				 4.75f
+#define CAMERA_SPEED                 8.0f
+#define GROUND_SPEED				 6.75f
 
 #define GROUND_START_X				 0.0f
 #define GROUND_START_Y				 1344.0f
+#define GROUND_SIZE_X				 1536.0f
 
 class SceneFrankysFirstSwim :
 	public Scene
@@ -53,12 +54,14 @@ private:
 	CollisionDetector*				m_ptr_collision_detector;
 	SceneRepository*				m_scene_repository;
 	FrankySprite*					m_ptr_franky;
-	Image*							m_ptr_ground;
 	Sprite*							m_ptr_wave1;
 	Sprite*							m_ptr_wave2;
 	Sprite*							m_ptr_wave3;
+	Image*							m_ptr_ground;
+	Image*							m_ptr_ground2;
 	Image*							m_ptr_background;
 	Image*							m_ptr_ready;
+	Image*							m_ptr_numbers;
 
 	list<Sprite*>					m_gameitems;
 	list<Sprite*>					m_clouds;

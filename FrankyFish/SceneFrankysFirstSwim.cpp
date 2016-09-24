@@ -34,12 +34,12 @@ void SceneFrankysFirstSwim::on_setup() {
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255,255,255));
 	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
 	m_scene_repository = new SceneRepository("res/scene/scene1.fsh");
 	set_stage();
 	
 	m_ptr_ground = new Image("res/sprites/sprite_ground.png", make_size(1536,137));
-	m_ptr_ground->x(GROUND_START_X);
-	m_ptr_ground->y(GROUND_START_Y);
+	m_ptr_ground2 = new Image("res/sprites/sprite_ground.png", make_size(1536, 137));
 
 	m_ptr_franky = new FrankySprite();	
 
@@ -56,6 +56,7 @@ void SceneFrankysFirstSwim::on_setup() {
 
 	m_ptr_background = new Image("res/sprites/background.png", make_size(720,1480), 0.0f, 0.0f);
 	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y-125);
+	m_ptr_numbers = new Image("res/sprites/numbers.png", make_size(300, 48));
 		
 	register_sprite(m_ptr_wave1);
 	register_sprite(m_ptr_wave2);
@@ -66,7 +67,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
 
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
-	Graphics::instance()->visible_bounding_box(true);
+	Graphics::instance()->visible_bounding_box(false);
 }
 
 
@@ -115,6 +116,12 @@ void SceneFrankysFirstSwim::on_begin() {
 	m_ptr_wave1->position(0, WAVE_SPRITE_Y_POSITION);
 	m_ptr_wave2->position(255, WAVE_SPRITE_Y_POSITION);
 	m_ptr_wave3->position(510, WAVE_SPRITE_Y_POSITION);
+
+	m_ptr_ground->x(GROUND_START_X);
+	m_ptr_ground->y(GROUND_START_Y);
+	m_ptr_ground2->x(GROUND_START_X + GROUND_SIZE_X);
+	m_ptr_ground2->y(GROUND_START_Y);
+
 }
 
 
@@ -220,6 +227,12 @@ void SceneFrankysFirstSwim::on_update() {
 		m_ptr_wave2->move_relative_x(CAMERA_SPEED);
 		m_ptr_wave3->move_relative_x(CAMERA_SPEED);
 		m_ptr_ground->x(m_ptr_ground->x() + GROUND_SPEED);
+		m_ptr_ground2->x(m_ptr_ground2->x() + GROUND_SPEED);
+
+		if (m_ptr_ground->x() < ptr_camera->position_x() - GROUND_SIZE_X)
+			m_ptr_ground->x(m_ptr_ground2->x() + GROUND_SIZE_X);
+		if (m_ptr_ground2->x() < ptr_camera->position_x() - GROUND_SIZE_X)
+			m_ptr_ground2->x(m_ptr_ground->x() + GROUND_SIZE_X);
 	}
 	
 	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
@@ -250,7 +263,8 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 	ptr_graphics->render(m_ptr_wave2);
 	ptr_graphics->render(m_ptr_wave3);
 	ptr_graphics->render(m_ptr_ground);
-	
+	ptr_graphics->render(m_ptr_ground2);
+
 
 	// render all game sprites including fish, bugs
 	for each (Sprite* sprite in m_gameitems) {
@@ -262,6 +276,8 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 	if (m_scene_state == SCENE_STATE_READY_PLAYER_ONE) {
 		ptr_graphics->render(m_ptr_ready);
 	}
+
+	ptr_graphics->render(m_score, m_ptr_numbers, 30, 4, 500.0f, 10.0f);
 }
 
 void SceneFrankysFirstSwim::on_end() {
@@ -289,11 +305,12 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 		disable_sprite_updates();
 		return;
 	}
-	if (message_type == MESSAGE_TYPE_REWARD_COLLECTED) {
-		Sprite* sprite = (Sprite*)ptr_sender;
+	if (message_type == MESSAGE_TYPE_REWARD_COLLECTED && m_is_play_enabled) {
+		RewardSprite* sprite = (RewardSprite*)ptr_sender;		
 		m_gameitems.remove(sprite);
+		sprite->is_visible(false);
 		unregister_sprite(sprite);
-		delete sprite;
+		m_score += sprite->points();
 		return;
 	}
 }

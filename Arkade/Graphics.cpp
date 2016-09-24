@@ -7,6 +7,7 @@ namespace arkade {
 
 	Graphics::Graphics()
 	{
+		m_show_bounding_box = false;
 		m_is_animating = true;
 		m_bounding_box_color = RGB(255, 0, 255);
 	}
@@ -249,6 +250,43 @@ namespace arkade {
 				);
 
 		} while (psz_text);
+	}
+
+	void Graphics::render(uint32_t nbr, Image* digit_source, uint8_t digit_width, uint8_t desired_places, float x, float y, uint8_t padding) {
+		char* nbr_str;
+		nbr_str = new char[desired_places];
+		Rect source_rect;
+		Rect destination_rect;
+		Texture* ptr_texture = digit_source->texture();
+
+		source_rect.y = 0;
+		source_rect.w = digit_width;
+		source_rect.h = digit_source->source_rect()->h;
+
+		destination_rect.y = y;
+		destination_rect.w = digit_width;
+		destination_rect.h = digit_source->source_rect()->h;
+
+		SDL_uitoa(nbr, nbr_str, 10);
+		for (int p = 0; p < desired_places; p++) {
+			char c = nbr_str[p];
+			int pos = c - 48;
+			float screen_x = x + (p * digit_width);
+			source_rect.x = pos * digit_width;
+			destination_rect.x = screen_x;
+			
+			SDL_RenderCopyEx(
+				m_ptr_renderer,
+				ptr_texture,
+				&source_rect,
+				&destination_rect,
+				0,
+				NULL,
+				SDL_FLIP_NONE
+			);
+		}
+
+		delete nbr_str;
 	}
 
 	void Graphics::render_boundingBox(Rect* ptr_rect) {
