@@ -28,6 +28,7 @@ namespace arkade
 		SDL_Texture*							load_texture(const std::string& path, RGB back_color = RGB(0xFF, 0x00, 0xFF)) const;
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
+		void									render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation);
 		void									render(Sprite* ptr_sprite);
 		void									render(SpritePool* ptr_sprite_pool);
 		void									render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font);
@@ -51,13 +52,12 @@ namespace arkade
 		uint32_t								m_window_height;
 		uint32_t								m_color_depth;
 		bool									m_full_screen;
-
 		bool									m_show_bounding_box;
 		bool									m_is_animating;
 		RGB										m_bounding_box_color;
 		RGB										m_stored_pen_color;
 		RGB										m_background_color;
-
+		Rect									m_destination_rect;
 		uint8_t									clip(Rect* srcRect, Rect* destRect, Rect* clipRect);
 		void									render_boundingBox(Rect* ptr_rect);
 

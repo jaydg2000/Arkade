@@ -134,6 +134,22 @@ namespace arkade {
 		m_is_animating = should_animate;
 	}
 
+	void Graphics::render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation) {
+		m_destination_rect.w = src_rect->w;
+		m_destination_rect.h = src_rect->h;
+		m_ptr_camera->to_screen(&m_destination_rect, coordinate_x, coordinate_y);
+		
+		SDL_RenderCopyEx(
+			m_ptr_renderer,
+			ptr_texture,
+			src_rect,
+			&m_destination_rect,
+			rotation,
+			NULL,
+			flip
+		);
+	}
+
 	void Graphics::render(Sprite* sprite) {
 		if (!sprite->is_visible())
 			return;
@@ -164,7 +180,7 @@ namespace arkade {
 			dest_rect,
 			rotation,
 			NULL,
-			SDL_FLIP_NONE
+			sprite->flip()
 			);
 
 		if (m_show_bounding_box) {

@@ -36,6 +36,12 @@ void SceneFrankysFirstSwim::on_setup() {
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
 	m_scene_repository = new SceneRepository("res/scene/scene1.fsh");
+	
+	TileSetRepository tile_set_repo;
+	m_tile_set = tile_set_repo.load_tile_set();
+	TileMapRepository map_repo;
+	m_map = map_repo.load_map("res/scene/scene1.scn", m_tile_set);
+	
 	set_stage();
 	
 	m_ptr_ground = new Image("res/sprites/sprite_ground.png", make_size(1536,137));
@@ -108,7 +114,8 @@ void SceneFrankysFirstSwim::on_begin() {
 	m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
 	disable_sprite_updates();
 	Graphics::instance()->animation_on(false);
-	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
+	//Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
+	Camera::instance()->position(0, 0);
 	m_ptr_background->x(0.0f);
 	m_ptr_background->y(0.0f);
 	m_ptr_ground->x(GROUND_START_X);
@@ -256,19 +263,54 @@ void SceneFrankysFirstSwim::on_update() {
 
 */
 void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
+	Camera* ptr_camera = Camera::instance();
+
+	ptr_graphics->render(m_ptr_background);
+
+	Rect tile_source_rect;
+	tile_source_rect.x = 0;
+	tile_source_rect.y = 0;
+
+	uint32_t first_tile_x = ((int)ptr_camera->position_x()) / TILE_WIDTH;
+	uint32_t last_tile_x = first_tile_x + 10;
+	//float start_x = ptr_camera->position_x() - ((float)(TILE_WIDTH * first_tile_x));
+	
+	if (first_tile_x >= 10)
+		first_tile_x -= 10;
+	else
+		first_tile_x = 0;
+
+	float tile_render_x;// = start_x;
+	float tile_render_y;// = 0.0f;
+
+	for (uint32_t tile_x = first_tile_x; tile_x < last_tile_x; tile_x++) {
+		for (uint32_t tile_y = 0; tile_y < TILE_MAP_HEIGHT; tile_y++) {
+			Tile* tile = m_map->tile_at(tile_x, tile_y);
+			if (tile != nullptr && tile->tile_type()) {
+				tile_render_x = tile_x * TILE_WIDTH;
+				tile_render_y = tile_y * TILE_HEIGHT;
+				tile_source_rect.w = tile->size()->x;
+				tile_source_rect.h = tile->size()->y;
+				ptr_graphics->render(tile->texture(), tile_render_x, tile_render_y, &tile_source_rect, tile->flip(), tile->rotation());
+			}
+			//tile_render_y += (float)TILE_HEIGHT;
+		}
+		//tile_render_x += (float)TILE_WIDTH;
+		//tile_render_y = 0.0f;
+	}
+
 
 	// render environment.
-	ptr_graphics->render(m_ptr_background);
-	ptr_graphics->render(m_ptr_wave1);
-	ptr_graphics->render(m_ptr_wave2);
-	ptr_graphics->render(m_ptr_wave3);
-	ptr_graphics->render(m_ptr_ground);
-	ptr_graphics->render(m_ptr_ground2);
+	//ptr_graphics->render(m_ptr_wave1);
+	//ptr_graphics->render(m_ptr_wave2);
+	//ptr_graphics->render(m_ptr_wave3);
+	//ptr_graphics->render(m_ptr_ground);
+	//ptr_graphics->render(m_ptr_ground2);
 
 
 	// render all game sprites including fish, bugs
 	for each (Sprite* sprite in m_gameitems) {
-		ptr_graphics->render(sprite);
+		//ptr_graphics->render(sprite);
 	}
 
 	ptr_graphics->render(m_ptr_franky);
@@ -291,10 +333,10 @@ void SceneFrankysFirstSwim::on_detect_collisions() {
 	if (!m_scene_state == SCENE_STATE_PLAYING)
 		return;
 
-	for each (Sprite* ptr_sprite in m_gameitems)
-	{
-		m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
-	}
+	//for each (Sprite* ptr_sprite in m_gameitems)
+	//{
+	//	m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
+	//}
 }
 
 void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
