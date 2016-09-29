@@ -16,7 +16,7 @@ TileMap* TileMapRepository::load_map(const char* m_psz_filename, TileSet* tile_s
 	TileMap* map = new TileMap();	
 	uint32_t row = 0;
 	uint32_t col = 0;
-
+	
 	ifstream file(m_psz_filename);
 	if (file.is_open()) {
 		string line;
@@ -26,6 +26,12 @@ TileMap* TileMapRepository::load_map(const char* m_psz_filename, TileSet* tile_s
 			string part;
 
 			getline(ss, part, ',');
+
+			if (part == "-") {
+				file.close();
+				return map;
+			}
+
 			int item_type = atoi(part.c_str());
 			getline(ss, part, ',');
 			int flip_x = atoi(part.c_str());
@@ -34,10 +40,10 @@ TileMap* TileMapRepository::load_map(const char* m_psz_filename, TileSet* tile_s
 
 			TileDef* tile_def = tile_set->find_tile(item_type);
 			Flip flip;
-			uint16_t rotation= 0;
-			
+			uint16_t rotation = 0;
+
 			if (flip_x && flip_y) {
-				flip = FLIP_NONE;				
+				flip = FLIP_NONE;
 				rotation = 180.0f;
 			}
 			else if (flip_x && !flip_y) {
@@ -49,7 +55,7 @@ TileMap* TileMapRepository::load_map(const char* m_psz_filename, TileSet* tile_s
 			else {
 				flip = FLIP_NONE;
 			}
-			
+
 			if (item_type) {
 				Tile* tile = new Tile(tile_def, flip);
 				map->tile_at(col, row, tile);

@@ -27,7 +27,6 @@ public:
 
 	void				boost();
 	void				rest();
-	void				jump();
 	bool				can_restart();
 	virtual void		on_update() override;
 	virtual void		on_collision(Sprite* sprite) override;
@@ -36,7 +35,6 @@ public:
 private:
 	float				m_momentum;	
 	float				m_rotation_increment;
-	bool				m_is_jumping;
 	bool				m_is_dead;
 
 	void				tilt();

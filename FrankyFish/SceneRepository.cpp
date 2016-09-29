@@ -22,8 +22,23 @@ void SceneRepository::read_file() {
 	ifstream file(m_psz_filename);
 	if (file.is_open()) {
 		string line;
+
+		bool found_sprite_section = false;
+		while (!found_sprite_section) {
+			file >> line;
+			istringstream ss(line);
+			string part;
+			getline(ss, part, ',');
+			if (part == "-") {
+				found_sprite_section = true;
+			}
+		}
+
 		while (!file.eof()) {
 			file >> line;
+			if (file.eof())
+				continue;
+
 			istringstream ss(line);
 			string part;
 

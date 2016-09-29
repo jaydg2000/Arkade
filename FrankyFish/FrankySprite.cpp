@@ -18,7 +18,7 @@ FrankySprite::~FrankySprite() {
 }
 
 void FrankySprite::boost() {
-	if (m_is_jumping || m_is_dead) {
+	if (m_is_dead) {
 		rest();
 		return;
 	}
@@ -28,10 +28,7 @@ void FrankySprite::boost() {
 }
 
 void FrankySprite::rest() {
-	if(m_is_jumping)
-		m_momentum -= MOMENTUM_AIR_STEP_DN;
-	else
-		m_momentum -= MOMENTUM_STEP_DN;
+	m_momentum -= MOMENTUM_STEP_DN;
 	if(m_momentum < MIN_MOMENTUM)
 		m_momentum = MIN_MOMENTUM;
 
@@ -43,24 +40,10 @@ void FrankySprite::tilt() {
 	rotation(r);
 }
 
-void FrankySprite::jump() {
-	if (m_is_jumping)
-		return;
-
-	m_is_jumping = true;
-	rotation(-45);
-	m_momentum = 14.0f;//MAX_MOMENTUM;
-}
-
 void FrankySprite::on_update() {
 	move_relative_y(-m_momentum);
 	if(position_y() > MAX_Y_POSITION)
 		position_y(MAX_Y_POSITION);
-	if (m_is_jumping) {
-		if (position_y() > MIN_Y_JUMP_POSITION) {
-			m_is_jumping = false;
-		}
-	}
 }
 
 bool FrankySprite::can_restart() {
@@ -91,6 +74,5 @@ void FrankySprite::on_collision(Sprite* sprite) {
 void FrankySprite::reset() {
 	this->rotation(0);
 	this->m_momentum = 0.0f;
-	this->m_is_jumping = false;
 	this->m_is_dead = false;
 }

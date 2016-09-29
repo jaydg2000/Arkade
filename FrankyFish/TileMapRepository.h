@@ -14,6 +14,6 @@ public:
 	TileMapRepository();
 	~TileMapRepository();
 
-	TileMap*					load_map(const char* m_psz_filename, TileSet* tile_set);	
+	TileMap*					load_map(const char* m_psz_filename, TileSet* tile_set);
 };
 

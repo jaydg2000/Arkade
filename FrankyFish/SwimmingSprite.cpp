@@ -5,8 +5,8 @@
 SwimmingSprite::SwimmingSprite(const char* filename, Size& frame_size)
 	: GameSprite(filename, frame_size)
 {
-	m_speed = 1.5f;// Random::rand_float(1.0f, 1.25f);
-	m_y_sine_amplitude = Random::rand_float(0.55f, 2.55f);
+	m_speed = Random::rand_float(1.0f, 1.25f);
+	m_y_sine_amplitude = Random::rand_float(0.55f, 1.55f);
 	m_x_sine = Random::rand_float(.05f, 50.0f);
 	m_swim_timer.start(20);
 }

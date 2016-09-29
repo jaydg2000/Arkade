@@ -60,20 +60,10 @@ private:
 	CollisionDetector*				m_ptr_collision_detector;
 	SceneRepository*				m_scene_repository;
 	FrankySprite*					m_ptr_franky;
-	Sprite*							m_ptr_wave1;
-	Sprite*							m_ptr_wave2;
-	Sprite*							m_ptr_wave3;
-	Image*							m_ptr_ground;
-	Image*							m_ptr_ground2;
 	Image*							m_ptr_background;
 	Image*							m_ptr_ready;
 	Image*							m_ptr_numbers;
-
 	list<Sprite*>					m_gameitems;
-	list<Sprite*>					m_clouds;
-
-	RGB								m_water_color_rgb;
-
 	uint32_t						m_scene_state;
 	uint32_t						m_score;
 	bool							m_is_play_enabled;

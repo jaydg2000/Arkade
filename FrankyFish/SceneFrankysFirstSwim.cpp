@@ -12,8 +12,7 @@ SceneFrankysFirstSwim::SceneFrankysFirstSwim()
 SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 {
 	delete m_ptr_franky;
-	delete m_ptr_background;
-	// TODO: delete sprites in lists.
+	delete m_ptr_background;	
 	delete m_scene_repository;
 	delete m_ptr_collision_detector;
 }
@@ -26,54 +25,52 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 
 */
 void SceneFrankysFirstSwim::on_setup() {
+
+	// pre-cache these images that use alternate color keys.
 	TextureCache* ptr_texture_cache = TextureCache::instance();
-	m_is_play_enabled = true;
-	m_scene_state = SCENE_STATE_NOT_READY;	
 	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0,0,0));
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255,255,255));
 	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
-	m_scene_repository = new SceneRepository("res/scene/scene1.fsh");
-	
+
+	// load the game obstacles.
+	m_scene_repository = new SceneRepository("res/scene/scene1.scn");
+
+	// create the star of the show.
+	m_ptr_franky = new FrankySprite();
+
+	// load the tile set and tile map.
 	TileSetRepository tile_set_repo;
 	m_tile_set = tile_set_repo.load_tile_set();
 	TileMapRepository map_repo;
 	m_map = map_repo.load_map("res/scene/scene1.scn", m_tile_set);
 	
-	set_stage();
-	
-	m_ptr_ground = new Image("res/sprites/sprite_ground.png", make_size(1536,137));
-	m_ptr_ground2 = new Image("res/sprites/sprite_ground.png", make_size(1536, 137));
+	// get the game obstacles and register them with the scene.
+	set_stage();	
 
-	m_ptr_franky = new FrankySprite();	
-
-	m_ptr_wave1 = new Sprite("res/sprites/sprite_wave.png", make_size(255, 258));
-	m_ptr_wave2 = new Sprite("res/sprites/sprite_wave.png", make_size(255, 258));
-	m_ptr_wave3 = new Sprite("res/sprites/sprite_wave.png", make_size(255, 258));
-	m_ptr_wave1->animator(new RandomAnimator(4, 100));
-	m_ptr_wave2->animator(new RandomAnimator(4, 100));
-	m_ptr_wave3->animator(new RandomAnimator(4, 100));
-	m_ptr_wave1->position(0, WAVE_SPRITE_Y_POSITION);
-	m_ptr_wave2->position(255, WAVE_SPRITE_Y_POSITION);
-	m_ptr_wave3->position(510, WAVE_SPRITE_Y_POSITION);
-	
-
-	m_ptr_background = new Image("res/sprites/background.png", make_size(720,1480), 0.0f, 0.0f);
+	// load various images.
+	m_ptr_background = new Image("res/sprites/gradient.png", make_size(720,1280), 0.0f, 0.0f);
 	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y-125);
 	m_ptr_numbers = new Image("res/sprites/numbers.png", make_size(300, 48));
 		
-	register_sprite(m_ptr_wave1);
-	register_sprite(m_ptr_wave2);
-	register_sprite(m_ptr_wave3);
-
+	// register the scene for messages.
 	register_for_messages(MESSAGE_TYPE_DEAD);
 	register_for_messages(MESSAGE_TYPE_SCORE);
 	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
 
+	// set camera at the start position.
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
+	
+	// for debugging, show collision rectangles.
 	Graphics::instance()->visible_bounding_box(false);
+
+	// ready for player input.
+	m_is_play_enabled = true;
+	
+	// scene not ready to go just yet.
+	m_scene_state = SCENE_STATE_NOT_READY;
 }
 
 
@@ -114,21 +111,9 @@ void SceneFrankysFirstSwim::on_begin() {
 	m_scene_state = SCENE_STATE_READY_PLAYER_ONE;
 	disable_sprite_updates();
 	Graphics::instance()->animation_on(false);
-	//Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
 	Camera::instance()->position(0, 0);
 	m_ptr_background->x(0.0f);
 	m_ptr_background->y(0.0f);
-	m_ptr_ground->x(GROUND_START_X);
-	m_ptr_ground->y(GROUND_START_Y);
-	m_ptr_wave1->position(0, WAVE_SPRITE_Y_POSITION);
-	m_ptr_wave2->position(255, WAVE_SPRITE_Y_POSITION);
-	m_ptr_wave3->position(510, WAVE_SPRITE_Y_POSITION);
-
-	m_ptr_ground->x(GROUND_START_X);
-	m_ptr_ground->y(GROUND_START_Y);
-	m_ptr_ground2->x(GROUND_START_X + GROUND_SIZE_X);
-	m_ptr_ground2->y(GROUND_START_Y);
-
 }
 
 
@@ -181,12 +166,7 @@ void SceneFrankysFirstSwim::handle_playing_input(bool is_up_pressed) {
 	
 	if (is_up_pressed) {
 		if (m_is_play_enabled) {
-			if (m_ptr_franky->position_y() < MIN_Y_JUMP_POSITION) {
-				m_ptr_franky->jump();
-			}
-			else {
-				m_ptr_franky->boost();
-			}
+			m_ptr_franky->boost();
 			m_is_play_enabled = false;
 		}
 		else {
@@ -230,16 +210,6 @@ void SceneFrankysFirstSwim::on_update() {
 		ptr_camera->move_relative_x(CAMERA_SPEED);
 		m_ptr_franky->move_relative_x(CAMERA_SPEED);
 		m_ptr_background->x(m_ptr_background->x() + CAMERA_SPEED);
-		m_ptr_wave1->move_relative_x(CAMERA_SPEED);
-		m_ptr_wave2->move_relative_x(CAMERA_SPEED);
-		m_ptr_wave3->move_relative_x(CAMERA_SPEED);
-		m_ptr_ground->x(m_ptr_ground->x() + GROUND_SPEED);
-		m_ptr_ground2->x(m_ptr_ground2->x() + GROUND_SPEED);
-
-		if (m_ptr_ground->x() < ptr_camera->position_x() - GROUND_SIZE_X)
-			m_ptr_ground->x(m_ptr_ground2->x() + GROUND_SIZE_X);
-		if (m_ptr_ground2->x() < ptr_camera->position_x() - GROUND_SIZE_X)
-			m_ptr_ground2->x(m_ptr_ground->x() + GROUND_SIZE_X);
 	}
 	
 	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
@@ -251,8 +221,7 @@ void SceneFrankysFirstSwim::on_update() {
 	}
 	else {
 		ptr_camera->position_y(CAMERA_NORMAL_Y_POSITION);
-	}
-	
+	}	
 }
 
 
@@ -273,15 +242,14 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 
 	uint32_t first_tile_x = ((int)ptr_camera->position_x()) / TILE_WIDTH;
 	uint32_t last_tile_x = first_tile_x + 10;
-	//float start_x = ptr_camera->position_x() - ((float)(TILE_WIDTH * first_tile_x));
 	
 	if (first_tile_x >= 10)
 		first_tile_x -= 10;
 	else
 		first_tile_x = 0;
 
-	float tile_render_x;// = start_x;
-	float tile_render_y;// = 0.0f;
+	float tile_render_x;
+	float tile_render_y;
 
 	for (uint32_t tile_x = first_tile_x; tile_x < last_tile_x; tile_x++) {
 		for (uint32_t tile_y = 0; tile_y < TILE_MAP_HEIGHT; tile_y++) {
@@ -293,24 +261,11 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 				tile_source_rect.h = tile->size()->y;
 				ptr_graphics->render(tile->texture(), tile_render_x, tile_render_y, &tile_source_rect, tile->flip(), tile->rotation());
 			}
-			//tile_render_y += (float)TILE_HEIGHT;
 		}
-		//tile_render_x += (float)TILE_WIDTH;
-		//tile_render_y = 0.0f;
 	}
 
-
-	// render environment.
-	//ptr_graphics->render(m_ptr_wave1);
-	//ptr_graphics->render(m_ptr_wave2);
-	//ptr_graphics->render(m_ptr_wave3);
-	//ptr_graphics->render(m_ptr_ground);
-	//ptr_graphics->render(m_ptr_ground2);
-
-
-	// render all game sprites including fish, bugs
 	for each (Sprite* sprite in m_gameitems) {
-		//ptr_graphics->render(sprite);
+		ptr_graphics->render(sprite);
 	}
 
 	ptr_graphics->render(m_ptr_franky);
