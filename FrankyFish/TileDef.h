@@ -2,11 +2,12 @@
 
 #include <ArkadeTypes.h>
 #include <queue>
+#include "Collidable.h"
 
 using namespace std;
 using namespace arkade;
 
-class TileDef
+class TileDef : public Collidable
 {
 public:
 	TileDef();

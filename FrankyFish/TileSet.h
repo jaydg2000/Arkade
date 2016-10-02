@@ -8,7 +8,7 @@ public:
 	TileSet();
 	~TileSet();
 
-	void				add_tile(uint32_t type_id, Texture* ptr_texture, uint32_t w, uint32_t h);
+	TileDef*			add_tile(uint32_t type_id, Texture* ptr_texture, uint32_t w, uint32_t h);
 	TileDef*			find_tile(uint32_t type_id);
 
 private:

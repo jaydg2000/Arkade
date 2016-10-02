@@ -18,8 +18,11 @@ TileSet* TileSetRepository::load_tile_set() {
 	TileDef* ptr_tile_def;
 
 	ptr_texture = ptr_graphics->load_texture("res/tiles/bottom-edge.png", white);
-	ptr_tile_set->add_tile(1, ptr_texture, 128, 128);
-
+	ptr_tile_def = ptr_tile_set->add_tile(1, ptr_texture, 128, 128);
+	ptr_tile_def->add_collision_region(0, 0, 127, 86);
+	ptr_tile_def->add_collision_region(0, 87, 45, 16);
+	ptr_tile_def->add_collision_region(80, 87, 47, 17);
+	
 	ptr_texture = ptr_graphics->load_texture("res/tiles/bottom-edge-2.png", white);
 	ptr_tile_set->add_tile(2, ptr_texture, 128, 128);
 
