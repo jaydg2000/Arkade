@@ -5,8 +5,8 @@
 
 using namespace arkade;
 
-#define MIN_MOMENTUM            -12.0f
-#define MAX_MOMENTUM              8.0f
+#define MIN_MOMENTUM           -18.0f
+#define MAX_MOMENTUM             6.0f
 #define MOMENTUM_STEP_DN         0.15f
 #define MOMENTUM_AIR_STEP_DN      .35f
 
