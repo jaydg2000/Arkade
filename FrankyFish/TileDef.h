@@ -7,7 +7,7 @@
 using namespace std;
 using namespace arkade;
 
-class TileDef : public Collidable
+class TileDef
 {
 public:
 	TileDef();
@@ -19,10 +19,13 @@ public:
 	Texture*				texture();
 	Size*					size();
 	void					size(uint32_t w, uint32_t h);
+	list<Rect*>*			collision_regions();
+	void					add_collision_region(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
 
 private:
 	uint32_t				m_tile_type;
 	Texture*				m_ptr_texture;
 	Size					m_size;
+	list<Rect*>				m_collision_rects;
 };
 

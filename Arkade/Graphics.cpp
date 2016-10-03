@@ -134,6 +134,10 @@ namespace arkade {
 		m_is_animating = should_animate;
 	}
 
+	void Graphics::render(Rect* rect) {
+		render_boundingBox(rect);
+	}
+
 	void Graphics::render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation) {
 		m_destination_rect.w = src_rect->w;
 		m_destination_rect.h = src_rect->h;

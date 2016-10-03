@@ -12,7 +12,7 @@ public:
 	Collidable();
 	~Collidable();
 
-	bool					has_collided(Rect* source_rect);
+	virtual bool			has_collided(Rect* source_rect) = 0;
 	void					add_collision_region(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
 	list<Rect*>				collision_regions();
 	void					collision_enabled(bool enabled);
@@ -22,5 +22,6 @@ public:
 private:
 	bool					m_collision_detection_enabled;
 	list<Rect*>				m_collision_rects;
+	void					flip_region(Rect* rect, bool flip_h, bool flip_v);
 };
 

@@ -35,3 +35,17 @@ void TileDef::size(uint32_t w, uint32_t h) {
 	m_size.x = w;
 	m_size.y = h;
 }
+
+void TileDef::add_collision_region(uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
+	Rect* r = new Rect();
+	r->x = x;
+	r->y = y;
+	r->w = w;
+	r->h = h;
+
+	m_collision_rects.push_back(r);
+}
+
+list<Rect*>* TileDef::collision_regions() {
+	return &m_collision_rects;
+}

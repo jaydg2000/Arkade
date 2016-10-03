@@ -25,7 +25,7 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 
 */
 void SceneFrankysFirstSwim::on_setup() {
-
+	
 	// pre-cache these images that use alternate color keys.
 	TextureCache* ptr_texture_cache = TextureCache::instance();
 	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0,0,0));
@@ -71,6 +71,20 @@ void SceneFrankysFirstSwim::on_setup() {
 	
 	// scene not ready to go just yet.
 	m_scene_state = SCENE_STATE_NOT_READY;
+
+	// tell each tile where it's positioned in the world.
+	float tile_render_x;
+	float tile_render_y;
+	for (uint32_t tile_x = 0; tile_x < TILE_MAP_WIDTH; tile_x++) {
+		for (uint32_t tile_y = 0; tile_y < TILE_MAP_HEIGHT; tile_y++) {
+			Tile* tile = m_map->tile_at(tile_x, tile_y);
+			if (tile != nullptr && tile->tile_type()) {
+				tile_render_x = tile_x * TILE_WIDTH;
+				tile_render_y = tile_y * TILE_HEIGHT;
+				m_map->tile_at(tile_x, tile_y)->position(tile_render_x, tile_render_y);
+			}
+		}
+	}
 }
 
 
@@ -236,7 +250,7 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 
 	ptr_graphics->render(m_ptr_background);
 
-	Rect tile_source_rect;
+	Rect tile_source_rect;	
 	tile_source_rect.x = 0;
 	tile_source_rect.y = 0;
 
@@ -260,6 +274,16 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 				tile_source_rect.w = tile->size()->x;
 				tile_source_rect.h = tile->size()->y;
 				ptr_graphics->render(tile->texture(), tile_render_x, tile_render_y, &tile_source_rect, tile->flip(), tile->rotation());
+
+				// render collision regions for debug. remove this for release.
+				Rect box_rect;
+				for each (Rect* rect in *(tile->collision_regions())) {
+					box_rect.x = Camera::instance()->x_to_screen(tile_render_x + rect->x);
+					box_rect.y = Camera::instance()->y_to_screen(tile_render_y + rect->y);
+					box_rect.w = rect->w;
+					box_rect.h = rect->h;
+					ptr_graphics->render(&box_rect);
+				}
 			}
 		}
 	}
@@ -287,6 +311,8 @@ void SceneFrankysFirstSwim::on_cleanup() {
 void SceneFrankysFirstSwim::on_detect_collisions() {
 	if (!m_scene_state == SCENE_STATE_PLAYING)
 		return;
+
+
 
 	//for each (Sprite* ptr_sprite in m_gameitems)
 	//{

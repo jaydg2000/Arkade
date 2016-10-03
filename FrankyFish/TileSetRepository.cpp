@@ -69,7 +69,9 @@ TileSet* TileSetRepository::load_tile_set() {
 	ptr_tile_set->add_tile(16, ptr_texture, 561, 384);
 
 	ptr_texture = ptr_graphics->load_texture("res/tiles/mountain_3.png", white);
-	ptr_tile_set->add_tile(17, ptr_texture, 480, 512);
+	ptr_tile_def = ptr_tile_set->add_tile(17, ptr_texture, 480, 512);
+	ptr_tile_def->add_collision_region(148, 38, 93, 192);
+	ptr_tile_def->add_collision_region(89, 237, 226, 271);
 
 	ptr_texture = ptr_graphics->load_texture("res/tiles/mountain_4.png", white);
 	ptr_tile_set->add_tile(18, ptr_texture, 384, 128);

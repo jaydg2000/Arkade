@@ -5,7 +5,7 @@
 #include "TileSet.h"
 #include "TileMap.h"
 
-#define TILE_MAP_WIDTH 10000
+#define TILE_MAP_WIDTH 2000
 #define TILE_MAP_HEIGHT 10
 
 class TileMapRepository {

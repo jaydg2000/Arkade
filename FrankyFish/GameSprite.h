@@ -5,7 +5,7 @@
 
 using namespace arkade;
 
-class GameSprite : public Sprite, Collidable	
+class GameSprite : public Sprite	
 {
 public:
 	GameSprite(const char* file_name, Size& frame_size);
