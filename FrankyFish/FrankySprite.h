@@ -12,7 +12,7 @@ using namespace arkade;
 
 #define MIN_Y_POSITION          100.0f
 #define MIN_Y_JUMP_POSITION     390.0f
-#define MAX_Y_POSITION          1370.0f
+#define MAX_Y_POSITION          1180.0f
 
 #define MAX_ROTATION_UP         -355.0f
 #define MAX_ROTATION_DOWN          5.0f

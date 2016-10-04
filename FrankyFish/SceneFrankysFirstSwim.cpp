@@ -5,6 +5,7 @@
 SceneFrankysFirstSwim::SceneFrankysFirstSwim()
 {
 	m_ptr_collision_detector = new BoundingBoxCollisionDetector();	
+	m_ptr_multibox_collision_detector = new MultipleBoundingBoxCollisionDetector();
 }
 
 
@@ -26,6 +27,8 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 */
 void SceneFrankysFirstSwim::on_setup() {
 	
+	m_ptr_sound_coin_collected = Audio::instance()->load_sound("");
+
 	// pre-cache these images that use alternate color keys.
 	TextureCache* ptr_texture_cache = TextureCache::instance();
 	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0,0,0));
@@ -276,13 +279,17 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 				ptr_graphics->render(tile->texture(), tile_render_x, tile_render_y, &tile_source_rect, tile->flip(), tile->rotation());
 
 				// render collision regions for debug. remove this for release.
-				Rect box_rect;
-				for each (Rect* rect in *(tile->collision_regions())) {
-					box_rect.x = Camera::instance()->x_to_screen(tile_render_x + rect->x);
-					box_rect.y = Camera::instance()->y_to_screen(tile_render_y + rect->y);
-					box_rect.w = rect->w;
-					box_rect.h = rect->h;
-					ptr_graphics->render(&box_rect);
+				//Rect box_rect;
+				//for each (Rect* rect in *(tile->collision_regions())) {
+				//	box_rect.x = Camera::instance()->x_to_screen(tile_render_x + rect->x);
+				//	box_rect.y = Camera::instance()->y_to_screen(tile_render_y + rect->y);
+				//	box_rect.w = rect->w;
+				//	box_rect.h = rect->h;
+				//	ptr_graphics->render(&box_rect);
+				//}
+
+				if (tile->have_collided(m_ptr_franky->collision_rect())) {
+					end_game();					
 				}
 			}
 		}
@@ -314,18 +321,15 @@ void SceneFrankysFirstSwim::on_detect_collisions() {
 
 
 
-	//for each (Sprite* ptr_sprite in m_gameitems)
-	//{
-	//	m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
-	//}
+	for each (Sprite* ptr_sprite in m_gameitems)
+	{
+		m_ptr_collision_detector->detect(m_ptr_franky, ptr_sprite);
+	}
 }
 
 void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
 	if (message_type == MESSAGE_TYPE_DEAD) {
-		m_is_play_enabled = false;
-		m_scene_state = SCENE_STATE_GAME_OVER;
-		Graphics::instance()->animation_on(false);
-		disable_sprite_updates();
+		end_game();
 		return;
 	}
 	if (message_type == MESSAGE_TYPE_REWARD_COLLECTED && m_is_play_enabled) {
@@ -340,4 +344,11 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 
 bool SceneFrankysFirstSwim::is_no_touch_happening(InputManager* ptr_input_manager) {
 	return !ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP);
+}
+
+void SceneFrankysFirstSwim::end_game() {
+	m_is_play_enabled = false;
+	m_scene_state = SCENE_STATE_GAME_OVER;
+	Graphics::instance()->animation_on(false);
+	disable_sprite_updates();
 }

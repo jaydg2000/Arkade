@@ -8,6 +8,7 @@ ToothyFishTwoSprite::ToothyFishTwoSprite()
 	animator(new ForwardAnimator(6, 110));
 	animator()->current_frame(Random::rand_int(0, 5));
 	type(SPRITE_TYPE_PREDATOR);
+	collision_dim(5, 15, 40, 40);
 }
 
 
