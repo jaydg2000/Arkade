@@ -27,7 +27,7 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 */
 void SceneFrankysFirstSwim::on_setup() {
 	
-	m_ptr_sound_coin_collected = Audio::instance()->load_sound("");
+	m_ptr_sound_coin_collected = new Sound("res/wav/coin6.wav");
 
 	// pre-cache these images that use alternate color keys.
 	TextureCache* ptr_texture_cache = TextureCache::instance();
@@ -338,6 +338,8 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 		sprite->is_visible(false);
 		unregister_sprite(sprite);
 		m_score += sprite->points();
+		m_ptr_sound_coin_collected->play_sound();
+
 		return;
 	}
 }
