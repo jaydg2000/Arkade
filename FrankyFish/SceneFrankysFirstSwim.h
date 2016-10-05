@@ -57,9 +57,12 @@ protected:
 
 private:
 	Sound*									m_ptr_sound_coin_collected;
+	Sound*									m_ptr_sound_splash;
+	Sound*									m_ptr_sound_death;
 	TileSet*								m_tile_set;
 	TileMap*								m_map;
 	Timer									m_swim_timer;
+	Timer									m_splash_timer;
 	CollisionDetector*						m_ptr_collision_detector;
 	MultipleBoundingBoxCollisionDetector*	m_ptr_multibox_collision_detector;
 	SceneRepository*						m_scene_repository;

@@ -21,7 +21,7 @@ using namespace arkade;
 
 class FrankySprite : public GameSprite
 {
-public:
+public:           
 	FrankySprite();
 	~FrankySprite();
 
@@ -31,11 +31,15 @@ public:
 	virtual void		on_update() override;
 	virtual void		on_collision(Sprite* sprite) override;
 	void				reset();
+	void				die();
+	bool				immortal();
+	void				immortal(bool enable);
 
 private:
 	float				m_momentum;	
 	float				m_rotation_increment;
 	bool				m_is_dead;
+	bool				m_is_immortal;
 
 	void				tilt();
 };

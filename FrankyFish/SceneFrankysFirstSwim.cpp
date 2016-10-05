@@ -27,7 +27,9 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 */
 void SceneFrankysFirstSwim::on_setup() {
 	
-	m_ptr_sound_coin_collected = new Sound("res/wav/coin6.wav");
+	m_ptr_sound_coin_collected = new Sound("res/wav/coin10.wav");
+	m_ptr_sound_splash = new Sound("res/wav/splash1.wav");
+	m_ptr_sound_death = new Sound("res/wav/death.wav");
 
 	// pre-cache these images that use alternate color keys.
 	TextureCache* ptr_texture_cache = TextureCache::instance();
@@ -122,6 +124,7 @@ void SceneFrankysFirstSwim::set_stage() {
 */
 void SceneFrankysFirstSwim::on_begin() {
 	m_swim_timer.start(20);
+	m_splash_timer.start(1500);
 	m_ptr_franky->reset();
 	m_ptr_franky->position(FRANKY_START_X, FRANKY_START_Y);
 	m_score = 0;
@@ -142,6 +145,7 @@ void SceneFrankysFirstSwim::on_begin() {
 */
 void SceneFrankysFirstSwim::on_check_input(InputManager* ptr_input_manager) {
 
+	bool is_F1_pressed = ptr_input_manager->is_key_pressed(SDL_SCANCODE_F1);
 	bool is_escape_pressed = ptr_input_manager->is_key_pressed(SDL_SCANCODE_ESCAPE);
 	bool is_up_pressed = ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT) ||
 		ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP);
@@ -151,6 +155,9 @@ void SceneFrankysFirstSwim::on_check_input(InputManager* ptr_input_manager) {
 	if (is_escape_pressed) {
 		stop();
 	}
+
+	if (is_F1_pressed)
+		m_ptr_franky->immortal(true);
 
 	switch (m_scene_state) {
 		case SCENE_STATE_PLAYING:
@@ -184,6 +191,9 @@ void SceneFrankysFirstSwim::handle_playing_input(bool is_up_pressed) {
 	if (is_up_pressed) {
 		if (m_is_play_enabled) {
 			m_ptr_franky->boost();
+			//if(m_splash_timer.has_elapsed())
+			//	m_ptr_sound_splash->play_sound();
+			//m_splash_timer.start();
 			m_is_play_enabled = false;
 		}
 		else {
@@ -288,8 +298,11 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 				//	ptr_graphics->render(&box_rect);
 				//}
 
-				if (tile->have_collided(m_ptr_franky->collision_rect())) {
-					end_game();					
+				if (m_scene_state == SCENE_STATE_PLAYING && tile->have_collided(m_ptr_franky->collision_rect())) {
+					if (!m_ptr_franky->immortal()) {
+						m_ptr_franky->die();
+						end_game();
+					}
 				}
 			}
 		}
@@ -353,4 +366,5 @@ void SceneFrankysFirstSwim::end_game() {
 	m_scene_state = SCENE_STATE_GAME_OVER;
 	Graphics::instance()->animation_on(false);
 	disable_sprite_updates();
+	m_ptr_sound_death->play_sound();
 }

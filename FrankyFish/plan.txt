@@ -1,0 +1,8 @@
+ Sound effect for boost.
+ Sound effect for fish chomp.
+ Sound effect for coin grab.
+-End of game after colliding with tile freezes game.
+ Clean up sprites.
+ Complete level 1.
+ New font for score.
+
