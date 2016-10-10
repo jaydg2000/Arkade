@@ -175,6 +175,9 @@ namespace arkade {
 			if (!clip(src_rect, dest_rect, clip_rect))
 				return;
 
+		//dest_rect->w = dest_rect->w * sprite->scale();
+		//dest_rect->h = dest_rect->h * sprite->scale();
+
 		sprite->on_pre_render();
 
 		SDL_RenderCopyEx(
@@ -234,7 +237,7 @@ namespace arkade {
 		if (!image->use_screen_positioning()) {
 			m_ptr_camera->to_screen(destination_rect, image->x(), image->y());
 		}
-
+		
 		SDL_RenderCopyEx(
 			m_ptr_renderer,
 			image->texture(),

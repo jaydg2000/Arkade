@@ -1,9 +1,9 @@
 #pragma once
 
-//#define WINDOW_WIDTH					450
-//#define WINDOW_HEIGHT					800
-#define WINDOW_WIDTH					720
-#define WINDOW_HEIGHT					1280
+#define WINDOW_WIDTH					450
+#define WINDOW_HEIGHT					800
+//#define WINDOW_WIDTH					720
+//#define WINDOW_HEIGHT					1280
 
 #define LOGICAL_WIDTH					720
 #define LOGICAL_HEIGHT					1280

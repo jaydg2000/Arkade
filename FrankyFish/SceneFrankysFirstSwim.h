@@ -8,6 +8,7 @@
 #include <Sound.h>
 #include "Geometry.h"
 #include "FrankySprite.h"
+#include "DollarSprite.h"
 #include "FishGame.h"
 #include "SceneRepository.h"
 #include "MessageTypes.h"
@@ -56,6 +57,7 @@ protected:
 	virtual void							on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 private:
+	SpritePool								m_dollar_pool;
 	Sound*									m_ptr_sound_coin_collected;
 	Sound*									m_ptr_sound_splash;
 	Sound*									m_ptr_sound_death;
@@ -69,6 +71,7 @@ private:
 	FrankySprite*							m_ptr_franky;
 	Image*									m_ptr_background;
 	Image*									m_ptr_ready;
+	Image*									m_ptr_game_over;
 	Image*									m_ptr_numbers;
 	list<Sprite*>							m_gameitems;
 	uint32_t								m_scene_state;

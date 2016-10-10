@@ -39,6 +39,8 @@ namespace arkade {
 		//void					scale(float x, float y);
 		//void					scale(PointF& point);
 		//PointF					scale();
+		void					scale(float scale);
+		float					scale();
 		uint32_t				size_x();
 		uint32_t				size_y();
 		Size*					size();
@@ -84,8 +86,7 @@ namespace arkade {
 		float					m_bounds_upper_x;
 		float					m_bounds_upper_y;
 		float					m_rotation;
-		float					m_scale_x;
-		float					m_scale_y;
+		float					m_scale;
 		Size					m_frame_size;
 		uint32_t				m_z_order;
 		Flip					m_flip;

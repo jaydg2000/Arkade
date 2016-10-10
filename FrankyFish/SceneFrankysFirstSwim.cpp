@@ -36,9 +36,17 @@ void SceneFrankysFirstSwim::on_setup() {
 	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0,0,0));
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255,255,255));
+	ptr_texture_cache->push("res/sprites/game_over.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
+
+	for (int c = 0; c < 100; c++) {
+		DollarSprite* dollar = new DollarSprite();
+		m_dollar_pool.add(dollar);
+	}
+	//register_sprite_pool(&m_dollar_pool);
 
 	// load the game obstacles.
 	m_scene_repository = new SceneRepository("res/scene/scene1.scn");
@@ -58,12 +66,14 @@ void SceneFrankysFirstSwim::on_setup() {
 	// load various images.
 	m_ptr_background = new Image("res/sprites/gradient.png", make_size(720,1280), 0.0f, 0.0f);
 	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y-125);
+	m_ptr_game_over = new Image("res/sprites/game_over.png", make_size(415, 183), 290.0f, 500.0f);
 	m_ptr_numbers = new Image("res/sprites/numbers.png", make_size(300, 48));
 		
 	// register the scene for messages.
 	register_for_messages(MESSAGE_TYPE_DEAD);
 	register_for_messages(MESSAGE_TYPE_SCORE);
 	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
+	register_for_messages(MESSAGE_TYPE_DOLLAR_COMPLETED);
 
 	// set camera at the start position.
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
@@ -313,9 +323,15 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 	}
 
 	ptr_graphics->render(m_ptr_franky);
+	ptr_graphics->render(&m_dollar_pool);
 
 	if (m_scene_state == SCENE_STATE_READY_PLAYER_ONE) {
 		ptr_graphics->render(m_ptr_ready);
+	}
+
+	if (m_scene_state == SCENE_STATE_GAME_OVER) {
+		m_ptr_game_over->x(ptr_camera->position_x() + 150);
+		ptr_graphics->render(m_ptr_game_over);
 	}
 
 	ptr_graphics->render(m_score, m_ptr_numbers, 30, 4, 500.0f, 10.0f);
@@ -353,7 +369,19 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 		m_score += sprite->points();
 		m_ptr_sound_coin_collected->play_sound();
 
+		for (int c = 0; c < 5; c++) {
+			float heading = c < 3 ? Random::rand_float(0.0f, 180.0f) : Random::rand_float(180.0f, 359.0f);
+			DollarSprite* dollar_sprite = (DollarSprite*)m_dollar_pool.obtain();
+			dollar_sprite->init(sprite->position_x(), sprite->position_y(), heading);
+			register_sprite(dollar_sprite);
+		}
+
 		return;
+	}
+	if (message_type == MESSAGE_TYPE_DOLLAR_COMPLETED) {
+		DollarSprite* sprite = (DollarSprite*)ptr_sender;
+		unregister_sprite(sprite);
+		m_dollar_pool.release(sprite);
 	}
 }
 
