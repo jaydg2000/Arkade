@@ -4,7 +4,8 @@ namespace arkade {
 
 	Scene::Scene() {
 		m_scene_is_ended = false;
-		m_is_updating_sprites = true;		
+		m_is_updating_sprites = true;	
+		m_is_paused = false;
 	}
 
 
@@ -29,13 +30,15 @@ namespace arkade {
 		while (!m_scene_is_ended) {
 			ptr_inputManager->update();
 			on_check_input(ptr_inputManager);
-			handle_messages();
-			on_update();
-			on_detect_collisions();
-			update_sprites();
-			ptr_graphics->begin_render();
-			on_render(ptr_graphics);
-			ptr_graphics->end_render();
+			if (!m_is_paused) {
+				handle_messages();
+				on_detect_collisions();
+				on_update();
+				update_sprites();
+				ptr_graphics->begin_render();
+				on_render(ptr_graphics);
+				ptr_graphics->end_render();
+			}
 			while (!m_frame_timer.has_elapsed());
 		}
 		cleanup_sprites();
@@ -89,6 +92,18 @@ namespace arkade {
 
 	void Scene::enable_sprite_updates() {
 		m_is_updating_sprites = true;
+	}
+
+	void Scene::pause() {
+		m_is_paused = true;
+	}
+
+	void Scene::resume() {
+		m_is_paused = false;
+	}
+
+	bool Scene::is_paused() {
+		return m_is_paused;
 	}
 
 	void Scene::on_detect_collisions() {				

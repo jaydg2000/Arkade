@@ -31,12 +31,8 @@ using namespace arkade;
 #define CAMERA_NORMAL_Y_POSITION     0
 #define CAMERA_FOLLOW_THRESHOLD_TOP  450
 
-#define CAMERA_SPEED                 8.0f
-#define GROUND_SPEED				 6.75f
+#define CAMERA_SPEED                 6.0f
 
-#define GROUND_START_X				 0.0f
-#define GROUND_START_Y				 1344.0f
-#define GROUND_SIZE_X				 1536.0f
 
 class SceneFrankysFirstSwim :
 	public Scene
@@ -63,8 +59,8 @@ private:
 	Sound*									m_ptr_sound_death;
 	TileSet*								m_tile_set;
 	TileMap*								m_map;
-	Timer									m_swim_timer;
-	Timer									m_splash_timer;
+	//Timer									m_swim_timer;
+	//Timer									m_splash_timer;
 	CollisionDetector*						m_ptr_collision_detector;
 	MultipleBoundingBoxCollisionDetector*	m_ptr_multibox_collision_detector;
 	SceneRepository*						m_scene_repository;
@@ -77,7 +73,7 @@ private:
 	uint32_t								m_scene_state;
 	uint32_t								m_score;
 	bool									m_is_play_enabled;
-	bool									m_is_sound_enabled;
+	bool									m_is_sound_enabled;	
 
 	void									set_stage();
 	bool									is_no_touch_happening(InputManager* ptr_keyboard);

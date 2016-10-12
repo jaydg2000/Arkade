@@ -8,7 +8,7 @@ SharkSprite::SharkSprite()
 	animator(new ForwardAnimator(6, 80));
 	animator()->current_frame(Random::rand_int(0, 5));
 	type(SPRITE_TYPE_PREDATOR);
-	collision_dim(60, 90, 150, 100);
+	collision_dim(60, 90, 150, 80);
 }
 
 

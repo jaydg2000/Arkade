@@ -44,7 +44,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_jelly.png", RGB(255, 255, 255));
 
-	for (int c = 0; c < 100; c++) {
+	for (int c = 0; c < 24; c++) {
 		DollarSprite* dollar = new DollarSprite();
 		m_dollar_pool.add(dollar);
 	}
@@ -137,8 +137,8 @@ void SceneFrankysFirstSwim::set_stage() {
 
 */
 void SceneFrankysFirstSwim::on_begin() {
-	m_swim_timer.start(20);
-	m_splash_timer.start(1500);
+	//m_swim_timer.start(20);
+	//m_splash_timer.start(1500);
 	m_ptr_franky->reset();
 	m_ptr_franky->position(FRANKY_START_X, FRANKY_START_Y);
 	m_score = 0;
@@ -164,10 +164,21 @@ void SceneFrankysFirstSwim::on_check_input(InputManager* ptr_input_manager) {
 	bool is_up_pressed = ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT) ||
 		ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP);
 	bool is_no_input_happening = is_no_touch_happening(ptr_input_manager);
+	bool is_pause_button_pressed = ptr_input_manager->is_key_pressed(SDL_SCANCODE_P);
+	bool is_un_pause_button_pressed = ptr_input_manager->is_key_pressed(SDL_SCANCODE_U);
 
 	// if escape key is pressed, exit immediately.
 	if (is_escape_pressed) {
 		stop();
+	}
+
+	if (is_pause_button_pressed) {
+			pause();
+		return;
+	}
+
+	if (is_un_pause_button_pressed) {
+		resume();
 	}
 
 	if (is_F1_pressed)
@@ -187,7 +198,6 @@ void SceneFrankysFirstSwim::on_check_input(InputManager* ptr_input_manager) {
 			break;
 	}
 }
-
 
 
 void SceneFrankysFirstSwim::handle_player_ready_input(bool is_up_pressed) {
@@ -247,11 +257,11 @@ void SceneFrankysFirstSwim::on_update() {
 
 	Camera* ptr_camera = Camera::instance();
 
-	if (m_swim_timer.has_elapsed()) {
+	//if (m_swim_timer.has_elapsed()) {
 		ptr_camera->move_relative_x(CAMERA_SPEED);
 		m_ptr_franky->move_relative_x(CAMERA_SPEED);
 		m_ptr_background->x(m_ptr_background->x() + CAMERA_SPEED);
-	}
+	//}
 	
 	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
 		float franky_y = m_ptr_franky->position_y();

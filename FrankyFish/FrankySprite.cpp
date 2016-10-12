@@ -12,7 +12,7 @@ FrankySprite::FrankySprite():
 	this->animator(new ForwardAnimator(6, 80));
 	this->reset();
 	this->m_rotation_increment = -(140.0f / (MAX_MOMENTUM - MIN_MOMENTUM));
-	this->collision_dim(15, 25, 78, 78);
+	this->collision_dim(30, 45, 70, 45);
 }
 
 FrankySprite::~FrankySprite() {

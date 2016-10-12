@@ -77,6 +77,10 @@
     <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_mixer-2.0.0\include;C:\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\SDL\SDL2-2.0.4\lib\x64;C:\SDL\SDL2_mixer-2.0.0\lib\x64;C:\SDL\SDL2_image-2.0.0\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_mixer-2.0.0\include;C:\SDL\SDL2_image-2.0.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>C:\SDL\SDL2-2.0.4\lib\x64;C:\SDL\SDL2_mixer-2.0.0\lib\x64;C:\SDL\SDL2_image-2.0.0\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -152,6 +156,9 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y $(OutDir)Arkade.lib c:\arkade</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -172,7 +179,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="GameAttributes.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Image.h" />
-    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="Message.h" />
@@ -180,7 +187,6 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="MessagePool.h" />
     <ClInclude Include="MessageRouter.h" />
     <ClInclude Include="MessageSink.h" />
-    <ClInclude Include="Mouse.h" />
     <ClInclude Include="OscillatingAnimator.h" />
     <ClInclude Include="PhysicsBasedSprite.h" />
     <ClInclude Include="Point.h" />
@@ -212,7 +218,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Image.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MathUtil.cpp" />
     <ClCompile Include="Message.cpp" />
