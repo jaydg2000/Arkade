@@ -12,6 +12,7 @@
 #include "BugOneSprite.h"
 #include "BugTwoSprite.h"
 #include "BugThreeSprite.h"
+#include "JellyFishSprite.h"
 
 using namespace arkade;
 
@@ -19,6 +20,7 @@ using namespace arkade;
 #define ITEM_TOOTHY_FISH_1 5
 #define ITEM_TOOTHY_FISH_2 6
 #define ITEM_TOOTHY_FISH_3 7
+#define ITEM_JELLY_FISH 8
 #define ITEM_BUG_1 20
 #define ITEM_BUG_2 21
 #define ITEM_BUG_3 22

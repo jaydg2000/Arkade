@@ -77,6 +77,7 @@ private:
 	uint32_t								m_scene_state;
 	uint32_t								m_score;
 	bool									m_is_play_enabled;
+	bool									m_is_sound_enabled;
 
 	void									set_stage();
 	bool									is_no_touch_happening(InputManager* ptr_keyboard);

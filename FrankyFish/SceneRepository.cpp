@@ -88,6 +88,9 @@ Sprite* SceneRepository::make_gamesprite(int type, int x, int y) {
 		case ITEM_TOOTHY_FISH_3:
 			sprite = new ToothyFishThreeSprite();
 			break;
+		case ITEM_JELLY_FISH:
+			sprite = new JellyFishSprite();
+			break;
 		case ITEM_BIRD:
 			sprite = new BirdSprite();
 			break;

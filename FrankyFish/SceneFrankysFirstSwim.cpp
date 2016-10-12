@@ -6,6 +6,7 @@ SceneFrankysFirstSwim::SceneFrankysFirstSwim()
 {
 	m_ptr_collision_detector = new BoundingBoxCollisionDetector();	
 	m_ptr_multibox_collision_detector = new MultipleBoundingBoxCollisionDetector();
+	m_is_sound_enabled = true;
 }
 
 
@@ -41,6 +42,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/sprite_jelly.png", RGB(255, 255, 255));
 
 	for (int c = 0; c < 100; c++) {
 		DollarSprite* dollar = new DollarSprite();
@@ -100,6 +102,8 @@ void SceneFrankysFirstSwim::on_setup() {
 			}
 		}
 	}
+
+	m_is_sound_enabled = false;
 }
 
 
@@ -367,7 +371,8 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 		sprite->is_visible(false);
 		unregister_sprite(sprite);
 		m_score += sprite->points();
-		m_ptr_sound_coin_collected->play_sound();
+		if(m_is_sound_enabled)
+			m_ptr_sound_coin_collected->play_sound();
 
 		for (int c = 0; c < 5; c++) {
 			float heading = c < 3 ? Random::rand_float(0.0f, 180.0f) : Random::rand_float(180.0f, 359.0f);
@@ -394,5 +399,6 @@ void SceneFrankysFirstSwim::end_game() {
 	m_scene_state = SCENE_STATE_GAME_OVER;
 	Graphics::instance()->animation_on(false);
 	disable_sprite_updates();
-	m_ptr_sound_death->play_sound();
+	if(m_is_sound_enabled)
+		m_ptr_sound_death->play_sound();
 }
