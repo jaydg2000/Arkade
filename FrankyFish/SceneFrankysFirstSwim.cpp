@@ -1,7 +1,11 @@
 #include "SceneFrankysFirstSwim.h"
 
 
+/*
 
+	Default constructor.
+
+*/
 SceneFrankysFirstSwim::SceneFrankysFirstSwim()
 {
 	m_ptr_collision_detector = new BoundingBoxCollisionDetector();	
@@ -10,7 +14,11 @@ SceneFrankysFirstSwim::SceneFrankysFirstSwim()
 }
 
 
+/*
 
+	Destructor
+
+*/
 SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 {
 	delete m_ptr_franky;
@@ -27,67 +35,51 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 
 */
 void SceneFrankysFirstSwim::on_setup() {
-	
-	m_ptr_sound_coin_collected = new Sound("res/wav/coin10.wav");
-	m_ptr_sound_splash = new Sound("res/wav/splash1.wav");
-	m_ptr_sound_death = new Sound("res/wav/death.wav");
+	m_is_play_enabled = true;
+	m_scene_state = SCENE_STATE_NOT_READY;
+	m_is_sound_enabled = false;
 
-	// pre-cache these images that use alternate color keys.
-	TextureCache* ptr_texture_cache = TextureCache::instance();
-	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0,0,0));
-	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/ready.png", RGB(255,255,255));
-	ptr_texture_cache->push("res/sprites/game_over.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/sprite_jelly.png", RGB(255, 255, 255));
+	load_textures();
+	load_sounds();
+	load_dollar_spritepool();
 
-	for (int c = 0; c < 24; c++) {
-		DollarSprite* dollar = new DollarSprite();
-		m_dollar_pool.add(dollar);
-	}
-	//register_sprite_pool(&m_dollar_pool);
-
-	// load the game obstacles.
 	m_scene_repository = new SceneRepository("res/scene/scene1.scn");
-
-	// create the star of the show.
 	m_ptr_franky = new FrankySprite();
 
-	// load the tile set and tile map.
-	TileSetRepository tile_set_repo;
-	m_tile_set = tile_set_repo.load_tile_set();
-	TileMapRepository map_repo;
-	m_map = map_repo.load_map("res/scene/scene1.scn", m_tile_set);
+	load_scene();
 	
 	// get the game obstacles and register them with the scene.
 	set_stage();	
-
-	// load various images.
-	m_ptr_background = new Image("res/sprites/gradient.png", make_size(720,1280), 0.0f, 0.0f);
-	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y-125);
-	m_ptr_game_over = new Image("res/sprites/game_over.png", make_size(415, 183), 290.0f, 500.0f);
-	m_ptr_numbers = new Image("res/sprites/numbers.png", make_size(300, 48));
-		
-	// register the scene for messages.
-	register_for_messages(MESSAGE_TYPE_DEAD);
-	register_for_messages(MESSAGE_TYPE_SCORE);
-	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
-	register_for_messages(MESSAGE_TYPE_DOLLAR_COMPLETED);
+	
+	register_message_handling();
 
 	// set camera at the start position.
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
 	
 	// for debugging, show collision rectangles.
-	Graphics::instance()->visible_bounding_box(false);
+	Graphics::instance()->visible_bounding_box(true);
 
-	// ready for player input.
-	m_is_play_enabled = true;
+}
+
+
+/*
+
+	Specify the messages this scene can receive.
 	
-	// scene not ready to go just yet.
-	m_scene_state = SCENE_STATE_NOT_READY;
+*/
+void SceneFrankysFirstSwim::register_message_handling() {
+	register_for_messages(MESSAGE_TYPE_DEAD);
+	register_for_messages(MESSAGE_TYPE_SCORE);
+	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
+	register_for_messages(MESSAGE_TYPE_DOLLAR_COMPLETED);
+}
+
+void SceneFrankysFirstSwim::load_scene() {
+	// load the tile set and tile map.
+	TileSetRepository tile_set_repo;
+	m_tile_set = tile_set_repo.load_tile_set();
+	TileMapRepository map_repo;
+	m_map = map_repo.load_map("res/scene/scene1.scn", m_tile_set);
 
 	// tell each tile where it's positioned in the world.
 	float tile_render_x;
@@ -102,11 +94,42 @@ void SceneFrankysFirstSwim::on_setup() {
 			}
 		}
 	}
+}
 
-	m_is_sound_enabled = false;
+void SceneFrankysFirstSwim::load_textures() {
+	TextureCache* ptr_texture_cache = TextureCache::instance();
+	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0, 0, 0));
+	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/ready.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/game_over.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/sprite_jelly.png", RGB(255, 255, 255));
+
+	// load various images.
+	m_ptr_background = new Image("res/sprites/gradient.png", make_size(720, 1280), 0.0f, 0.0f);
+	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y - 125);
+	m_ptr_game_over = new Image("res/sprites/game_over.png", make_size(415, 183), 290.0f, 500.0f);
+	m_ptr_numbers = new Image("res/sprites/numbers.png", make_size(300, 48));
+
+	m_ptr_background->use_screen_positioning(true);
 }
 
 
+void SceneFrankysFirstSwim::load_sounds() {
+	m_ptr_sound_coin_collected = new Sound("res/wav/coin10.wav");
+	m_ptr_sound_splash = new Sound("res/wav/splash1.wav");
+	m_ptr_sound_death = new Sound("res/wav/death.wav");
+}
+
+void SceneFrankysFirstSwim::load_dollar_spritepool() {
+	for (int c = 0; c < 24; c++) {
+		DollarSprite* dollar = new DollarSprite();
+		m_dollar_pool.add(dollar);
+	}
+}
 
 /*
 
@@ -137,7 +160,6 @@ void SceneFrankysFirstSwim::set_stage() {
 
 */
 void SceneFrankysFirstSwim::on_begin() {
-	//m_swim_timer.start(20);
 	//m_splash_timer.start(1500);
 	m_ptr_franky->reset();
 	m_ptr_franky->position(FRANKY_START_X, FRANKY_START_Y);
@@ -255,15 +277,9 @@ void SceneFrankysFirstSwim::on_update() {
 	if (m_scene_state != SCENE_STATE_PLAYING)
 		return;	
 
-	Camera* ptr_camera = Camera::instance();
-
-	//if (m_swim_timer.has_elapsed()) {
-		ptr_camera->move_relative_x(CAMERA_SPEED);
-		m_ptr_franky->move_relative_x(CAMERA_SPEED);
-		m_ptr_background->x(m_ptr_background->x() + CAMERA_SPEED);
-	//}
+	move_camera();
 	
-	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
+/*	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
 		float franky_y = m_ptr_franky->position_y();
 		float new_y = CAMERA_NORMAL_Y_POSITION - (CAMERA_FOLLOW_THRESHOLD_TOP - franky_y);
 		if (new_y < 0.0f)
@@ -272,7 +288,7 @@ void SceneFrankysFirstSwim::on_update() {
 	}
 	else {
 		ptr_camera->position_y(CAMERA_NORMAL_Y_POSITION);
-	}	
+	}*/	
 }
 
 
@@ -402,6 +418,13 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 
 bool SceneFrankysFirstSwim::is_no_touch_happening(InputManager* ptr_input_manager) {
 	return !ptr_input_manager->is_key_pressed(SDL_SCANCODE_UP);
+}
+
+void SceneFrankysFirstSwim::move_camera() {
+	Camera* ptr_camera = Camera::instance();
+	ptr_camera->move_relative_x(CAMERA_SPEED);
+	m_ptr_franky->move_relative_x(CAMERA_SPEED);
+	//m_ptr_background->x(m_ptr_background->x() + CAMERA_SPEED);
 }
 
 void SceneFrankysFirstSwim::end_game() {

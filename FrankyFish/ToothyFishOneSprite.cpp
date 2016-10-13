@@ -8,7 +8,7 @@ ToothyFishOneSprite::ToothyFishOneSprite()
 	animator(new ForwardAnimator(8, 90));
 	animator()->current_frame(Random::rand_int(0, 7));
 	type(SPRITE_TYPE_PREDATOR);
-	collision_dim(15, 65, 100, 90);
+	collision_dim(25, 85, 100, 55);
 }
 
 
