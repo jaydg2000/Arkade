@@ -24,4 +24,8 @@ namespace arkade {
 	float Random::rand_float(float low, float high) {
 		return low + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (high - low)));
 	}
+
+	bool Random::rand_bool() {
+		return rand_int(0, 1) == 0;
+	}
 }

@@ -9,11 +9,12 @@ namespace arkade {
 		Sound(const char* filename);
 		~Sound();
 
-		int					play_sound(bool loop = false);
+		int					play_sound(bool loop = false, int number_of_loops = -1);
+		void				stop_sound();
 		void				stop_sound(int channel);
 
 	private:
 		Mix_Chunk*			m_ptr_mix_chunk;
-		
+		int					m_channel;
 	};
 }
