@@ -37,7 +37,7 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 void SceneFrankysFirstSwim::on_setup() {
 	m_is_play_enabled = true;
 	m_scene_state = SCENE_STATE_NOT_READY;
-	m_is_sound_enabled = false;
+	//m_is_sound_enabled = false;
 
 	load_textures();
 	load_sounds();
@@ -57,7 +57,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
 	
 	// for debugging, show collision rectangles.
-	Graphics::instance()->visible_bounding_box(true);
+	Graphics::instance()->visible_bounding_box(false);
 
 }
 
@@ -122,6 +122,7 @@ void SceneFrankysFirstSwim::load_sounds() {
 	m_ptr_sound_coin_collected = new Sound("res/wav/coin10.wav");
 	m_ptr_sound_splash = new Sound("res/wav/splash1.wav");
 	m_ptr_sound_death = new Sound("res/wav/death.wav");
+	m_ptr_back_track = new Sound("res/wav/jungle.wav");
 }
 
 void SceneFrankysFirstSwim::load_dollar_spritepool() {
@@ -150,6 +151,8 @@ void SceneFrankysFirstSwim::set_stage() {
 	for each (Sprite* sprite in m_gameitems) {
 		register_sprite(sprite);
 	}
+
+	m_dollar_pool.release_all();
 }
 
 
@@ -227,6 +230,7 @@ void SceneFrankysFirstSwim::handle_player_ready_input(bool is_up_pressed) {
 		m_scene_state = SCENE_STATE_PLAYING;
 		enable_sprite_updates();
 		Graphics::instance()->animation_on(true);
+		m_ptr_back_track->play_sound(true);
 		return;
 	}
 }
@@ -401,10 +405,12 @@ void SceneFrankysFirstSwim::on_message(uint32_t message_type, MessageSink* ptr_s
 			m_ptr_sound_coin_collected->play_sound();
 
 		for (int c = 0; c < 5; c++) {
-			float heading = c < 3 ? Random::rand_float(0.0f, 180.0f) : Random::rand_float(180.0f, 359.0f);
 			DollarSprite* dollar_sprite = (DollarSprite*)m_dollar_pool.obtain();
-			dollar_sprite->init(sprite->position_x(), sprite->position_y(), heading);
-			register_sprite(dollar_sprite);
+			if (dollar_sprite) {
+				float heading = c < 3 ? Random::rand_float(0.0f, 180.0f) : Random::rand_float(180.0f, 359.0f);
+				dollar_sprite->init(sprite->position_x(), sprite->position_y(), heading);
+				register_sprite(dollar_sprite);
+			}
 		}
 
 		return;
@@ -428,6 +434,7 @@ void SceneFrankysFirstSwim::move_camera() {
 }
 
 void SceneFrankysFirstSwim::end_game() {
+	m_ptr_back_track->stop_sound();
 	m_is_play_enabled = false;
 	m_scene_state = SCENE_STATE_GAME_OVER;
 	Graphics::instance()->animation_on(false);

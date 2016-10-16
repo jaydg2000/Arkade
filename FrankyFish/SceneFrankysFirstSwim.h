@@ -27,11 +27,9 @@ using namespace arkade;
 
 #define FRANKY_START_Y               PLAYER_POSITION_Y
 #define FRANKY_START_X               PLAYER_POSITION_X
-#define WAVE_SPRITE_Y_POSITION       278
 #define CAMERA_NORMAL_Y_POSITION     0
-#define CAMERA_FOLLOW_THRESHOLD_TOP  450
 
-#define CAMERA_SPEED                 4.0f
+#define CAMERA_SPEED                 4.5f
 
 
 class SceneFrankysFirstSwim :
@@ -54,6 +52,7 @@ protected:
 
 private:
 	SpritePool								m_dollar_pool;
+	Sound*									m_ptr_back_track;
 	Sound*									m_ptr_sound_coin_collected;
 	Sound*									m_ptr_sound_splash;
 	Sound*									m_ptr_sound_death;

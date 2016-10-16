@@ -9,7 +9,7 @@ CoinSprite::CoinSprite()
 {
 	animator(new ForwardAnimator(6, 90));
 	//animator()->current_frame(Random::rand_int(0, 5));
-	collision_dim(20,10,25,45);
+	collision_dim(15,5,35,55);
 }
 
 

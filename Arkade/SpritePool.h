@@ -17,6 +17,7 @@ namespace arkade {
 		void									add(Sprite* sprite);
 		Sprite*									obtain();
 		void									release(Sprite*);
+		void									release_all();
 
 		list<Sprite*>*							get_sprite_list();
 

@@ -30,6 +30,14 @@ namespace arkade {
 		m_allocated_sprites.remove(ptr_sprite);
 	}
 
+	void SpritePool::release_all() {
+		for each (Sprite* ptr_sprite in m_allocated_sprites) {
+			ptr_sprite->on_pool_release();
+			m_available_sprites.push(ptr_sprite);
+		}
+		m_allocated_sprites.clear();
+	}
+
 	list<Sprite*>* SpritePool::get_sprite_list() {
 		return &m_allocated_sprites;
 	}
