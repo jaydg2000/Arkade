@@ -27,6 +27,8 @@ namespace arkade {
 		void							unregister_sprite(Sprite* ptr_sprite);
 		void							register_sprite_pool(SpritePool* ptr_sprite_pool);
 		void							millis_per_frame(uint32_t millis);
+		void							type(uint32_t type);
+		uint32_t						type();		
 
 	protected:
 		virtual void					on_setup();
@@ -40,6 +42,7 @@ namespace arkade {
 		virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 	private:
+		uint32_t						m_type;
 		uint32_t						m_millis_per_frame;
 		bool							m_is_updating_sprites;
 		bool							m_scene_is_ended;

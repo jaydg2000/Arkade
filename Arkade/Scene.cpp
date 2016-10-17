@@ -3,6 +3,7 @@
 namespace arkade {
 
 	Scene::Scene() {
+		m_type = 0;
 		m_scene_is_ended = false;
 		m_is_updating_sprites = true;	
 		m_is_paused = false;
@@ -10,6 +11,14 @@ namespace arkade {
 
 
 	Scene::~Scene() {		
+	}
+
+	void Scene::type(uint32_t type) {
+		m_type = type;
+	}
+
+	uint32_t Scene::type() {
+		return m_type;
 	}
 
 	void Scene::millis_per_frame(uint32_t millis) {

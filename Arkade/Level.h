@@ -21,6 +21,8 @@ namespace arkade {
 		virtual void				on_begin();
 		virtual void				on_end();
 		virtual void				on_cleanup();
+		virtual void				on_begin_scene(Scene* scene);
+		virtual void				on_end_scene(Scene* scene);
 
 	private:
 		uint32_t					m_millis_per_frame;

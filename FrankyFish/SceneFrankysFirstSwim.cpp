@@ -8,9 +8,11 @@
 */
 SceneFrankysFirstSwim::SceneFrankysFirstSwim()
 {
+	type(SCENE_TYPE_GAME);
 	m_ptr_collision_detector = new BoundingBoxCollisionDetector();	
 	m_ptr_multibox_collision_detector = new MultipleBoundingBoxCollisionDetector();
 	m_is_sound_enabled = true;
+	m_is_music_enabled = true;
 }
 
 
@@ -27,6 +29,11 @@ SceneFrankysFirstSwim::~SceneFrankysFirstSwim()
 	delete m_ptr_collision_detector;
 }
 
+
+void SceneFrankysFirstSwim::set_audio(bool is_sound_on, bool is_music_on) {
+	m_is_sound_enabled = is_sound_on;
+	m_is_music_enabled = is_music_on;
+}
 
 
 /*
@@ -230,7 +237,8 @@ void SceneFrankysFirstSwim::handle_player_ready_input(bool is_up_pressed) {
 		m_scene_state = SCENE_STATE_PLAYING;
 		enable_sprite_updates();
 		Graphics::instance()->animation_on(true);
-		m_ptr_back_track->play_sound(true);
+		if (m_is_music_enabled)
+			m_ptr_back_track->play_sound(true);
 		return;
 	}
 }
@@ -434,7 +442,8 @@ void SceneFrankysFirstSwim::move_camera() {
 }
 
 void SceneFrankysFirstSwim::end_game() {
-	m_ptr_back_track->stop_sound();
+	if (m_is_music_enabled)
+		m_ptr_back_track->stop_sound();
 	m_is_play_enabled = false;
 	m_scene_state = SCENE_STATE_GAME_OVER;
 	Graphics::instance()->animation_on(false);

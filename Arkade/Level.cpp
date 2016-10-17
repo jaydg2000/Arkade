@@ -3,7 +3,7 @@
 namespace arkade {
 
 	Level::Level()
-	{
+	{		
 		m_level_is_ended = false;
 	}
 
@@ -50,10 +50,18 @@ namespace arkade {
 
 	}
 
+	void Level::on_begin_scene(Scene* scene) {
+	}
+
+	void Level::on_end_scene(Scene* scene) {
+	}
+
 	void Level::run_scene() {
 		Scene* scene = m_scenes.front();
 		m_scenes.pop();
+		on_begin_scene(scene);
 		scene->run();
+		on_end_scene(scene);
 		if (m_scenes.empty())
 			stop();
 	}

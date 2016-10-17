@@ -277,6 +277,10 @@ namespace arkade {
 		return &m_frame_center;
 	}
 
+	bool Sprite::intersects_with(uint32_t x, uint32_t y) {
+		return (SDL_HasIntersection(&(make_rect(x, y, 1, 1)), collision_rect()) == SDL_TRUE);		
+	}
+
 	void Sprite::on_setup() {
 	}
 

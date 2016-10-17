@@ -20,6 +20,8 @@
 
 using namespace arkade;
 
+#define SCENE_TYPE_GAME              5
+
 #define SCENE_STATE_NOT_READY        0
 #define SCENE_STATE_READY_PLAYER_ONE 1
 #define SCENE_STATE_PLAYING          2
@@ -38,6 +40,8 @@ class SceneFrankysFirstSwim :
 public:
 	SceneFrankysFirstSwim();
 	~SceneFrankysFirstSwim();
+
+	void									set_audio(bool is_sound_on, bool is_music_on);
 
 protected:
 	virtual void							on_setup();
@@ -72,6 +76,7 @@ private:
 	uint32_t								m_score;
 	bool									m_is_play_enabled;
 	bool									m_is_sound_enabled;	
+	bool									m_is_music_enabled;
 
 	void									load_textures();
 	void									load_sounds();

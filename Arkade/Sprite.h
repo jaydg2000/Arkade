@@ -58,6 +58,7 @@ namespace arkade {
 									float upper_x,
 									float lower_y,
 									float upper_y);
+		bool					intersects_with(uint32_t x, uint32_t y);
 		
 		virtual Rect*			source_rect();
 		virtual Rect*			destination_rect();

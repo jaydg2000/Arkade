@@ -2,13 +2,11 @@
 
 namespace arkade {
 
-	InputManager::InputManager()
-	{
+	InputManager::InputManager() {
 	}
 
 
-	InputManager::~InputManager()
-	{
+	InputManager::~InputManager() {
 	}
 
 	void InputManager::update() {
@@ -25,6 +23,10 @@ namespace arkade {
 					m_mouse_button_right_down = true;
 				}
 			}
+			if (event.type == SDL_MOUSEMOTION) {
+				m_mouse_x = event.motion.x;
+				m_mouse_y = event.motion.y;
+			}
 		}
 	}
 
@@ -39,5 +41,13 @@ namespace arkade {
 			return m_mouse_button_left_down;
 		if (button == MOUSE_BUTTON_INPUT_RIGHT)
 			return m_mouse_button_right_down;
+	}
+
+	uint32_t InputManager::mouse_x() {
+		return m_mouse_x;
+	}
+
+	uint32_t InputManager::mouse_y() {
+		return m_mouse_y;
 	}
 }
