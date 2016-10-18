@@ -11,8 +11,9 @@ namespace arkade {
 		Level();
 		~Level();
 
-		void						run();
+		bool						run();
 		void						stop();
+		void						end();
 		void						add_scene(Scene* scene);
 		void						millis_per_frame(uint32_t millis);
 
@@ -27,6 +28,7 @@ namespace arkade {
 	private:
 		uint32_t					m_millis_per_frame;
 		bool						m_level_is_ended;
+		bool						m_game_is_ended;
 		queue<Scene*>				m_scenes;
 
 		void						run_scene();

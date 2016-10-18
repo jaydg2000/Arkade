@@ -109,8 +109,8 @@ void SceneFrankysFirstSwim::load_textures() {
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/game_over.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
+	//ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
+	//ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_jelly.png", RGB(255, 255, 255));

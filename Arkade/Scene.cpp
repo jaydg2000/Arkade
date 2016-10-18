@@ -5,6 +5,7 @@ namespace arkade {
 	Scene::Scene() {
 		m_type = 0;
 		m_scene_is_ended = false;
+		m_game_is_ended = false;
 		m_is_updating_sprites = true;	
 		m_is_paused = false;
 	}
@@ -25,7 +26,7 @@ namespace arkade {
 		m_millis_per_frame = millis;
 	}
 
-	void Scene::run() {
+	bool Scene::run() {
 		Graphics*		ptr_graphics = Graphics::instance();
 		Audio*			ptr_audio = Audio::instance();
 		TextureCache*	ptr_texture_cache = TextureCache::instance();
@@ -52,10 +53,17 @@ namespace arkade {
 		}
 		cleanup_sprites();
 		on_cleanup();
+
+		return !m_game_is_ended;
 	}
 
 	void Scene::stop() {
 		m_scene_is_ended = true;
+	}
+
+	void Scene::end() {
+		m_game_is_ended = true;
+		stop();
 	}
 
 	void Scene::register_sprite(Sprite* sprite) {

@@ -5,6 +5,7 @@ namespace arkade {
 	Level::Level()
 	{		
 		m_level_is_ended = false;
+		m_game_is_ended = false;
 	}
 
 
@@ -16,17 +17,24 @@ namespace arkade {
 		m_millis_per_frame = millis;
 	}
 
-	void Level::run() {
+	bool Level::run() {
 		on_setup();
 		on_begin();
 		while (!m_level_is_ended)
 			run_scene();
 		on_end();
 		on_cleanup();
+
+		return !m_game_is_ended;
 	}
 
 	void Level::stop() {
 		m_level_is_ended = true;
+	}
+
+	void Level::end() {
+		m_game_is_ended = true;
+		stop();
 	}
 
 	void Level::add_scene(Scene* scene) {
@@ -60,7 +68,8 @@ namespace arkade {
 		Scene* scene = m_scenes.front();
 		m_scenes.pop();
 		on_begin_scene(scene);
-		scene->run();
+		if (!scene->run())
+			stop(); // end()????
 		on_end_scene(scene);
 		if (m_scenes.empty())
 			stop();

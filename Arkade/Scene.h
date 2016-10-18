@@ -16,8 +16,9 @@ namespace arkade {
 		Scene();
 		~Scene();
 
-		void							run();
+		bool							run();
 		void							stop();
+		void							end();
 		void							disable_sprite_updates();
 		void							enable_sprite_updates();
 		void							pause();
@@ -46,6 +47,7 @@ namespace arkade {
 		uint32_t						m_millis_per_frame;
 		bool							m_is_updating_sprites;
 		bool							m_scene_is_ended;
+		bool							m_game_is_ended;
 		bool							m_is_paused;
 		list<Sprite*>					m_sprite_list;
 		Timer							m_frame_timer;

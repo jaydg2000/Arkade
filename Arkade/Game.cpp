@@ -71,7 +71,8 @@ namespace arkade {
 	void Game::run_level() {
 		Level* level = m_levels.front();
 		m_levels.pop();
-		level->run();
+		if (!level->run())
+			stop();
 		if (m_levels.empty())
 			stop();
 	}
