@@ -56,6 +56,7 @@ protected:
 
 private:
 	SpritePool								m_dollar_pool;
+	SpritePool								m_plants;
 	Sound*									m_ptr_back_track;
 	Sound*									m_ptr_sound_coin_collected;
 	Sound*									m_ptr_sound_splash;
@@ -81,6 +82,7 @@ private:
 	void									load_textures();
 	void									load_sounds();
 	void									load_dollar_spritepool();
+	void									load_plant_spritepool();
 	void									load_scene();
 	void									move_camera();
 	void									register_message_handling();
@@ -89,6 +91,7 @@ private:
 	void									handle_player_ready_input(bool is_up_pressed);
 	void									handle_playing_input(bool is_up_pressed);
 	void									handle_game_over_input(bool is_up_pressed);
+	void									add_plant();
 	void									end_game();
 };
 

@@ -58,6 +58,7 @@ TileMap* TileMapRepository::load_map(const char* m_psz_filename, TileSet* tile_s
 
 			if (item_type) {
 				Tile* tile = new Tile(tile_def, flip);
+				tile->rotation(rotation);
 				map->tile_at(col, row, tile);
 
 				//float tile_render_x = col * TILE_WIDTH;

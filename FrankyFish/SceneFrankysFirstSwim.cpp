@@ -49,6 +49,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	load_textures();
 	load_sounds();
 	load_dollar_spritepool();
+	load_plant_spritepool();
 
 	m_scene_repository = new SceneRepository("res/scene/scene1.scn");
 	m_ptr_franky = new FrankySprite();
@@ -109,6 +110,11 @@ void SceneFrankysFirstSwim::load_textures() {
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/game_over.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/plant-1.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/plant-2.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/plant-3.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/plant-4.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/plant-5.png", RGB(255, 255, 255));
 	//ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
 	//ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
@@ -137,6 +143,24 @@ void SceneFrankysFirstSwim::load_dollar_spritepool() {
 		DollarSprite* dollar = new DollarSprite();
 		m_dollar_pool.add(dollar);
 	}
+}
+
+
+void SceneFrankysFirstSwim::load_plant_spritepool() {
+	m_plants.add(new Sprite("res/sprites/plant-1.png", make_size(269, 360)));
+	m_plants.add(new Sprite("res/sprites/plant-1.png", make_size(269, 360)));
+
+	m_plants.add(new Sprite("res/sprites/plant-2.png", make_size(269, 360)));
+	m_plants.add(new Sprite("res/sprites/plant-2.png", make_size(269, 360)));
+
+	m_plants.add(new Sprite("res/sprites/plant-3.png", make_size(192, 336)));
+	m_plants.add(new Sprite("res/sprites/plant-3.png", make_size(192, 336)));
+
+	m_plants.add(new Sprite("res/sprites/plant-4.png", make_size(192, 336)));
+	m_plants.add(new Sprite("res/sprites/plant-4.png", make_size(192, 336)));
+
+	m_plants.add(new Sprite("res/sprites/plant-5.png", make_size(153, 315)));
+	m_plants.add(new Sprite("res/sprites/plant-5.png", make_size(153, 315)));
 }
 
 /*
@@ -289,6 +313,19 @@ void SceneFrankysFirstSwim::on_update() {
 	if (m_scene_state != SCENE_STATE_PLAYING)
 		return;	
 
+	list<Sprite*>* plant_list = m_plants.get_sprite_list();
+	for(list<Sprite*>::iterator itr = plant_list->begin(); itr != plant_list->end(); ++itr)	
+	{
+		Sprite* sprite = (Sprite*)(*itr);
+		if (sprite->position_x() < Camera::instance()->position_x() - 300) {			
+			m_plants.release_deferred(sprite);
+		}
+	}
+
+	m_plants.flush();
+
+	add_plant();
+
 	move_camera();
 	
 /*	if (m_ptr_franky->position_y() < CAMERA_FOLLOW_THRESHOLD_TOP) {
@@ -314,6 +351,9 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 	Camera* ptr_camera = Camera::instance();
 
 	ptr_graphics->render(m_ptr_background);
+
+	ptr_graphics->render(&m_plants);
+
 
 	Rect tile_source_rect;	
 	tile_source_rect.x = 0;
@@ -439,6 +479,15 @@ void SceneFrankysFirstSwim::move_camera() {
 	ptr_camera->move_relative_x(CAMERA_SPEED);
 	m_ptr_franky->move_relative_x(CAMERA_SPEED);
 	//m_ptr_background->x(m_ptr_background->x() + CAMERA_SPEED);
+}
+
+void SceneFrankysFirstSwim::add_plant() {
+	if (Random::rand_int(0, 9) == 0) {
+		Sprite* plant_sprite = m_plants.obtain();
+		if (plant_sprite) {
+			plant_sprite->position(1050 + Camera::instance()->position_x(), 1216);
+		}
+	}
 }
 
 void SceneFrankysFirstSwim::end_game() {

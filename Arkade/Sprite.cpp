@@ -36,6 +36,7 @@ namespace arkade {
 
 	Sprite::Sprite(const char* filename, Size& frame_size) : Sprite() {		
 		texture(filename);
+		
 		m_frame_size.x = frame_size.x;
 		m_frame_size.y = frame_size.y;
 

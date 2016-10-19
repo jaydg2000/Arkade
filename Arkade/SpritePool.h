@@ -17,7 +17,9 @@ namespace arkade {
 		void									add(Sprite* sprite);
 		Sprite*									obtain();
 		void									release(Sprite*);
+		void									release_deferred(Sprite*);
 		void									release_all();
+		void									flush();
 
 		list<Sprite*>*							get_sprite_list();
 
@@ -32,6 +34,7 @@ namespace arkade {
 	private:
 		queue<Sprite*>							m_available_sprites;
 		list<Sprite*>							m_allocated_sprites;
+		list<Sprite*>							m_deferred_released_sprites;
 	};
 
 }
