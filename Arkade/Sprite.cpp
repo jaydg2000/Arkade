@@ -14,7 +14,8 @@ namespace arkade {
 			m_bounds_upper_y = -1;
 
 		m_rotation = 0;
-		m_scale = 1.0f;
+		m_scale_x = 1.0f;
+		m_scale_y = 1.0f;
 
 		m_enable_bounds_checking = false;
 		m_flip = FLIP_NONE;
@@ -214,12 +215,17 @@ namespace arkade {
 		m_z_order = z_order;
 	}
 
-	void Sprite::scale(float scale) {
-		m_scale = scale;
+	void Sprite::scale(float scale_x, float scale_y) {
+		m_scale_x = scale_x;
+		m_scale_y = scale_y;
 	}
 	
-	float Sprite::scale() {
-		return m_scale;
+	float Sprite::scale_x() {
+		return m_scale_x;
+	}
+
+	float Sprite::scale_y() {
+		return m_scale_y;
 	}
 
 	Flip Sprite::flip() {

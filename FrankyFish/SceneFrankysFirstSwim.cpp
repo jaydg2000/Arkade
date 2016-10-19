@@ -161,6 +161,10 @@ void SceneFrankysFirstSwim::load_plant_spritepool() {
 
 	m_plants.add(new Sprite("res/sprites/plant-5.png", make_size(153, 315)));
 	m_plants.add(new Sprite("res/sprites/plant-5.png", make_size(153, 315)));
+
+	//for (Sprite* sprite : *m_plants.get_sprite_list()) {
+	//	sprite->scale(1.0f, 1.50f);
+	//}
 }
 
 /*
@@ -354,7 +358,6 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 
 	ptr_graphics->render(&m_plants);
 
-
 	Rect tile_source_rect;	
 	tile_source_rect.x = 0;
 	tile_source_rect.y = 0;
@@ -482,10 +485,10 @@ void SceneFrankysFirstSwim::move_camera() {
 }
 
 void SceneFrankysFirstSwim::add_plant() {
-	if (Random::rand_int(0, 9) == 0) {
+	if (Random::rand_int(0, 99) == 0) {
 		Sprite* plant_sprite = m_plants.obtain();
 		if (plant_sprite) {
-			plant_sprite->position(1050 + Camera::instance()->position_x(), 1216);
+			plant_sprite->position(1050 + Camera::instance()->position_x(), 846);
 		}
 	}
 }

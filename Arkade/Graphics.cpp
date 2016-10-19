@@ -175,8 +175,8 @@ namespace arkade {
 			if (!clip(src_rect, dest_rect, clip_rect))
 				return;
 
-		//dest_rect->w = dest_rect->w * sprite->scale();
-		//dest_rect->h = dest_rect->h * sprite->scale();
+		//dest_rect->w = dest_rect->w * sprite->scale_x();
+		//dest_rect->h = dest_rect->h * sprite->scale_y();
 
 		sprite->on_pre_render();
 
