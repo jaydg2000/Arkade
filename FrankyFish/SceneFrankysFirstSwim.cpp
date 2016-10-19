@@ -419,7 +419,7 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 		ptr_graphics->render(m_ptr_game_over);
 	}
 
-	ptr_graphics->render(m_score, m_ptr_numbers, 30, 4, 500.0f, 10.0f);
+	ptr_graphics->render(m_score, m_ptr_numbers, 30, 4, 500.0f, 15.0f);
 }
 
 void SceneFrankysFirstSwim::on_end() {
