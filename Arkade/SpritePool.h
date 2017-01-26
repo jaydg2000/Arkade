@@ -25,7 +25,7 @@ namespace arkade {
 
 		template<typename Functor>
 		void									for_each(Functor functor) {
-			for each (Sprite* sprite in m_allocated_sprites)
+			for (Sprite* sprite : m_allocated_sprites)
 			{
 				functor(sprite);
 			}

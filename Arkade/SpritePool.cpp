@@ -43,7 +43,7 @@ namespace arkade {
 	}
 
 	void SpritePool::release_all() {
-		for each (Sprite* ptr_sprite in m_allocated_sprites) {
+		for (Sprite* ptr_sprite : m_allocated_sprites) {
 			ptr_sprite->on_pool_release();
 			m_available_sprites.push(ptr_sprite);
 		}

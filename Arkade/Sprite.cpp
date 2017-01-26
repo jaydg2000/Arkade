@@ -33,6 +33,7 @@ namespace arkade {
 		m_y = 0;
 
 		m_use_screen_positioning = false;
+		m_is_visible = true;
 	}
 
 	Sprite::Sprite(const char* filename, Size& frame_size) : Sprite() {		
