@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -91,7 +90,7 @@ Sprite* SceneRepository::make_gamesprite(int type, int x, int y) {
 		case ITEM_JELLY_FISH:
 			sprite = new JellyFishSprite();
 			break;
-		case ITEM_BIRD:
+/*		case ITEM_BIRD:
 			sprite = new BirdSprite();
 			break;
 		case ITEM_BUG_1:
@@ -102,7 +101,7 @@ Sprite* SceneRepository::make_gamesprite(int type, int x, int y) {
 			break;
 		case ITEM_BUG_3:
 			sprite = new BugThreeSprite();
-			break;
+			break; */
 		case ITEM_COIN:
 			sprite = new CoinSprite();
 			break;

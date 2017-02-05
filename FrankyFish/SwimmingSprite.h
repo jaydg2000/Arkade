@@ -11,7 +11,7 @@ class SwimmingSprite :
 	public GameSprite
 {
 public:
-	SwimmingSprite(const char* filename, Size& frame_size);
+	SwimmingSprite(const char* filename, const Size& frame_size);
 	~SwimmingSprite();
 
 	void							speed(float speed);

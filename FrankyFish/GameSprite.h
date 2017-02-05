@@ -8,7 +8,7 @@ using namespace arkade;
 class GameSprite : public Sprite	
 {
 public:
-	GameSprite(const char* file_name, Size& frame_size);
+	GameSprite(const char* file_name, const Size& frame_size);
 	~GameSprite();
 
 	Rect*						collision_rect() override;

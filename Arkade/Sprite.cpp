@@ -36,7 +36,7 @@ namespace arkade {
 		m_is_visible = true;
 	}
 
-	Sprite::Sprite(const char* filename, Size& frame_size) : Sprite() {		
+	Sprite::Sprite(const char* filename, const Size& frame_size) : Sprite() {		
 		texture(filename);
 		
 		m_frame_size.x = frame_size.x;

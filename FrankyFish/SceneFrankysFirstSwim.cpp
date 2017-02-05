@@ -64,7 +64,7 @@ void SceneFrankysFirstSwim::on_setup() {
 	Camera::instance()->position(0, CAMERA_NORMAL_Y_POSITION);
 	
 	// for debugging, show collision rectangles.
-	Graphics::instance()->visible_bounding_box(true);
+	Graphics::instance()->visible_bounding_box(false);
 
 }
 
@@ -264,11 +264,20 @@ void SceneFrankysFirstSwim::on_render(Graphics* ptr_graphics) {
 	}
 
 	if (m_scene_state == SCENE_STATE_GAME_OVER) {
-		m_ptr_game_over->x(ptr_camera->position_x() + 150);
+		m_ptr_game_over->x(ptr_camera->position_x() + 153);
+		m_ptr_top_score->x(ptr_camera->position_x() + 142);
 		ptr_graphics->render(m_ptr_game_over);
-	}
+		ptr_graphics->render(m_ptr_top_score);
 
-	ptr_graphics->render(m_score, m_ptr_numbers, 30, 4, 500.0f, 15.0f);
+		int score_x = 500.0f - get_padding_for_number(m_score);
+		int top_score_x = 500.0f - get_padding_for_number(m_top_score);
+
+		ptr_graphics->render(m_score, m_ptr_numbers, 30, 4, score_x, 645.0f);
+		ptr_graphics->render(m_top_score, m_ptr_numbers, 30, 4, top_score_x, 725.0f);
+	}
+	else {
+		ptr_graphics->render(m_score, m_ptr_numbers, 30, 4, 500.0f, 15.0f);
+	}
 }
 
 void SceneFrankysFirstSwim::on_end() {

@@ -5,7 +5,7 @@
 class RewardSprite : public GameSprite
 {
 public:
-	RewardSprite(const char* filename, Size& frame_size, uint32_t points);
+	RewardSprite(const char* filename, const Size& frame_size, uint32_t points);
 	~RewardSprite();
 
 	uint32_t						points();

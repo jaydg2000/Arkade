@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "SplashScene.h"
 #include <TextureCache.h>
 

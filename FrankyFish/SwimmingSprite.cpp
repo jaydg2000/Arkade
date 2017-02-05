@@ -1,8 +1,7 @@
-#include "stdafx.h"
 #include "SwimmingSprite.h"
 #include <Camera.h>
 
-SwimmingSprite::SwimmingSprite(const char* filename, Size& frame_size)
+SwimmingSprite::SwimmingSprite(const char* filename, const Size& frame_size)
 	: GameSprite(filename, frame_size)
 {
 	m_speed = Random::rand_float(1.0f, 1.25f);

@@ -15,7 +15,7 @@ namespace arkade {
 	class Sprite : public MessageSink, public MessageBroadcaster {
 	public:
 		Sprite();
-		Sprite(const char* filename, Size& frame_size);
+		Sprite(const char* filename, const Size& frame_size);
 		~Sprite();
 
 		void					texture(const char* filename, RGB back_color = RGB::Magenta);

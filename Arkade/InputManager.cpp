@@ -3,6 +3,7 @@
 namespace arkade {
 
 	InputManager::InputManager() {
+		m_device_close = false;
 	}
 
 
@@ -27,6 +28,9 @@ namespace arkade {
 				m_mouse_x = event.motion.x;
 				m_mouse_y = event.motion.y;
 			}
+			if (event.type == SDLK_AC_BACK) {
+				m_device_close = true;
+			}
 		}
 	}
 
@@ -50,4 +54,9 @@ namespace arkade {
 	uint32_t InputManager::mouse_y() {
 		return m_mouse_y;
 	}
+	
+	bool InputManager::is_device_closing_app() {
+		return m_device_close;
+	}
+
 }

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "CoinSprite.h"
 #include <Random.h>
 #include <ForwardAnimator.h>

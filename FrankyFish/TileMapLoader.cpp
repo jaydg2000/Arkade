@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "TileMapLoader.h"
 #include "Scene1TileData.h"
 

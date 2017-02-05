@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "TileSet.h"
 
 
@@ -21,7 +20,7 @@ TileDef* TileSet::add_tile(uint32_t type_id, Texture* ptr_texture, uint32_t w, u
 }
 
 TileDef* TileSet::find_tile(uint32_t type_id) {
-	for each (TileDef* td in m_tile_defs) {
+	for (TileDef* td : m_tile_defs) {
 		if (td->tile_type() == type_id)
 			return td;
 	}

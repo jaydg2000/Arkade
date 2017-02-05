@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "MultipleBoundingBoxCollisionDetector.h"
 
 
@@ -17,7 +16,7 @@ bool MultipleBoundingBoxCollisionDetector::detect(Collidable* c1, Collidable* c2
 		return false;
 
 	list<Rect*> rects = c1->collision_regions();
-	for each(Rect* ptr_rect in rects) {
+	for (Rect* ptr_rect : rects) {
 		if (c2->has_collided(ptr_rect))
 			return true;		
 	}

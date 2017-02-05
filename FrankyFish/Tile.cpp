@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Tile.h"
 
 Tile::Tile() {}
@@ -74,7 +73,7 @@ bool Tile::have_collided(Rect* source_rect) {
 
 	// tight detection
 	list<Rect*>* collision_rect_list = m_tile_definition->collision_regions();
-	for each (Rect* collision_rect in *collision_rect_list) {
+	for (Rect* collision_rect : *collision_rect_list) {
 
 		flip_collision_region(collision_rect, &flipped_rect);
 
@@ -92,7 +91,7 @@ bool Tile::have_collided(Rect* source_rect) {
 list<Rect*>* Tile::collision_regions() {
 	list<Rect*>* new_list = new list<Rect*>();
 
-	for each (Rect* rect in *m_tile_definition->collision_regions()) {
+	for (Rect* rect : *m_tile_definition->collision_regions()) {
 		Rect* new_rect = new Rect();
 		flip_collision_region(rect, new_rect);
 		new_list->push_back(new_rect);

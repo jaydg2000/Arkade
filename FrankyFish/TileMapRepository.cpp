@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "TileMapRepository.h"
 #include <fstream>
 #include <string>

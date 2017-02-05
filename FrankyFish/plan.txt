@@ -3,10 +3,15 @@
 +Sound effect for coin grab.
 +End of game after colliding with tile freezes game.
  Clean up sprites.
- Complete level 1.
  New font for score.
  Death scene
  Octupus
 +Jellyfish
  Move Jellyfish up and down.
+ Complete level
+ Restart level when completed at faster speed
+ Final score after 3 times through level
+ Admob
+ Change to use button to restart after death
+ Make Android compat changes
 

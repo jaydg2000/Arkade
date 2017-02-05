@@ -1,10 +1,10 @@
-#include "stdafx.h"
 #include "FrankyFishScene.h"
 
 
 FrankyFishScene::FrankyFishScene() : Scene()
 {
 	m_camera_speed = 4.5f;
+	m_score_keeper = new ScoreKeeper();
 }
 
 
@@ -25,15 +25,16 @@ void FrankyFishScene::load_common_textures() {
 	ptr_texture_cache->push("res/sprites/plant-5.png", RGB(255, 255, 255));
 	//ptr_texture_cache->push("res/sprites/sprite_ground.png", RGB(255, 255, 255));
 	//ptr_texture_cache->push("res/sprites/sprite_wave.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/numbers.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/numbers_red.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_jelly.png", RGB(255, 255, 255));
 
 	// load various images.
 	m_ptr_background = new Image("res/sprites/gradient.png", make_size(720, 1280), 0.0f, 0.0f);
 	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y - 125);
-	m_ptr_game_over = new Image("res/sprites/game_over.png", make_size(415, 183), 290.0f, 500.0f);
-	m_ptr_numbers = new Image("res/sprites/numbers.png", make_size(300, 48));
+	m_ptr_game_over = new Image("res/sprites/game_over.png", make_size(415, 183), 290.0f, 300.0f);
+	m_ptr_top_score = new Image("res/sprites/top_score.png", make_size(432, 232), 150.0f, 600.0f);
+	m_ptr_numbers = new Image("res/sprites/numbers_red.png", make_size(300, 48));
 
 	m_ptr_background->use_screen_positioning(true);
 }
@@ -95,6 +96,8 @@ void FrankyFishScene::load_scene() {
 			}
 		}
 	}
+
+	m_top_score = m_score_keeper->read();
 }
 
 void FrankyFishScene::move_camera() {
@@ -152,6 +155,11 @@ void FrankyFishScene::end_game() {
 	disable_sprite_updates();
 	if (m_is_sound_enabled)
 		m_ptr_sound_death->play_sound();
+
+	if (m_score > m_top_score) {
+		m_score_keeper->save(m_score);
+		m_top_score = m_score;
+	}
 }
 
 void FrankyFishScene::handle_player_ready_input(bool is_up_pressed) {
@@ -195,4 +203,19 @@ void FrankyFishScene::handle_game_over_input(bool is_up_pressed) {
 			return;
 		}
 	}
+}
+
+uint32_t FrankyFishScene::get_padding_for_number(uint32_t nbr) {
+	uint32_t digits = 0;
+
+	if (nbr < 10)
+		digits = 0;
+	else if (nbr < 100)
+		digits = 1;
+	else if (nbr < 1000)
+		digits = 2;
+	else if (nbr < 10000)
+		digits = 3;
+
+	return digits * 30;
 }

@@ -21,6 +21,7 @@
 #include "TileMapLoader.h"
 #include "SceneLoader.h"
 #include "MultipleBoundingBoxCollisionDetector.h"
+#include "ScoreKeeper.h"
 
 #define SCENE_TYPE_GAME              5
 #define SCENE_STATE_NOT_READY        0
@@ -46,6 +47,7 @@ protected:
 	list<Sprite*>							m_gameitems;
 	uint32_t								m_scene_state;
 	uint32_t								m_score;
+	uint32_t								m_top_score;
 	SpritePool								m_dollar_pool;
 	SpritePool								m_plants;
 	Sound*									m_ptr_back_track;
@@ -58,10 +60,12 @@ protected:
 	CollisionDetector*						m_ptr_collision_detector;
 	MultipleBoundingBoxCollisionDetector*	m_ptr_multibox_collision_detector;
 	SceneLoader*							m_scene_repository;
+	ScoreKeeper*							m_score_keeper;
 	FrankySprite*							m_ptr_franky;
 	Image*									m_ptr_background;
 	Image*									m_ptr_ready;
 	Image*									m_ptr_game_over;
+	Image*									m_ptr_top_score;
 	Image*									m_ptr_numbers;
 	float									m_camera_speed;
 	
@@ -80,6 +84,7 @@ protected:
 	void									handle_game_over_input(bool is_up_pressed);
 	void									add_plant();
 	void									end_game();
+	uint32_t								get_padding_for_number(uint32_t nbr);
 
 };
 

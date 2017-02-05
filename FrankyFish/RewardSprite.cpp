@@ -1,9 +1,8 @@
-#include "stdafx.h"
 #include "RewardSprite.h"
 #include "MessageTypes.h"
 
 
-RewardSprite::RewardSprite(const char* filename, Size& frame_size, uint32_t points)
+RewardSprite::RewardSprite(const char* filename, const Size& frame_size, uint32_t points)
 	:GameSprite(filename, frame_size)
 {
 	m_points = points;
