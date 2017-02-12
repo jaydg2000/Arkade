@@ -4,8 +4,6 @@
 SplashScene::SplashScene() {
 	type(SCENE_TYPE_SPLASH);
 	m_swim_left = false;
-	m_is_sound_on = true;
-	m_is_music_on = true;
 }
 
 
@@ -15,13 +13,15 @@ SplashScene::~SplashScene() {
 void SplashScene::on_setup() {
 	TextureCache* ptr_texture_cache = TextureCache::instance();
 
-	ptr_texture_cache->push("res/sprites/offon.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/sound_off_on.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/sound_dlg.png", RGB(255,255,255));
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/play_button.png", RGB(255,255,255));
 	m_ptr_background = new Image("res/sprites/gradient.png", make_size(720, 1280), 0.0f, 0.0f);
-	m_ptr_image_sound = new Image("res/sprites/config_sound.png", make_size(432,232), 150, 400);
-	m_ptr_sound_on_off = new Sprite("res/sprites/offon.png", make_size(118, 47));
-	m_ptr_music_on_off = new Sprite("res/sprites/offon.png", make_size(118, 47));
-	m_ptr_play = new Sprite("res/sprites/play.png", make_size(432,128));
+	m_ptr_image_sound = new Image("res/sprites/sound_dlg.png", make_size(432,232), 150, 400);
+	m_ptr_sound_on_off = new Sprite("res/sprites/sound_off_on.png", make_size(56, 64));
+	m_ptr_music_on_off = new Sprite("res/sprites/sound_off_on.png", make_size(56, 64));
+	m_ptr_play = new ButtonSprite("res/sprites/play_button.png", make_size(271,90));
 	m_ptr_franky = new FrankySprite();
 }
 
@@ -29,13 +29,13 @@ void SplashScene::on_begin() {
 	m_ptr_sound_on_off->animator(new StaticAnimator(2));
 	m_ptr_music_on_off->animator(new StaticAnimator(2));
 
-	m_ptr_sound_on_off->position(440, 450);
-	m_ptr_music_on_off->position(440, 535);
+	m_ptr_sound_on_off->position(440, 445);
+	m_ptr_music_on_off->position(440, 520);
 
-	m_ptr_sound_on_off->animator()->current_frame(1);
-	m_ptr_music_on_off->animator()->current_frame(1);
+	m_ptr_sound_on_off->animator()->current_frame(m_is_sound_on ? 1 : 0);
+	m_ptr_music_on_off->animator()->current_frame(m_is_music_on ? 1 : 0);
 
-	m_ptr_play->position(150, 700);
+	m_ptr_play->position(230, 700);
 
 	m_ptr_franky->position(-100, 100);
 }
@@ -74,7 +74,7 @@ void SplashScene::on_check_input(InputManager* ptr_input_manager) {
 			}
 		}
 
-		if (m_ptr_play->intersects_with(mx, my)) {
+		if (m_ptr_play->is_clicked(mx, my)) {
 			stop();
 		}
 	}
@@ -86,6 +86,11 @@ bool SplashScene::is_sound_on() {
 
 bool SplashScene::is_music_on() {
 	return m_is_music_on;
+}
+
+void SplashScene::set_audio(bool is_sound_on, bool is_music_on) {
+	m_is_sound_on = is_sound_on;
+	m_is_music_on = is_music_on;
 }
 
 void SplashScene::on_update() {
@@ -103,7 +108,6 @@ void SplashScene::on_render(Graphics* ptr_graphics) {
 }
 
 void SplashScene::on_end() {
-
 }
 
 void SplashScene::on_cleanup() {

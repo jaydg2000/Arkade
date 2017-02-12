@@ -2,6 +2,7 @@
 #include "GameSprite.h"
 #include "SpriteTypes.h"
 #include "MessageTypes.h"
+#include <Sound.h>
 
 using namespace arkade;
 
@@ -40,6 +41,9 @@ private:
 	float				m_rotation_increment;
 	bool				m_is_dead;
 	bool				m_is_immortal;
+	Timer				m_swoosh_timer;
+	Sound*				m_ptr_sound_swoosh;
+
 
 	void				tilt();
 };

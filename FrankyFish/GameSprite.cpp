@@ -31,3 +31,21 @@ Rect* GameSprite::collision_rect() {
 
 	return &m_collision_rect;
 }
+
+void GameSprite::enable_sound(bool enabled) {
+	m_is_sound_enabled = enabled;
+}
+
+bool GameSprite::is_sound_enabled() {
+	return m_is_sound_enabled;
+}
+
+void GameSprite::on_set_stage() {
+	position(m_start_x, m_start_y);
+}
+
+void GameSprite::start_position(float x, float y) {
+	m_start_x = x;
+	m_start_y = y;
+	position(x,y);
+}

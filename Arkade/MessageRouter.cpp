@@ -59,13 +59,13 @@ namespace arkade {
 			auto new_pair = make_pair(message_type, new_list);
 			m_sink_map.insert(new_pair);
 		}
-		return &(m_sink_map.at(message_type));
+		return &(m_sink_map[message_type]);
 	}
 
 	list<MessageSink*>* MessageRouter::get_message_type_list(uint32_t message_type) {
 		if (!contains_message_type(message_type)) {
 			return nullptr;
 		}
-		return &(m_sink_map.at(message_type));
+		return &(m_sink_map[message_type]);
 	}
 }

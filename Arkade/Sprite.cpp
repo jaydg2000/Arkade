@@ -286,7 +286,8 @@ namespace arkade {
 	}
 
 	bool Sprite::intersects_with(uint32_t x, uint32_t y) {
-		return (SDL_HasIntersection(&(make_rect(x, y, 1, 1)), collision_rect()) == SDL_TRUE);		
+		const Rect rect = make_rect(x, y, 1, 1);
+		return (SDL_HasIntersection(&rect, collision_rect()) == SDL_TRUE);		
 	}
 
 	void Sprite::on_setup() {

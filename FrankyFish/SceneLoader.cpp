@@ -43,7 +43,7 @@ list<Sprite*> SceneLoader::load_gameitems() {
 
 Sprite* SceneLoader::make_gamesprite(int type, int x, int y) {
 
-	Sprite* sprite;
+	GameSprite* sprite;
 
 	switch (type) {
 	case ITEM_SHARK:
@@ -61,23 +61,20 @@ Sprite* SceneLoader::make_gamesprite(int type, int x, int y) {
 	case ITEM_JELLY_FISH:
 		sprite = new JellyFishSprite();
 		break;
-/*	case ITEM_BIRD:
-		sprite = new BirdSprite();
+	case ITEM_BOULDER:
+		sprite = new BoulderSprite();
 		break;
-	case ITEM_BUG_1:
-		sprite = new BugOneSprite();
+	case ITEM_SPIKE:
+		sprite = new SpikeSprite();
 		break;
-	case ITEM_BUG_2:
-		sprite = new BugTwoSprite();
-		break;
-	case ITEM_BUG_3:
-		sprite = new BugThreeSprite();
-		break;*/
 	case ITEM_COIN:
 		sprite = new CoinSprite();
 		break;
+	case ITEM_HEART:
+		sprite = new HeartSprite();
+		break;
 	}
 
-	sprite->position(x, y);
+	sprite->start_position(x, y);
 	return sprite;
 }

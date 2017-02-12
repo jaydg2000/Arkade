@@ -15,3 +15,7 @@ CoinSprite::CoinSprite()
 CoinSprite::~CoinSprite()
 {
 }
+
+void CoinSprite::on_set_stage() {
+	animator()->reset();
+}

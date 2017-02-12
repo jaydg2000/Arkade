@@ -27,6 +27,6 @@ namespace arkade {
 	}
 
 	bool Random::rand_bool() {
-		return rand_int(0, 1) == 0;
+		return rand_int(0, 2) == 0;
 	}
 }

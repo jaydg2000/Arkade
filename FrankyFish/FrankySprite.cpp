@@ -13,6 +13,8 @@ FrankySprite::FrankySprite():
 	this->reset();
 	this->m_rotation_increment = -(140.0f / (MAX_MOMENTUM - MIN_MOMENTUM));
 	this->collision_dim(30, 45, 70, 45);
+	m_swoosh_timer.start(1200);
+	m_ptr_sound_swoosh = new Sound("res/wav/swim.wav");	
 }
 
 FrankySprite::~FrankySprite() {
@@ -22,6 +24,13 @@ void FrankySprite::boost() {
 	if (m_is_dead) {
 		rest();
 		return;
+	}
+
+	if (m_swoosh_timer.has_elapsed() && is_sound_enabled()) {
+		m_ptr_sound_swoosh->play_sound();
+	}
+	else {
+		m_swoosh_timer.start();
 	}
 
 	m_momentum = MAX_MOMENTUM; 
@@ -60,6 +69,12 @@ void FrankySprite::on_collision(Sprite* sprite) {
 		uint32_t points = ((RewardSprite*)sprite)->points();
 		Message* message = obtain_message();
 		message->set(MESSAGE_TYPE_SCORE, this, &points);
+		send_message(message);
+	}
+
+	if (sprite->type() == SPRITE_TYPE_EXTRA) {
+		Message* message = obtain_message();
+		message->set(MESSAGE_TYPE_EXTRA_LIFE, this, sprite);
 		send_message(message);
 	}
 

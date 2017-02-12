@@ -5,11 +5,13 @@
 #include <StaticAnimator.h>
 #include <Random.h>
 #include "FrankySprite.h"
-
-using namespace arkade;
+#include "ButtonSprite.h"
 
 #define SCENE_TYPE_SPLASH			2
 #define FRANKY_SPLASH_SPEED         2.8f
+
+using namespace arkade;
+
 class SplashScene : public Scene {
 public:
 	SplashScene();
@@ -17,6 +19,7 @@ public:
 
 	bool							is_sound_on();
 	bool							is_music_on();
+	void							set_audio(bool is_sound_on, bool is_music_on);
 
 protected:
 	virtual void					on_setup();
@@ -32,7 +35,7 @@ private:
 	Image*							m_ptr_image_sound;
 	Sprite*							m_ptr_sound_on_off;
 	Sprite*							m_ptr_music_on_off;
-	Sprite*							m_ptr_play;
+	ButtonSprite*					m_ptr_play;
 	FrankySprite*					m_ptr_franky;
 	bool							m_swim_left;
 	bool							m_is_sound_on;

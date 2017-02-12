@@ -34,6 +34,7 @@ uint32_t ScoreKeeper::read() {
 		ifstream file;
 		file.open(fullpath, ios::binary);
 		file >> score;
+		file.close();
 	}
 
 	return score;

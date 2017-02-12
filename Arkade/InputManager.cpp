@@ -56,7 +56,9 @@ namespace arkade {
 	}
 	
 	bool InputManager::is_device_closing_app() {
-		return m_device_close;
+		bool is_closing = m_device_close;
+		m_device_close = false;
+		return is_closing;
 	}
 
 }

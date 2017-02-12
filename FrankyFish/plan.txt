@@ -1,4 +1,4 @@
- Sound effect for boost.
++Sound effect for boost.
 +Sound effect for fish chomp.
 +Sound effect for coin grab.
 +End of game after colliding with tile freezes game.
@@ -13,5 +13,7 @@
  Final score after 3 times through level
  Admob
  Change to use button to restart after death
- Make Android compat changes
-
++Make Android compat changes
+ Create release build
+ Style buttons
+ Style message boxes

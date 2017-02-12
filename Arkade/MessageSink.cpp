@@ -19,9 +19,11 @@ namespace arkade {
 	void MessageSink::flush() {
 		while (!m_message_queue.empty()) {
 			Message* ptr_message = m_message_queue.front();
-			on_message(ptr_message->message_type(), ptr_message->sender(), ptr_message->data());
-			ptr_message->release();
-			m_message_queue.pop();
+			if (ptr_message) {
+				on_message(ptr_message->message_type(), ptr_message->sender(), ptr_message->data());
+				ptr_message->release();
+				m_message_queue.pop();
+			}
 		}
 	}
 

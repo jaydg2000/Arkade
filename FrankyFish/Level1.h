@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Level.h>
+#include "ConfigSettings.h"
+
 
 using namespace arkade;
 
@@ -19,6 +21,7 @@ protected:
 	bool							music_on();
 
 private:
+	ConfigSettings*					m_config_settings;
 	Scene*							m_ptr_scene_splash;
 	Scene*							m_ptr_scene_franky_first_swim;
 	bool							m_is_sound_on;

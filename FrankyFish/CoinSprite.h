@@ -6,5 +6,7 @@ class CoinSprite : public RewardSprite
 public:
 	CoinSprite();
 	~CoinSprite();
+
+	void					on_set_stage() override;
 };
 

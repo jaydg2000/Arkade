@@ -31,7 +31,7 @@ namespace arkade {
 			m_texture_map.insert(pair);
 		}
 
-		return m_texture_map.at(name);
+		return m_texture_map[name];
 	}
 
 	void TextureCache::push(const char* name, RGB rgb) {

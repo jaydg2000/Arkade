@@ -59,6 +59,7 @@ namespace arkade {
 
 	void Scene::stop() {
 		m_scene_is_ended = true;
+		on_end();
 	}
 
 	void Scene::end() {
