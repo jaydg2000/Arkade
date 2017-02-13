@@ -1,5 +1,6 @@
 #include "SplashScene.h"
 #include <TextureCache.h>
+#include <ForwardAnimator.h>
 
 SplashScene::SplashScene() {
 	type(SCENE_TYPE_SPLASH);
@@ -23,6 +24,8 @@ void SplashScene::on_setup() {
 	m_ptr_music_on_off = new Sprite("res/sprites/sound_off_on.png", make_size(56, 64));
 	m_ptr_play = new ButtonSprite("res/sprites/play_button.png", make_size(271,90));
 	m_ptr_franky = new FrankySprite();
+
+	m_ptr_play->animator(new ForwardAnimator(2, 500));
 }
 
 void SplashScene::on_begin() {
@@ -34,7 +37,7 @@ void SplashScene::on_begin() {
 
 	m_ptr_sound_on_off->animator()->current_frame(m_is_sound_on ? 1 : 0);
 	m_ptr_music_on_off->animator()->current_frame(m_is_music_on ? 1 : 0);
-
+		
 	m_ptr_play->position(230, 700);
 
 	m_ptr_franky->position(-100, 100);

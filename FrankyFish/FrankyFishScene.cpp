@@ -42,7 +42,7 @@ void FrankyFishScene::load_common_textures() {
 	ptr_texture_cache->push("res/sprites/plant-4.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/plant-5.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/numbers_water.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/dollar.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/little_coin.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/sprite_jelly.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/boulder.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/spike.png", RGB(255, 255, 255));
@@ -287,9 +287,10 @@ void FrankyFishScene::on_setup() {
 	m_ptr_franky = new FrankySprite();
 	m_ptr_franky->enable_sound(m_is_sound_enabled);
 
-	m_ptr_play = new ButtonSprite("res/sprites/play.png", make_size(432, 128));
+	m_ptr_play = new ButtonSprite("res/sprites/play_button.png", make_size(271, 90));
+	m_ptr_play->animator(new ForwardAnimator(2, 500));
 	m_ptr_play->use_screen_positioning(true);
-	m_ptr_play->position(150, 900);
+	m_ptr_play->position(230, 900);
 	
 	m_ptr_try_again = new ButtonSprite("res/sprites/continue.png", make_size(432, 128));	
 	m_ptr_try_again->use_screen_positioning(true);
@@ -368,6 +369,8 @@ void FrankyFishScene::on_check_input(InputManager* ptr_input_manager) {
 
 	case SCENE_STATE_READY_PLAYER_ONE:
 		handle_player_ready_input(ptr_input_manager, is_up_pressed);
+		// cheesy workaround alert. sprite updates are disabled when in ready state.
+		m_ptr_play->animate();
 		break;
 	}
 }

@@ -1,8 +1,8 @@
 #include "DollarSprite.h"
 
 
-DollarSprite::DollarSprite() 
-: GameSprite("res/sprites/dollar.png", make_size(22,38)) {
+DollarSprite::DollarSprite()
+	: GameSprite("res/sprites/little_coin.png", make_size(22, 21)) {
 
 	m_heading_to_move = Random::rand_float(0.0f, 359.0f);
 }

@@ -13,7 +13,7 @@ FrankySprite::FrankySprite():
 	this->reset();
 	this->m_rotation_increment = -(140.0f / (MAX_MOMENTUM - MIN_MOMENTUM));
 	this->collision_dim(30, 45, 70, 45);
-	m_swoosh_timer.start(1200);
+	m_swoosh_timer.start(1500);
 	m_ptr_sound_swoosh = new Sound("res/wav/swim.wav");	
 }
 
