@@ -1,18 +1,17 @@
+#include <iostream>
 #include "Font.h"
 #include "TextureCache.h"
 
 namespace arkade {
 
-	Font::Font(const char* texture_file_name, Size cell_size)
+	Font::Font(const std::string &font_path, int size)
 	{
-		m_ptr_texture = TextureCache::instance()->obtain(texture_file_name);
-		m_cell_size.x = cell_size.x;
-		m_cell_size.y = cell_size.y;
-
-		m_source_rect.y = 0;
-		m_source_rect.w = m_cell_size.x;
-		m_source_rect.h = m_cell_size.y;
-
+		_ptr_texture = nullptr;
+		_font = TTF_OpenFont(font_path.c_str(), size);
+		if (!_font)
+		{
+			std:cerr << "failed to load font: " << font_path.c_str() << SDL_GetError();
+		}
 	}
 
 
@@ -20,16 +19,28 @@ namespace arkade {
 	{
 	}
 
-	Rect* Font::source_rect_for_character(char c) {
-		m_source_rect.x = ((c - 32) * m_cell_size.x);
-		return &m_source_rect;
+	TTF_Font* Font::font()
+	{
+		return _font;
 	}
 
-	Texture* Font::texture() {
-		return m_ptr_texture;
+	int Font::size()
+	{
+		return _size;
 	}
 
-	Size* Font::cell_size() {
-		return &m_cell_size;
+	Texture* Font::make_text_texture(const char* psz_text, SDL_Color text_color)
+	{
+		if (_ptr_texture)
+		{
+			SDL_DestroyTexture(_ptr_texture);
+			_ptr_texture = nullptr;
+		}
+		SDL_Surface* text_surface = TTF_RenderText_Solid(_font, psz_text, text_color);
+		_ptr_texture = Graphics::instance()->create_texture_from_surface(text_surface);
+		SDL_FreeSurface(text_surface);
+		return _ptr_texture;
 	}
+
+
 }

@@ -1,0 +1,19 @@
+v1.0.1
+sourceimage:D:\Projects\Arkade\FrankyFish\res\sprites\jellyfish_spritesheet.png
+framewidth:138
+frameheight:244
+animationtechnique:Forward
+animationspeed:200
+rotation:0
+BEGIN FRAMES
+0;5;3
+1;152;3
+2;300;3
+3;446;3
+4;595;3
+5;4;252
+6;153;252
+7;300;252
+8;446;252
+9;594;252
+END FRAMES

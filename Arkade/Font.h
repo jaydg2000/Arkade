@@ -1,23 +1,25 @@
 #pragma once
 #include "ArkadeTypes.h"
+#include <SDL_ttf.h>
+#include <SDL.h>
+
 
 namespace arkade {
-
-	// supports ascii characters 32 through 126 inclusive.
+	
 	class Font
 	{
 	public:
-		Font(const char* texture_file_name, Size cell_size);
+		Font(const std::string &font_path, int size);
 		~Font();
 
-		Rect*			source_rect_for_character(char c);
-		Texture*		texture();
-		Size*			cell_size();
+		TTF_Font*			font();
+		int					size();
+		Texture*			make_text_texture(const char* psz_text, SDL_Color = {255,0,0,255});
 
 	private:
-		Size			m_cell_size;
-		Rect			m_source_rect;
-		Texture*		m_ptr_texture;
+		TTF_Font*			_font;
+		int					_size;
+		Texture*			_ptr_texture;
 
 	};
 

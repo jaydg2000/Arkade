@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,32 +22,32 @@
     <ProjectGuid>{7FF4AD75-B2B0-4490-8973-2F113ED0D18A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>FrankyFish</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Arkade\1.0\include;C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_image-2.0.0\include;C:\SDL\SDL2_mixer-2.0.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>C:\Arkade\1.0\lib;C:\SDL\SDL2-2.0.4\lib\x86;C:\SDL\SDL2_image-2.0.0\lib\x86;C:\SDL\SDL2_mixer-2.0.0\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>C:\SDL\SDL2_ttf-2.0.15\include;C:\Arkade\1.0\include;C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_image-2.0.0\include;C:\SDL\SDL2_mixer-2.0.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL\SDL2_ttf-2.0.15\lib\x86;C:\Arkade\1.0\lib;C:\SDL\SDL2-2.0.4\lib\x86;C:\SDL\SDL2_image-2.0.0\lib\x86;C:\SDL\SDL2_mixer-2.0.0\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -97,7 +97,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib Arkade.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib Arkade.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,11 +152,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BirdSprite.h" />
+    <ClInclude Include="BoulderSprite.h" />
     <ClInclude Include="BugOneSprite.h" />
     <ClInclude Include="BugThreeSprite.h" />
     <ClInclude Include="BugTwoSprite.h" />
+    <ClInclude Include="ButtonSprite.h" />
     <ClInclude Include="Collidable.h" />
+    <ClInclude Include="ConfigSettings.h" />
     <ClInclude Include="DollarSprite.h" />
+    <ClInclude Include="FileStorage.h" />
+    <ClInclude Include="FrankyFishScene.h" />
+    <ClInclude Include="HeartSprite.h" />
+    <ClInclude Include="LittleHeartSprite.h" />
+    <ClInclude Include="Scene1SpriteData.h" />
     <ClInclude Include="HighScore.h" />
     <ClInclude Include="JellyFishSprite.h" />
     <ClInclude Include="MultipleBoundingBoxCollisionDetector.h" />
@@ -169,9 +177,13 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="MessageTypes.h" />
-    <ClInclude Include="SceneFrankysFirstSwim.h" />
+    <ClInclude Include="Scene1TileData.h" />
+    <ClInclude Include="SceneLoader.h" />
     <ClInclude Include="SceneRepository.h" />
+    <ClInclude Include="ScoreKeeper.h" />
     <ClInclude Include="SharkSprite.h" />
+    <ClInclude Include="SpikeSprite.h" />
+    <ClInclude Include="SplashScene.h" />
     <ClInclude Include="SpriteTypes.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SwimmingSprite.h" />
@@ -179,6 +191,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileDef.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileMapLoader.h" />
     <ClInclude Include="TileMapRepository.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="TileSetRepository.h" />
@@ -188,12 +201,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BirdSprite.cpp" />
+    <ClCompile Include="BoulderSprite.cpp" />
     <ClCompile Include="BugOneSprite.cpp" />
     <ClCompile Include="BugThreeSprite.cpp" />
     <ClCompile Include="BugTwoSprite.cpp" />
+    <ClCompile Include="ButtonSprite.cpp" />
     <ClCompile Include="Collidable.cpp" />
+    <ClCompile Include="ConfigSettings.cpp" />
     <ClCompile Include="DollarSprite.cpp" />
+    <ClCompile Include="FrankyFishScene.cpp" />
+    <ClCompile Include="HeartSprite.cpp" />
     <ClCompile Include="JellyFishSprite.cpp" />
+    <ClCompile Include="LittleHeartSprite.cpp" />
     <ClCompile Include="MultipleBoundingBoxCollisionDetector.cpp" />
     <ClCompile Include="RewardSprite.cpp" />
     <ClCompile Include="CoinSprite.cpp" />
@@ -203,9 +222,12 @@
     <ClCompile Include="FrankySprite.cpp" />
     <ClCompile Include="GameSprite.cpp" />
     <ClCompile Include="Level1.cpp" />
-    <ClCompile Include="SceneFrankysFirstSwim.cpp" />
+    <ClCompile Include="SceneLoader.cpp" />
     <ClCompile Include="SceneRepository.cpp" />
+    <ClCompile Include="ScoreKeeper.cpp" />
     <ClCompile Include="SharkSprite.cpp" />
+    <ClCompile Include="SpikeSprite.cpp" />
+    <ClCompile Include="SplashScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -216,6 +238,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileDef.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileMapLoader.cpp" />
     <ClCompile Include="TileMapRepository.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="TileSetRepository.cpp" />

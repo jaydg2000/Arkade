@@ -35,7 +35,7 @@ void FrankyFishScene::load_common_textures() {
 	ptr_texture_cache->push("res/sprites/sprite_bird3.png", RGB(0, 0, 0));
 	ptr_texture_cache->push("res/sprites/sprite_franky_swim_right.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/ready.png", RGB(255, 255, 255));
-	ptr_texture_cache->push("res/sprites/game_over.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/gameover_dlg.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/plant-1.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/plant-2.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/plant-3.png", RGB(255, 255, 255));
@@ -47,12 +47,13 @@ void FrankyFishScene::load_common_textures() {
 	ptr_texture_cache->push("res/sprites/boulder.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/spike.png", RGB(255, 255, 255));
 	ptr_texture_cache->push("res/sprites/heart.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/little_heart.png", RGB(255, 255, 255));
+	ptr_texture_cache->push("res/sprites/retry_button.png", RGB(255, 255, 255));
 
 	// load various images.
 	m_ptr_background = new Image("res/sprites/gradient.png", make_size(720, 1280), 0.0f, 0.0f);
 	m_ptr_ready = new Image("res/sprites/ready.png", make_size(363, 198), FRANKY_START_X + 50, FRANKY_START_Y - 125);
-	m_ptr_game_over = new Image("res/sprites/game_over.png", make_size(415, 183), 290.0f, 200.0f);
-	m_ptr_top_score = new Image("res/sprites/top_score.png", make_size(432, 232), 150.0f, 500.0f);
+	m_ptr_game_over = new Image("res/sprites/gameover_dlg.png", make_size(432, 326), 290.0f, 400.0f);
 	m_ptr_numbers = new Image("res/sprites/numbers_water.png", make_size(370, 53));
 
 	m_ptr_background->use_screen_positioning(true);
@@ -69,6 +70,13 @@ void FrankyFishScene::load_dollar_spritepool() {
 	for (int c = 0; c < 24; c++) {
 		DollarSprite* dollar = new DollarSprite();
 		m_dollar_pool.add(dollar);
+	}
+}
+
+void FrankyFishScene::load_heart_spritepool() {
+	for (int c = 0; c < 5; c++) {
+		LittleHeartSprite* little_heart = new LittleHeartSprite();
+		m_heart_pool.add(little_heart);
 	}
 }
 
@@ -131,6 +139,7 @@ void FrankyFishScene::register_message_handling() {
 	register_for_messages(MESSAGE_TYPE_REWARD_COLLECTED);
 	register_for_messages(MESSAGE_TYPE_DOLLAR_COMPLETED);
 	register_for_messages(MESSAGE_TYPE_EXTRA_LIFE);
+	register_for_messages(MESSAGE_TYPE_HEART_COMPLETED);
 }
 
 void FrankyFishScene::set_stage() {
@@ -280,6 +289,7 @@ void FrankyFishScene::on_setup() {
 	load_common_textures();
 	load_common_sounds();
 	load_dollar_spritepool();
+	load_heart_spritepool();
 	load_plant_spritepool();
 
 	m_scene_repository = new SceneLoader();
@@ -292,9 +302,10 @@ void FrankyFishScene::on_setup() {
 	m_ptr_play->use_screen_positioning(true);
 	m_ptr_play->position(230, 900);
 	
-	m_ptr_try_again = new ButtonSprite("res/sprites/continue.png", make_size(432, 128));	
+	m_ptr_try_again = new ButtonSprite("res/sprites/retry_button.png", make_size(271, 90));	
+	m_ptr_try_again->animator(new ForwardAnimator(2, 500));
 	m_ptr_try_again->use_screen_positioning(true);
-	m_ptr_try_again->position(142, 800);
+	m_ptr_try_again->position(230, 800);
 
 	m_gameitems = m_scene_repository->load_gameitems();
 
@@ -365,6 +376,9 @@ void FrankyFishScene::on_check_input(InputManager* ptr_input_manager) {
 
 	case SCENE_STATE_GAME_OVER:
 		handle_game_over_input(ptr_input_manager, is_up_pressed);
+		// cheesy workaround alert.
+		m_ptr_try_again->animate();
+		
 		break;
 
 	case SCENE_STATE_READY_PLAYER_ONE:
@@ -484,6 +498,7 @@ void FrankyFishScene::on_render(Graphics* ptr_graphics) {
 
 	ptr_graphics->render(m_ptr_franky);
 	ptr_graphics->render(&m_dollar_pool);
+	ptr_graphics->render(&m_heart_pool);
 
 	if (m_scene_state == SCENE_STATE_READY_PLAYER_ONE) {
 		m_ptr_ready->x(m_ptr_franky->position_x()+50);
@@ -494,17 +509,18 @@ void FrankyFishScene::on_render(Graphics* ptr_graphics) {
 
 	if (m_scene_state == SCENE_STATE_GAME_OVER) {
 		m_ptr_game_over->x(ptr_camera->position_x() + 153);
-		m_ptr_top_score->x(ptr_camera->position_x() + 142);
+		//m_ptr_top_score->x(ptr_camera->position_x() + 142);
 		//m_ptr_try_again->position_x(ptr_camera->position_x() + 142);
 		ptr_graphics->render(m_ptr_game_over);
-		ptr_graphics->render(m_ptr_top_score);
+		//ptr_graphics->render(m_ptr_top_score);
 		ptr_graphics->render(m_ptr_try_again);
+		//ptr_graphics->render(m_ptr_play);
 
 		int score_x = 500.0f - get_padding_for_number(m_score);
 		int top_score_x = 500.0f - get_padding_for_number(m_top_score);
 
-		ptr_graphics->render(m_score, m_ptr_numbers, 37, 4, score_x, 540.0f);
-		ptr_graphics->render(m_top_score, m_ptr_numbers, 37, 4, top_score_x, 630.0f);
+		ptr_graphics->render(m_score, m_ptr_numbers, 37, 4, score_x, 563.0f);
+		ptr_graphics->render(m_top_score, m_ptr_numbers, 37, 4, top_score_x, 618.0f);
 	}
 	else {
 		ptr_graphics->render(m_score, m_ptr_numbers, 37, 4, 500.0f, 15.0f);
@@ -559,11 +575,26 @@ void FrankyFishScene::on_message(uint32_t message_type, MessageSink* ptr_sender,
 		unregister_sprite(sprite);
 		m_dollar_pool.release(sprite);
 	}
+	if (message_type == MESSAGE_TYPE_HEART_COMPLETED) {
+		LittleHeartSprite* sprite = (LittleHeartSprite*)ptr_sender;
+		unregister_sprite(sprite);
+		m_heart_pool.release(sprite);
+	}
 	if (message_type == MESSAGE_TYPE_EXTRA_LIFE) {
 		Sprite* heart_sprite = (Sprite*)ptr_data;
 		m_respawn_position.x = heart_sprite->position_x();
 		m_respawn_position.y = heart_sprite->position_y();
 		heart_sprite->is_visible(false);
+
+		for (int c = 0; c < 5; c++) {
+			LittleHeartSprite* little_heart_sprite = (LittleHeartSprite*)m_heart_pool.obtain();
+			if (little_heart_sprite) {
+				float heading = c < 3 ? Random::rand_float(0.0f, 180.0f) : Random::rand_float(180.0f, 359.0f);
+				little_heart_sprite->init(heart_sprite->position_x(), heart_sprite->position_y(), heading);
+				register_sprite(little_heart_sprite);
+			}
+		}
+
 	}
 }
 

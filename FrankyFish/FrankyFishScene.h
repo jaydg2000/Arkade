@@ -11,6 +11,7 @@
 #include "Geometry.h"
 #include "FrankySprite.h"
 #include "DollarSprite.h"
+#include "LittleHeartSprite.h"
 #include "ButtonSprite.h"
 #include "FishGame.h"
 #include "SceneRepository.h"
@@ -53,6 +54,7 @@ private:
 	uint32_t								m_score;
 	uint32_t								m_top_score;
 	SpritePool								m_dollar_pool;
+	SpritePool								m_heart_pool;
 	SpritePool								m_plants;
 	Sound*									m_ptr_back_track;
 	Sound*									m_ptr_sound_coin_collected;
@@ -68,7 +70,6 @@ private:
 	Image*									m_ptr_background;
 	Image*									m_ptr_ready;
 	Image*									m_ptr_game_over;
-	Image*									m_ptr_top_score;
 	Image*									m_ptr_numbers;
 	ButtonSprite*							m_ptr_play;
 	ButtonSprite*							m_ptr_try_again;
@@ -78,6 +79,7 @@ private:
 	void									load_common_textures();
 	void									load_common_sounds();
 	void									load_dollar_spritepool();
+	void									load_heart_spritepool();
 	void									load_plant_spritepool();
 	virtual void							load_scene();
 	virtual void							set_stage();

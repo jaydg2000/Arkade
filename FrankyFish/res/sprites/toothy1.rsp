@@ -1,0 +1,17 @@
+v1.0.1
+sourceimage:D:\Projects\Arkade\FrankyFish\res\sprites\work_toothy_fish_1.png
+framewidth:262
+frameheight:182
+animationtechnique:Forward
+animationspeed:500
+rotation:0
+BEGIN FRAMES
+0;63;56
+1;387;59
+2;694;57
+3;989;62
+4;68;399
+5;383;388
+6;696;385
+7;1018;380
+END FRAMES

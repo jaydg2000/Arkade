@@ -1,0 +1,14 @@
+v1.0.1
+sourceimage:D:\Projects\Arkade\FrankyFish\res\sprites\octopuss_flail_spritesheet_1004px_by_893px_per_frame.png
+framewidth:232
+frameheight:221
+animationtechnique:Forward
+animationspeed:125
+rotation:0
+BEGIN FRAMES
+0;81;85
+1;331;85
+2;581;85
+3;832;85
+4;80;307
+END FRAMES

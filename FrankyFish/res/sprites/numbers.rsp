@@ -1,0 +1,19 @@
+v1.0.1
+sourceimage:D:\Projects\Arkade\FrankyFish\res\sprites\work_numbers.png
+framewidth:30
+frameheight:48
+animationtechnique:Forward
+animationspeed:500
+rotation:0
+BEGIN FRAMES
+0;76;81
+1;107;81
+2;138;81
+3;170;81
+4;201;82
+5;232;82
+6;263;82
+7;294;82
+8;324;82
+9;356;82
+END FRAMES

@@ -60,9 +60,16 @@ namespace arkade {
 
 		m_ptr_renderer = SDL_CreateRenderer(m_ptr_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if (!m_ptr_renderer) {
-			SDL_Quit();
 			std::cout << "Could not create renderer: " << SDL_GetError();
+			SDL_Quit();
 		}
+
+		if (TTF_Init() < 0) {
+			std::cout << "Unable to init SDL_TTF: " << SDL_GetError();
+			SDL_Quit();
+			return 4;
+		}
+
 
 		pen_color(RGB(0x00, 0x00, 0x00, 0xFF));
 
@@ -91,6 +98,11 @@ namespace arkade {
 		RGB rgb;
 		SDL_GetRenderDrawColor(m_ptr_renderer, &rgb.r, &rgb.g, &rgb.b, &rgb.a);
 		return rgb;
+	}
+
+	SDL_Texture* Graphics::create_texture_from_surface(SDL_Surface* surface)
+	{
+		return SDL_CreateTextureFromSurface(m_ptr_renderer, surface);
 	}
 
 	SDL_Texture* Graphics::load_texture(const string& path, RGB back_color) const {
@@ -249,30 +261,13 @@ namespace arkade {
 			);
 	}
 
-	void Graphics::render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font) {
-		Texture* ptr_texture = ptr_font->texture();
-		Rect destination_rect;
-		destination_rect.x = screen_x;
-		destination_rect.y = screen_y;
-		destination_rect.w = ptr_font->cell_size()->x;
-		destination_rect.h = ptr_font->cell_size()->y;
-		uint16_t pos = 0;
-		do {
-			Rect* source_rect = ptr_font->source_rect_for_character(psz_text[0]);
-			destination_rect.x = (destination_rect.w * pos);
-			pos++;
-
-			SDL_RenderCopyEx(
-				m_ptr_renderer,
-				ptr_texture,
-				source_rect,
-				&destination_rect,
-				0,
-				NULL,
-				SDL_FLIP_NONE
-				);
-
-		} while (psz_text);
+	void Graphics::render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font, SDL_Color text_color, uint32_t rotation) {
+		Rect src_rect;
+		Texture* texture = ptr_font->make_text_texture(psz_text, text_color);
+		SDL_QueryTexture(texture, nullptr, nullptr, &src_rect.w, &src_rect.h);
+		src_rect.x = 0;
+		src_rect.y = 0;
+		render(texture, screen_x, screen_y, &src_rect, FLIP_NONE, rotation);		
 	}
 
 	void Graphics::render(uint32_t nbr, Image* digit_source, uint8_t digit_width, uint8_t desired_places, float x, float y, uint8_t padding) {

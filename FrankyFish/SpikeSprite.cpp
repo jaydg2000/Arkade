@@ -5,7 +5,7 @@ SpikeSprite::SpikeSprite()
 	: GameSprite("res/sprites/spike.png", make_size(65, 112))
 {
 	type(SPRITE_TYPE_PREDATOR);
-	m_speed = Random::rand_float(.5f, 3.0f);
+	m_speed = Random::rand_float(1.5f, 3.0f);
 	collision_dim(10, 15, 35, 85);
 }
 

@@ -1,0 +1,19 @@
+v1.0.1
+sourceimage:D:\Projects\Arkade\FrankyFish\res\sprites\numbers_water_work.png
+framewidth:37
+frameheight:53
+animationtechnique:Forward
+animationspeed:500
+rotation:0
+BEGIN FRAMES
+0;56;42
+1;145;44
+2;226;44
+3;308;44
+4;394;43
+5;473;42
+6;552;41
+7;634;42
+8;65;170
+9;165;167
+END FRAMES

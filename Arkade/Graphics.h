@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <memory>
 #include "ArkadeTypes.h"
@@ -25,13 +26,14 @@ namespace arkade
 		void									uninitialize();
 		void									pen_color(RGB rgb);
 		RGB										pen_color();
+		SDL_Texture*							create_texture_from_surface(SDL_Surface* surface);
 		SDL_Texture*							load_texture(const std::string& path, RGB back_color = RGB(0xFF, 0x00, 0xFF)) const;
 		void									push_pen_color(RGB rgb);
 		void									pop_pen_color();
 		void									render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation);
 		void									render(Sprite* ptr_sprite);
 		void									render(SpritePool* ptr_sprite_pool);
-		void									render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font);
+		void									render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font, SDL_Color text_color = {255,255,255,255}, uint32_t rotation = 0);
 		void									render(Image* ptr_image);
 		void									render(Image* ptr_image, Size size);
 		void									render(uint32_t nbr, Image* digit_source, uint8_t digit_width, uint8_t desired_places, float x, float y, uint8_t padding = 10);

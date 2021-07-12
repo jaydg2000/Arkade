@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,32 +22,32 @@
     <ProjectGuid>{DD2A318B-B851-408B-82BD-FFEF64EC8423}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Arkade</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_image-2.0.0\include;C:\SDL\SDL2_mixer-2.0.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>C:\SDL\SDL2-2.0.4\lib\x86;C:\SDL\SDL2_image-2.0.0\lib\x86;C:\SDL\SDL2_mixer-2.0.0\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>C:\SDL\SDL2-2.0.14\include;C:\SDL\SDL2_image-2.0.0\include;C:\SDL\SDL2_mixer-2.0.0\include;C:\SDL\SDL2_ttf-2.0.15\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL\SDL2-2.0.14\lib\x86;C:\SDL\SDL2_image-2.0.0\lib\x86;C:\SDL\SDL2_mixer-2.0.0\lib\x86;C:\SDL\SDL2_ttf-2.0.15\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_mixer-2.0.0\include;C:\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
@@ -95,9 +95,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(MSBuildProjectDirectory)\*.h C:\Arkade\1.0\include
-copy /Y $(OutputPath)*.lib C:\Arkade\1.0\lib
-copy /Y $(OutputPath)*.pdb C:\Arkade\1.0\lib</Command>
+      <Command>copy /Y "$(MSBuildProjectDirectory)\*.h" C:\Arkade\1.0\include
+copy /Y "$(OutputPath)*.lib" C:\Arkade\1.0\lib
+copy /Y "$(OutputPath)*.pdb" C:\Arkade\1.0\lib</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -200,6 +200,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpritePool.h" />
+    <ClInclude Include="StaticAnimator.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
@@ -235,6 +236,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpritePool.cpp" />
+    <ClCompile Include="StaticAnimator.cpp" />
     <ClCompile Include="TextureCache.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
