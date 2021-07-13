@@ -14,6 +14,7 @@ namespace arkade {
 
 		void			initialize(GameAttributes& game_attributes);
 		void			run();
+		virtual void	run_no_pipeline();
 		void			stop();
 		void			add_level(Level*);
 

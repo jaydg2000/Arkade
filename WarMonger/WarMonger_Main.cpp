@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 {
 	WarMongerGame game;
 
-	game.run();
+	game.run_no_pipeline();
 
 	return 0;
 }

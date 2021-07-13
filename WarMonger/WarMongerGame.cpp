@@ -1,5 +1,6 @@
 #include "WarMongerGame.h"
 #include "WarMonger_Main.h"
+#include "SceneWar.h"
 
 WarMongerGame::WarMongerGame() {
 	GameAttributes attr;
@@ -15,10 +16,13 @@ WarMongerGame::~WarMongerGame() {
 }
 
 void WarMongerGame::on_setup() {
-	_level_war = new LevelWar();
-	add_level(_level_war);
 }
 
 void WarMongerGame::on_cleanup() {
-	delete _level_war;
+}
+
+void WarMongerGame::run_no_pipeline()
+{
+	SceneWar scene;
+	scene.run();
 }

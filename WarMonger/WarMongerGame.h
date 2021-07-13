@@ -1,6 +1,5 @@
 #pragma once
 #include <Game.h>
-#include "LevelWar.h"
 
 using namespace arkade;
 
@@ -9,12 +8,11 @@ public:
 	WarMongerGame();
 	~WarMongerGame();
 
+	virtual void			run_no_pipeline();
+
 protected:
 	virtual void			on_setup();
 	virtual void			on_cleanup();
 
-private:
-	LevelWar*				_level_war;
 
 };
-

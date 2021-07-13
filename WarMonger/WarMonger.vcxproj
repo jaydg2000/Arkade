@@ -142,7 +142,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LevelWar.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="SceneWar.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -151,7 +150,6 @@
     <ClCompile Include="WarMonger_Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LevelWar.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneWar.h" />

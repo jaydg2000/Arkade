@@ -55,6 +55,10 @@ namespace arkade {
 		on_cleanup();
 	}
 
+	void Game::run_no_pipeline()
+	{
+	}
+
 	void Game::stop() {
 		m_game_is_ended = true;
 		Graphics::instance()->uninitialize();

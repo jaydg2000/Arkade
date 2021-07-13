@@ -21,9 +21,6 @@
     <ClCompile Include="WarMongerGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelWar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SceneWar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,9 +42,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WarMonger_Main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelWar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneWar.h">
