@@ -4,16 +4,14 @@
 
 namespace arkade {
 
-	Font::Font(const std::string &font_path, int size)
+	Font::Font(const char* font_path, int size)
 	{
-		_ptr_texture = nullptr;
-		_font = TTF_OpenFont(font_path.c_str(), size);
+		_font = TTF_OpenFont(font_path, size);
 		if (!_font)
 		{
-			std:cerr << "failed to load font: " << font_path.c_str() << SDL_GetError();
+			std:cerr << "failed to load font: " << font_path << SDL_GetError();
 		}
 	}
-
 
 	Font::~Font()
 	{
@@ -31,16 +29,9 @@ namespace arkade {
 
 	Texture* Font::make_text_texture(const char* psz_text, SDL_Color text_color)
 	{
-		if (_ptr_texture)
-		{
-			SDL_DestroyTexture(_ptr_texture);
-			_ptr_texture = nullptr;
-		}
 		SDL_Surface* text_surface = TTF_RenderText_Solid(_font, psz_text, text_color);
-		_ptr_texture = Graphics::instance()->create_texture_from_surface(text_surface);
+		Texture* ptr_texture = Graphics::instance()->create_texture_from_surface(text_surface);
 		SDL_FreeSurface(text_surface);
-		return _ptr_texture;
+		return ptr_texture;
 	}
-
-
 }

@@ -270,6 +270,11 @@ namespace arkade {
 		render(texture, screen_x, screen_y, &src_rect, FLIP_NONE, rotation);		
 	}
 
+	void Graphics::render(Text* text, uint32_t screen_x, uint32_t screen_y, uint32_t rotation, Flip flip) {
+		Texture* texture = text->texture();
+		render(texture, screen_x, screen_y, text->source_rect(), flip, rotation);
+	}
+
 	void Graphics::render(uint32_t nbr, Image* digit_source, uint8_t digit_width, uint8_t desired_places, float x, float y, uint8_t padding) {
 		char* nbr_str;
 		nbr_str = new char[desired_places];

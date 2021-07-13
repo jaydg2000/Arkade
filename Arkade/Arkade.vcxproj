@@ -180,6 +180,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IntervalLogic.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="Message.h" />
@@ -201,6 +202,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpritePool.h" />
     <ClInclude Include="StaticAnimator.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
@@ -220,6 +222,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="IntervalLogic.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MathUtil.cpp" />
     <ClCompile Include="Message.cpp" />
@@ -237,6 +240,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpritePool.cpp" />
     <ClCompile Include="StaticAnimator.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextureCache.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>

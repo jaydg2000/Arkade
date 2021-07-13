@@ -10,6 +10,7 @@
 #include "SpritePool.h"
 #include "Image.h"
 #include "Font.h"
+#include "Text.h"
 
 namespace arkade
 {
@@ -34,6 +35,7 @@ namespace arkade
 		void									render(Sprite* ptr_sprite);
 		void									render(SpritePool* ptr_sprite_pool);
 		void									render(const char* psz_text, uint32_t screen_x, uint32_t screen_y, Font* ptr_font, SDL_Color text_color = {255,255,255,255}, uint32_t rotation = 0);
+		void									render(Text* text, uint32_t screen_x, uint32_t screen_y, uint32_t rotation = 0, Flip flip = FLIP_NONE);
 		void									render(Image* ptr_image);
 		void									render(Image* ptr_image, Size size);
 		void									render(uint32_t nbr, Image* digit_source, uint8_t digit_width, uint8_t desired_places, float x, float y, uint8_t padding = 10);

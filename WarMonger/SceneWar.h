@@ -4,6 +4,8 @@
 #include <Image.h>
 #include "TiledMap.h"
 #include <Font.h>
+#include <Text.h>
+#include <IntervalLogic.h>
 
 using namespace arkade;
 
@@ -28,5 +30,8 @@ private:
 	Image*							_commandCenterImage;
 	TiledMap*						_ptr_map;
 	Font*							_ptr_font;
+	Text*							_ptr_text;
+	uint32_t						_rotation;
+	IntervalLogic*					_interval;
 };
 

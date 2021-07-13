@@ -10,6 +10,7 @@ SceneWar::SceneWar()
 	_commandCenterImage = nullptr;
 	_ptr_map = nullptr;
 	_ptr_font = nullptr;
+	_ptr_text = nullptr;
 }
 
 SceneWar::~SceneWar()
@@ -41,12 +42,17 @@ void SceneWar::on_setup()
 	_ptr_map = loader.load_map("maps/test.bin");
 
 	_ptr_font = new Font("fonts/bahnschrift.ttf", 30);
+	_ptr_text = new Text("This is my Text object!", _ptr_font);
+
+	_interval = new IntervalLogic(100, 1, true);
 	return;
 
 }
 
 void SceneWar::on_begin()
 {
+	_rotation = 0;
+	_interval->start();
 }
 
 void SceneWar::on_check_input(InputManager* ptr_inputManager)
@@ -56,17 +62,29 @@ void SceneWar::on_check_input(InputManager* ptr_inputManager)
 	{
 		stop();
 	}
+	if (ptr_inputManager->is_key_pressed(SDL_SCANCODE_A))
+	{
+		if (_interval->paused())
+			_interval->start();
+		else
+			_interval->pause();
+	}
 }
 
 void SceneWar::on_update()
 {
+	_interval->tick([this] (uint32_t step) {
+		this->_rotation += 5;
+		if (this->_rotation > 359)
+			this->_rotation = 0;
+	});
 }
 
 void SceneWar::on_render(Graphics* ptr_graphics)
 {
 	ptr_graphics->render(_commandCenterImage);
 
-	ptr_graphics->render("Hello World", 80, 50, _ptr_font);
+	ptr_graphics->render(_ptr_text, 200, 500, _rotation);
 }
 
 void SceneWar::on_end()
