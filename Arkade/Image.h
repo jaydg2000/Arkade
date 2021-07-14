@@ -6,6 +6,7 @@ namespace arkade {
 	class Image {
 	public:
 		Image(const char* filename, Size texture_size, float x=0.0f, float y=0.0f);
+		Image(Texture* ptr_texture, Size texture_size, float x = 0.0f, float y = 0.0f, bool use_screen_positioning = false);
 		~Image();
 
 		Texture*				texture();

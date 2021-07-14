@@ -1,6 +1,7 @@
 #include "WarMongerGame.h"
 #include "WarMonger_Main.h"
 #include "SceneWar.h"
+#include "SceneMainMenu.h"
 
 WarMongerGame::WarMongerGame() {
 	GameAttributes attr;
@@ -24,5 +25,7 @@ void WarMongerGame::on_cleanup() {
 void WarMongerGame::run_no_pipeline()
 {
 	SceneWar scene;
-	scene.run();
+	SceneMainMenu mainMenu;
+	
+	mainMenu.run();
 }

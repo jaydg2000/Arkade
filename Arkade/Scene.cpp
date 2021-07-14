@@ -22,6 +22,16 @@ namespace arkade {
 		return m_type;
 	}
 
+	void Scene::show_mouse()
+	{
+		SDL_ShowCursor(1);
+	}
+
+	void Scene::hide_mouse()
+	{
+		SDL_ShowCursor(0);
+	}
+
 	void Scene::millis_per_frame(uint32_t millis) {
 		m_millis_per_frame = millis;
 	}

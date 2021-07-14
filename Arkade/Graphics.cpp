@@ -150,6 +150,20 @@ namespace arkade {
 		render_boundingBox(rect);
 	}
 
+	void Graphics::render(Button* ptr_button)
+	{
+		Rect* button_rect = ptr_button->image()->destination_rect();
+		Size button_margin = ptr_button->border_margin();
+		Rect border_rect = copy_rect(button_rect);
+		expand_rect(&border_rect, button_margin);
+		
+		push_pen_color(ptr_button->border_color());
+		SDL_RenderDrawRect(m_ptr_renderer, &border_rect);
+		pop_pen_color();
+		render(ptr_button->image());
+		//render(ptr_button->image()->destination_rect());
+	}
+
 	void Graphics::render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation) {
 		m_destination_rect.w = src_rect->w;
 		m_destination_rect.h = src_rect->h;

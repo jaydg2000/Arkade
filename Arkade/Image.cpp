@@ -24,6 +24,26 @@ namespace arkade {
 		m_use_screen_positioning = false;
 	}
 
+	Image::Image(Texture* ptr_texture, Size texture_size, float x, float y, bool use_screen_positioning)
+	{
+		m_ptr_texture = ptr_texture;
+		m_x = x;
+		m_y = y;
+		m_size = texture_size;
+		m_rotation = 0.0f;
+
+		m_source_rect.x = 0;
+		m_source_rect.y = 0;
+		m_source_rect.w = texture_size.x;
+		m_source_rect.h = texture_size.y;
+
+		m_destination_rect.w = texture_size.x;
+		m_destination_rect.h = texture_size.y;
+
+		m_flip = FLIP_NONE;
+		m_use_screen_positioning = use_screen_positioning;
+	}
+
 	Image::~Image()
 	{
 	}

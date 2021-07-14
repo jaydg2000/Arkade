@@ -47,6 +47,11 @@ namespace arkade
         return &_source_rect;
     }
 
+    Image* Text::to_image()
+    {
+        return new Image(_ptr_texture, make_size(_source_rect.w, _source_rect.h), 0.0f, 0.0f, true);
+    }
+
     void Text::_make_texture()
     {
         _ptr_texture = _ptr_font->make_text_texture(_psz_text, _color);

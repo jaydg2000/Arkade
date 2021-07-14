@@ -44,7 +44,7 @@ void SceneWar::on_setup()
 	_ptr_font = new Font("fonts/bahnschrift.ttf", 30);
 	_ptr_text = new Text("This is my Text object!", _ptr_font);
 
-	_interval = new IntervalLogic(100, 1, true);
+	_interval = new IntervalLogic(200, 3);
 	return;
 
 }
@@ -77,6 +77,20 @@ void SceneWar::on_update()
 		this->_rotation += 5;
 		if (this->_rotation > 359)
 			this->_rotation = 0;
+
+		switch (step)
+		{
+			case 0:
+				_ptr_text->color({255,0,0,255});
+				break;
+			case 1:
+				_ptr_text->color({ 0,255,0,255 });
+				break;
+			case 2:
+				_ptr_text->color({ 0,0,255,255 });
+				break;
+
+		}
 	});
 }
 

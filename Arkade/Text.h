@@ -1,6 +1,7 @@
 #pragma once
 #include "ArkadeTypes.h"
 #include "Font.h"
+#include "Image.h"
 
 namespace arkade {
 
@@ -15,6 +16,7 @@ namespace arkade {
 		void						text(const char* psz_text);
 		void						color(SDL_Color color);
 		Rect*						source_rect();
+		Image*						to_image();
 
 	private:
 		const char*					_psz_text;

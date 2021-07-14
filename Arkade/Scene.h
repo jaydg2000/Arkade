@@ -30,6 +30,8 @@ namespace arkade {
 		void							millis_per_frame(uint32_t millis);
 		void							type(uint32_t type);
 		uint32_t						type();		
+		void							show_mouse();
+		void							hide_mouse();
 
 	protected:
 		virtual void					on_setup();

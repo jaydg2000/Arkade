@@ -18,7 +18,20 @@ namespace arkade {
 	void arkade::IntervalLogic::tick(std::function<void(uint32_t)> f)
 	{
 		if (_ptr_timer->has_elapsed())
-			f(_current_step);
+		{
+			f(_current_step++);	
+			if (_current_step >= _total_steps)
+			{
+				if (_is_repeating)
+				{
+					_current_step = 0;
+				}
+				else
+				{
+					stop();
+				}
+			}
+		}
 	}
 
 	void arkade::IntervalLogic::pause()

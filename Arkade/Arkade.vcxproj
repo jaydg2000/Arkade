@@ -170,6 +170,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="BackwardAnimator.h" />
     <ClInclude Include="BackwardOnceAnimator.h" />
     <ClInclude Include="BoundingBoxCollisionDetector.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Font.h" />
@@ -213,6 +214,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="BackwardAnimator.cpp" />
     <ClCompile Include="BackwardOnceAnimator.cpp" />
     <ClCompile Include="BoundingBoxCollisionDetector.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Font.cpp" />

@@ -11,6 +11,7 @@
 #include "Image.h"
 #include "Font.h"
 #include "Text.h"
+#include "Button.h"
 
 namespace arkade
 {
@@ -39,7 +40,8 @@ namespace arkade
 		void									render(Image* ptr_image);
 		void									render(Image* ptr_image, Size size);
 		void									render(uint32_t nbr, Image* digit_source, uint8_t digit_width, uint8_t desired_places, float x, float y, uint8_t padding = 10);
-		void									render(Rect* rect);
+		void									render(Rect* ptr_rect);
+		void									render(Button* ptr_button);
 		void									begin_render();
 		void									end_render();
 		void									background_color(RGB rgb);

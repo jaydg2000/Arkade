@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="SceneMainMenu.cpp" />
     <ClCompile Include="SceneWar.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TiledMap.cpp" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneMainMenu.h" />
     <ClInclude Include="SceneWar.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TiledMap.h" />
