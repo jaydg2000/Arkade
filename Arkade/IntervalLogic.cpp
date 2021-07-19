@@ -53,8 +53,15 @@ namespace arkade {
 	{
 		return _current_step;
 	}
+
 	bool IntervalLogic::paused()
 	{
 		return _ptr_timer->is_paused();
+	}
+
+	void IntervalLogic::restart()
+	{
+		_ptr_timer->stop();
+		_ptr_timer->start();
 	}
 }

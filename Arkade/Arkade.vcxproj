@@ -89,6 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,6 +175,8 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="Form.h" />
+    <ClInclude Include="FormControl.h" />
     <ClInclude Include="ForwardAnimator.h" />
     <ClInclude Include="ForwardOnceAnimator.h" />
     <ClInclude Include="Game.h" />
@@ -184,6 +187,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="IntervalLogic.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="MenuForm.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MessageBroadcaster.h" />
     <ClInclude Include="MessagePool.h" />
@@ -203,6 +207,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpritePool.h" />
     <ClInclude Include="StaticAnimator.h" />
+    <ClInclude Include="SystemMessages.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Timer.h" />
@@ -218,6 +223,8 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Form.cpp" />
+    <ClCompile Include="FormControl.cpp" />
     <ClCompile Include="ForwardAnimator.cpp" />
     <ClCompile Include="ForwardOnceAnimator.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -227,6 +234,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="IntervalLogic.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MathUtil.cpp" />
+    <ClCompile Include="MenuForm.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="MessageBroadcaster.cpp" />
     <ClCompile Include="MessagePool.cpp" />

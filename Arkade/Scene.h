@@ -8,6 +8,7 @@
 #include "Audio.h"
 #include "InputManager.h"
 #include "Timer.h"
+#include "Form.h"
 
 namespace arkade {
 
@@ -32,6 +33,9 @@ namespace arkade {
 		uint32_t						type();		
 		void							show_mouse();
 		void							hide_mouse();
+		void							register_form(Form* form);
+		void							unregister_form(Form* form);
+		void*							result();
 
 	protected:
 		virtual void					on_setup();
@@ -44,6 +48,8 @@ namespace arkade {
 		virtual void					on_detect_collisions();
 		virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
+		void							result(void* ptr_result);
+
 	private:
 		uint32_t						m_type;
 		uint32_t						m_millis_per_frame;
@@ -52,11 +58,16 @@ namespace arkade {
 		bool							m_game_is_ended;
 		bool							m_is_paused;
 		list<Sprite*>					m_sprite_list;
+		list<Form*>						m_form_list;
 		Timer							m_frame_timer;
+		void*							_result;
 
 		void							setup_sprites();
 		void							cleanup_sprites();
 		void							update_sprites();
 		void							handle_messages();
+		void							update_forms();
+		void							render_forms(Graphics* ptr_graphics);
+		void							check_forms_input(InputManager* ptr_input_manager);
 	};
 }

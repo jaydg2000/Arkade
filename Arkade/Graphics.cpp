@@ -146,22 +146,8 @@ namespace arkade {
 		m_is_animating = should_animate;
 	}
 
-	void Graphics::render(Rect* rect) {
+	void Graphics::render_bounding_box(Rect* rect) {
 		render_boundingBox(rect);
-	}
-
-	void Graphics::render(Button* ptr_button)
-	{
-		Rect* button_rect = ptr_button->image()->destination_rect();
-		Size button_margin = ptr_button->border_margin();
-		Rect border_rect = copy_rect(button_rect);
-		expand_rect(&border_rect, button_margin);
-		
-		push_pen_color(ptr_button->border_color());
-		SDL_RenderDrawRect(m_ptr_renderer, &border_rect);
-		pop_pen_color();
-		render(ptr_button->image());
-		//render(ptr_button->image()->destination_rect());
 	}
 
 	void Graphics::render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation) {
@@ -324,6 +310,20 @@ namespace arkade {
 		}
 
 		delete nbr_str;
+	}
+
+	void Graphics::render(Rect* rect, RGB color, bool fill )
+	{
+		push_pen_color(color);
+		if (fill)
+		{
+			SDL_RenderFillRect(m_ptr_renderer, rect);
+		}
+		else
+		{
+			SDL_RenderDrawRect(m_ptr_renderer, rect);
+		}
+		pop_pen_color();
 	}
 
 	void Graphics::render_boundingBox(Rect* ptr_rect) {

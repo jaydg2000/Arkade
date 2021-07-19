@@ -17,5 +17,6 @@ namespace arkade {
 
 		static const RGB Magenta;
 		static const RGB Black;
+		static const RGB White;
 	};
 }

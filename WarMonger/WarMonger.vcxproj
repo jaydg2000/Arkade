@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,20 +144,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="SceneChooseMap.cpp" />
     <ClCompile Include="SceneMainMenu.cpp" />
+    <ClCompile Include="SceneMapEditor.cpp" />
     <ClCompile Include="SceneWar.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TiledMap.cpp" />
+    <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="WarMongerGame.cpp" />
     <ClCompile Include="WarMonger_Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneChooseMap.h" />
     <ClInclude Include="SceneMainMenu.h" />
+    <ClInclude Include="SceneMapEditor.h" />
     <ClInclude Include="SceneWar.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TiledMap.h" />
+    <ClInclude Include="TileSet.h" />
     <ClInclude Include="WarMongerGame.h" />
     <ClInclude Include="WarMonger_Main.h" />
   </ItemGroup>

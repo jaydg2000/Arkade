@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ TiledMap* MapLoader::load_map(const char* psz_filename)
     TiledMap* ptr_map = new TiledMap();
     int buffer_size = (MAP_WIDTH * MAP_HEIGHT) * sizeof(int16_t);
     int tiles_per_row = MAP_WIDTH;
-    char* buffer = new char[buffer_size];
+    char* buffer = new char[buffer_size+1] {0};
 
     ifstream file(psz_filename, ios::in | ios::binary);
     file.read(buffer, buffer_size);
@@ -67,4 +68,15 @@ void MapLoader::save_map(const char* psz_filename, TiledMap* map)
     ofstream file(psz_filename, ios::out | ios::binary);
     file.write(buffer, buffer_size);
     file.close();
+}
+
+void MapLoader::get_all_maps(vector<const char*>* maps)
+{
+    for (const auto& entry : filesystem::directory_iterator("maps/"))
+    {
+        auto filename = entry.path().filename().string();
+        char* cname = new char[filename.length()+1];
+        strcpy_s(cname, filename.length()+1, filename.c_str());
+        maps->push_back(cname);
+    }    
 }

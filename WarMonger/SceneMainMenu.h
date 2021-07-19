@@ -2,7 +2,9 @@
 #include <Scene.h>
 #include <Font.h>
 #include <Button.h>
+#include <Form.h>
 #include <Text.h>
+#include <MenuForm.h>
 
 using namespace arkade;
 
@@ -24,8 +26,9 @@ protected:
 	virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 private:
-	Text*							_ptr_text_button_play;
 	Font*							_ptr_font_button;
-	Button*							_ptr_button_play;
+	MenuForm*						_ptr_menu;
+
+	void							_setup_main_menu();
 };
 

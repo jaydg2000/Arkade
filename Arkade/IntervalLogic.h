@@ -17,6 +17,7 @@ namespace arkade {
 		void					start();
 		uint32_t				step();
 		bool					paused();
+		void					restart();
 
 	protected:
 

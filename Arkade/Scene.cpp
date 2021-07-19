@@ -32,6 +32,21 @@ namespace arkade {
 		SDL_ShowCursor(0);
 	}
 
+	void Scene::register_form(Form* form)
+	{
+		m_form_list.push_back(form);
+	}
+
+	void Scene::unregister_form(Form* form)
+	{
+		m_form_list.remove(form);
+	}
+
+	void* Scene::result()
+	{
+		return _result;
+	}
+
 	void Scene::millis_per_frame(uint32_t millis) {
 		m_millis_per_frame = millis;
 	}
@@ -50,13 +65,16 @@ namespace arkade {
 		while (!m_scene_is_ended) {
 			ptr_inputManager->update();
 			on_check_input(ptr_inputManager);
+			check_forms_input(ptr_inputManager);
 			if (!m_is_paused) {
 				handle_messages();
 				on_detect_collisions();
 				on_update();
 				update_sprites();
+				update_forms();
 				ptr_graphics->begin_render();
 				on_render(ptr_graphics);
+				render_forms(ptr_graphics);
 				ptr_graphics->end_render();
 			}
 			while (!m_frame_timer.has_elapsed());
@@ -140,6 +158,11 @@ namespace arkade {
 	void Scene::on_message(uint32_t message_type, MessageSink * ptr_sender, void * ptr_data) {
 	}
 
+	void Scene::result(void* ptr_result)
+	{
+		_result = ptr_result;
+	}
+
 	void Scene::setup_sprites() {
 		for (Sprite* sprite : m_sprite_list) {
 			sprite->on_setup();
@@ -165,6 +188,38 @@ namespace arkade {
 		flush();
 		for (Sprite* sprite : m_sprite_list) {
 			sprite->flush();
+		}
+		for (Form* form : m_form_list) {
+			form->flush();
+		}
+	}
+
+	void Scene::update_forms()
+	{
+		for (Form* form : m_form_list) {
+			form->on_update();
+		}
+	}
+
+	void Scene::render_forms(Graphics* ptr_graphics)
+	{
+		for (Form* form : m_form_list)
+		{
+			if (form->visible())
+			{
+				form->on_render(ptr_graphics);
+			}
+		}
+	}
+
+	void Scene::check_forms_input(InputManager* ptr_input_manager)
+	{
+		for (Form* form : m_form_list)
+		{
+			if (form->enabled())
+			{
+				form->on_check_input(ptr_input_manager);
+			}
 		}
 	}
 

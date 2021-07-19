@@ -18,7 +18,6 @@ public:
 	float								position_y();
 	uint16_t							tile_type();
 	Texture*							texture();
-	Size*								size();
 	void								flip(Flip render_flip);
 	Flip								flip();
 	void								rotation(uint16_t rotation);

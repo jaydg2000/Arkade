@@ -144,6 +144,18 @@
     <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FormControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemMessages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -255,6 +267,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FormControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

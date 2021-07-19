@@ -35,6 +35,11 @@ uint16_t Tile::tile_type()
 	return _type_id;
 }
 
+Texture* Tile::texture()
+{
+	return _ptr_texture;
+}
+
 void Tile::flip(Flip render_flip)
 {
 	_flip = render_flip;

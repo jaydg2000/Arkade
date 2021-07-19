@@ -4,11 +4,12 @@
 #include "Text.h"
 #include "ArkadeTypes.h"
 #include "RGB.h"
-#include <functional>
+#include "FormControl.h"
+#include "Graphics.h"
 
 namespace arkade {
 
-	class Button
+	class Button : public FormControl
 	{
 	public:
 		Button(Image* image, uint32_t screen_x = 0, uint32_t screen_y = 0);
@@ -19,21 +20,24 @@ namespace arkade {
 		void					image(Image* image);
 		RGB						border_color();
 		void					border_color(RGB border_color);
-		Size					border_margin();
-		void					border_margin(Size border_margin);
-		void					on_click(std::function<void()> click_action);		
+
+		void					on_render(Graphics* ptr_graphics);
+
+	protected:
+		virtual void			on_mouse_down(uint32_t mouse_x, uint32_t mouse_y) override;
+		virtual void			on_mouse_up() override;
+		virtual void			on_mouse_over(uint32_t mouse_x, uint32_t mouse_y) override;
+
 
 	private:
-		uint32_t				_x, _y;
 		bool					_is_managing_image;
+		bool					_is_being_clicked;
 		Size					_ptr_size;
 		Image*					_ptr_image;
 		const char*				_psz_title;
 		Font*					_ptr_font;
-		uint32_t				_click_message_id;
 		RGB						_border_color;
-		Size					_border_size;
-		std::function<void()>	_click_action;
+		
 	};
 
 }

@@ -15,7 +15,6 @@ namespace arkade {
 
 	void Game::initialize(GameAttributes & game_attributes)
 	{
-
 		if (game_attributes.use_logical_scale) {
 			Graphics::instance()->initialize(
 				game_attributes.full_screen,
