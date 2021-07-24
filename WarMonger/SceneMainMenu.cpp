@@ -74,9 +74,9 @@ void SceneMainMenu::_setup_main_menu()
 		{			
 			const char* filename = (const char*)(map_chooser.result());
 			SceneMapEditor editor;
-			char fullpath[200] = "maps/";
-			strcat_s(fullpath, sizeof fullpath + sizeof filename, filename);			
-			editor.open_map(fullpath);
+			std::string str = "maps/";
+			str.append(filename);
+			editor.open_map(str.c_str());
 			editor.run();
 		}
 	});

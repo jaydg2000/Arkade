@@ -1,6 +1,11 @@
 #pragma once
 #include <Scene.h>
+#include <MenuForm.h>
+#include <Button.h>
+#include <Font.h>
+#include "WarMonger_Main.h"
 #include "TiledMap.h"
+#include "TileSet.h"
 
 using namespace arkade;
 
@@ -24,8 +29,41 @@ protected:
 	virtual void					on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 private:
-	TiledMap*						_ptr_map;
+	uint32_t						_last_mouse_x;
+	uint32_t						_last_mouse_y;
+	uint16_t						_city_count;
+	TiledMap*						_map;
+	TileSet*						_tileset;
 	const char*						_filename;
 	Rect							_map_viewport;
+	Form*							_editor_form;
+	Font*							_font;
+	Button*							_button_save;
+	Button*							_button_back;
+	Button*							_button_all_land;
+	Button*							_button_all_water;
+	Button*							_button_land;
+	Button*							_button_forest;
+	Button*							_button_mountain;
+	Button*							_button_river;
+	Button*							_button_water;
+	Button*							_button_city;
+
+	Image*							_image_save;
+	Image*							_image_back;
+	Image*							_image_land;
+	Image*							_image_forest;
+	Image*							_image_mountain;
+	Image*							_image_river;
+	Image*							_image_water;
+	Image*							_image_city;
+
+	Tile*							_current_brush;
+
+	void							_load_tile_buttons();
+	void							_select_brush(uint16_t tile_id);
+	void							_deselect_all_brushes();
+	void							_hilite_map_cell(Graphics* graphics, uint32_t mouse_x, uint32_t mouse_y);
+	void							_place_tile(uint32_t mouse_x, uint32_t mouse_y);
 };
 

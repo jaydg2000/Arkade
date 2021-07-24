@@ -42,6 +42,12 @@ namespace arkade {
 		return _size;
 	}
 
+	void FormControl::size(Size size)
+	{
+		_size.x = size.x;
+		_size.y = size.y;
+	}
+
 	Size FormControl::border_margin()
 	{
 		return _margin;

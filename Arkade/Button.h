@@ -14,6 +14,7 @@ namespace arkade {
 	public:
 		Button(Image* image, uint32_t screen_x = 0, uint32_t screen_y = 0);
 		Button(Text* ptr_text, uint32_t screen_x = 0, uint32_t screen_y = 0);
+		Button(const char* psz_title, Font* ptr_font, uint32_t screen_x, uint32_t screen_y = 0);
 		~Button();
 
 		Image*					image();
@@ -34,6 +35,7 @@ namespace arkade {
 		bool					_is_being_clicked;
 		Size					_ptr_size;
 		Image*					_ptr_image;
+		Text*					_ptr_text;
 		const char*				_psz_title;
 		Font*					_ptr_font;
 		RGB						_border_color;

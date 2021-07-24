@@ -1,12 +1,6 @@
 #include "TileSet.h"
 #include <TextureCache.h>
 
-#define TILE_WATER_1    101
-#define TILE_LAND_1     111
-#define TILE_FOREST_1   121
-#define TILE_MOUNTAIN_1 131
-#define TILE_RIVER_1    141
-
 TileSet::TileSet()
 {
     _tiles.insert(make_pair(TILE_WATER_1, new Tile(TILE_WATER_1, TextureCache::instance()->obtain("res/tile_water.png"))));

@@ -21,6 +21,7 @@ namespace arkade {
 		uint32_t					y();
 		void						position(uint32_t screen_x, uint32_t screen_y);
 		Size						size();
+		void						size(Size size);
 		Size						border_margin();
 		void						border_margin(Size border_margin);
 
