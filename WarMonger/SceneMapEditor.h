@@ -2,6 +2,7 @@
 #include <Scene.h>
 #include <MenuForm.h>
 #include <Button.h>
+#include <Checkbox.h>
 #include <Font.h>
 #include "WarMonger_Main.h"
 #include "TiledMap.h"
@@ -36,6 +37,8 @@ private:
 	TileSet*						_tileset;
 	const char*						_filename;
 	Rect							_map_viewport;
+	Rect							_map_preview_rect;
+	Rect							_map_preview_focus_rect;
 	Form*							_editor_form;
 	Font*							_font;
 	Button*							_button_save;
@@ -48,6 +51,8 @@ private:
 	Button*							_button_river;
 	Button*							_button_water;
 	Button*							_button_city;
+	Text*							_text_location;
+	Checkbox*						_checkbox_large_brush;
 
 	Image*							_image_save;
 	Image*							_image_back;
@@ -65,5 +70,9 @@ private:
 	void							_deselect_all_brushes();
 	void							_hilite_map_cell(Graphics* graphics, uint32_t mouse_x, uint32_t mouse_y);
 	void							_place_tile(uint32_t mouse_x, uint32_t mouse_y);
+	void							_splat_tiles(uint32_t mouse_x, uint32_t mouse_y);
+	void							_display_preview(Graphics* graphics);
+	void							_move_map_view_to_position();
+	void							_display_selected_map_location(Graphics* graphics, uint32_t map_x, uint32_t map_y);
 };
 

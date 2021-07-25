@@ -8,6 +8,7 @@ TileSet::TileSet()
     _tiles.insert(make_pair(TILE_FOREST_1, new Tile(TILE_FOREST_1, TextureCache::instance()->obtain("res/tile_forest.png"))));
     _tiles.insert(make_pair(TILE_MOUNTAIN_1, new Tile(TILE_MOUNTAIN_1, TextureCache::instance()->obtain("res/tile_mountain.png"))));
     _tiles.insert(make_pair(TILE_RIVER_1, new Tile(TILE_RIVER_1, TextureCache::instance()->obtain("res/tile_river.png"))));
+    _tiles.insert(make_pair(TILE_CITY_1, new Tile(TILE_CITY_1, TextureCache::instance()->obtain("res/tile_city.png"))));
 }
 
 TileSet::~TileSet()

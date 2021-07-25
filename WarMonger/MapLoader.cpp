@@ -20,7 +20,7 @@ TiledMap* MapLoader::load_map(const char* psz_filename)
     TiledMap* ptr_map = new TiledMap();
     int buffer_size = (MAP_WIDTH * MAP_HEIGHT) * sizeof(int16_t);
     int tiles_per_row = MAP_WIDTH;
-    char* buffer = new char[buffer_size+1] {0};
+    char* buffer = new char[buffer_size] {0};
 
     ifstream file(psz_filename, ios::in | ios::binary);
     file.read(buffer, buffer_size);
@@ -30,8 +30,8 @@ TiledMap* MapLoader::load_map(const char* psz_filename)
     uint16_t map_row = 0;
     while (buff_pos < buffer_size)
     {        
-        char low_byte = buffer[buff_pos];
-        char high_byte = buffer[buff_pos+1];
+        unsigned char low_byte = buffer[buff_pos];
+        unsigned char high_byte = buffer[buff_pos+1];
         uint16_t tile_type_id = low_byte | (high_byte << 8);
 
         buff_pos += 2;

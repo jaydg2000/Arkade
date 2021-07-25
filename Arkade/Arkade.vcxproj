@@ -173,6 +173,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClInclude Include="BoundingBoxCollisionDetector.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Checkbox.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Form.h" />
@@ -221,6 +222,7 @@ copy /Y $(ProjectDir)*.h c:\arkade</Command>
     <ClCompile Include="BoundingBoxCollisionDetector.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Checkbox.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Form.cpp" />

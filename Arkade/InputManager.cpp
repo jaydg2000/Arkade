@@ -4,6 +4,8 @@ namespace arkade {
 
 	InputManager::InputManager() {
 		m_device_close = false;
+		m_mouse_button_left_down = false;
+		m_mouse_button_right_down = false;
 	}
 
 
@@ -11,9 +13,6 @@ namespace arkade {
 	}
 
 	void InputManager::update() {
-		m_mouse_button_left_down = false;
-		m_mouse_button_right_down = false;
-
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_MOUSEBUTTONDOWN) {
@@ -22,6 +21,14 @@ namespace arkade {
 				}
 				else if (event.button.button == SDL_BUTTON_RMASK) {
 					m_mouse_button_right_down = true;
+				}
+			}
+			if (event.type == SDL_MOUSEBUTTONUP) {
+				if (event.button.button == SDL_BUTTON_LMASK) {
+					m_mouse_button_left_down = false;
+				}
+				else if (event.button.button == SDL_BUTTON_RMASK) {
+					m_mouse_button_right_down = false;
 				}
 			}
 			if (event.type == SDL_MOUSEMOTION) {

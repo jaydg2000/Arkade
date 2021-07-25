@@ -5,6 +5,7 @@ namespace arkade {
         : FormControl(screen_x, screen_y, make_size(ptr_image->source_rect()->w, ptr_image->source_rect()->h))
     {
         _ptr_image = ptr_image;
+        _ptr_image->use_screen_positioning(true);
         _ptr_image->x(screen_x);
         _ptr_image->y(screen_y);
         _is_managing_image = false;
@@ -16,6 +17,7 @@ namespace arkade {
         : FormControl(screen_x, screen_y, make_size(ptr_text->source_rect()->w, ptr_text->source_rect()->h))
     {
         _ptr_image = ptr_text->to_image();
+        _ptr_image->use_screen_positioning(true);
         _is_managing_image = true;
         _is_being_clicked = false;
         _ptr_text = ptr_text;
@@ -26,6 +28,7 @@ namespace arkade {
     {
         _ptr_text = new Text(psz_title, ptr_font);
         _ptr_image = _ptr_text->to_image();
+        _ptr_image->use_screen_positioning(true);
         _is_managing_image = true;
     }
 

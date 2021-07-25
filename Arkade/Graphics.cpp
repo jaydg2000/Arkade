@@ -150,11 +150,18 @@ namespace arkade {
 		render_boundingBox(rect);
 	}
 
-	void Graphics::render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation) {
+	void Graphics::render(Texture* ptr_texture, float coordinate_x, float coordinate_y, Rect* src_rect, Flip flip, uint32_t rotation, bool use_screen_coordinates) {
 		m_destination_rect.w = src_rect->w;
 		m_destination_rect.h = src_rect->h;
-		m_ptr_camera->to_screen(&m_destination_rect, coordinate_x, coordinate_y);
-		
+		if (!use_screen_coordinates)
+		{	
+			m_ptr_camera->to_screen(&m_destination_rect, coordinate_x, coordinate_y);
+		}
+		else
+		{
+			m_destination_rect.x = coordinate_x;
+			m_destination_rect.y = coordinate_y;
+		}
 		SDL_RenderCopyEx(
 			m_ptr_renderer,
 			ptr_texture,
@@ -271,8 +278,8 @@ namespace arkade {
 	}
 
 	void Graphics::render(Text* text, uint32_t screen_x, uint32_t screen_y, uint32_t rotation, Flip flip) {
-		Texture* texture = text->texture();
-		render(texture, screen_x, screen_y, text->source_rect(), flip, rotation);
+		Texture* texture = text->texture();		
+		render(texture, screen_x, screen_y, text->source_rect(), flip, rotation, true);
 	}
 
 	void Graphics::render(uint32_t nbr, Image* digit_source, uint8_t digit_width, uint8_t desired_places, float x, float y, uint8_t padding) {
@@ -323,6 +330,20 @@ namespace arkade {
 		{
 			SDL_RenderDrawRect(m_ptr_renderer, rect);
 		}
+		pop_pen_color();
+	}
+
+	void Graphics::render(uint32_t screen_x, uint32_t screen_y, RGB color)
+	{
+		push_pen_color(color);
+		SDL_RenderDrawPoint(m_ptr_renderer, screen_x, screen_y);
+		pop_pen_color();
+	}
+
+	void Graphics::render(SDL_Point* points, int count, RGB color)
+	{
+		push_pen_color(color);
+		SDL_RenderDrawPoints(m_ptr_renderer, points, count);
 		pop_pen_color();
 	}
 
