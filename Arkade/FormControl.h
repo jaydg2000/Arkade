@@ -50,11 +50,13 @@ namespace arkade {
 		Size						_size;
 		IntervalLogic*				_mouse_up_interval;
 		Size						_margin;
+		bool						_is_clicked;
 
 
 		std::function<void()>		_click_action;
 
 		void						click(uint32_t mouse_x, uint32_t mouse_y);
+		void						_wait_until_mouse_button_is_up(InputManager* input);
 	};
 
 }

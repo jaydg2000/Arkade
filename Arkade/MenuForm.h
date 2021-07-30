@@ -15,8 +15,10 @@ namespace arkade {
 
 		void					add_menu_item(const char* title, std::function<void()> click_action);
 		Form*					form();
-		void					show();
+		void					show();		
 		void					enable();
+		void					hide();
+		void					disable();
 
 	private:
 		Form*					_form;

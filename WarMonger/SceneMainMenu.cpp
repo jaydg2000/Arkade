@@ -3,6 +3,7 @@
 #include "WarMonger_Main.h"
 #include "SceneChooseMap.h"
 #include "SceneMapEditor.h"
+#include "SceneWar.h"
 
 SceneMainMenu::SceneMainMenu()
 {
@@ -65,19 +66,21 @@ void SceneMainMenu::_setup_main_menu()
 
 	_ptr_menu = new MenuForm(make_size(RES_WIDTH, RES_HEIGHT), _ptr_font_button);
 	_ptr_menu->add_menu_item("Play", [this]() {
-		// todo: play a game.
+		SceneWar wargame;
+		wargame.run();
 	});
 	_ptr_menu->add_menu_item("Map Editor", [this]() {
 		SceneChooseMap map_chooser;
 		map_chooser.run();
 		if (map_chooser.result() != nullptr)
-		{			
+		{
 			const char* filename = (const char*)(map_chooser.result());
 			SceneMapEditor editor;
 			std::string str = "maps/";
 			str.append(filename);
 			editor.open_map(str.c_str());
-			editor.run();
+			editor.run();	
+			map_chooser.stop();
 		}
 	});
 	_ptr_menu->add_menu_item("Quit", [this]() {

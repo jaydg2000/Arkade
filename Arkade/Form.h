@@ -25,6 +25,7 @@ namespace arkade {
 		bool							visible();
 		void							show();
 		void							hide();
+		void							show_border(bool should_render_border);
 
 		virtual void					on_check_input(InputManager* keyboard);
 		virtual void					on_update();
@@ -39,7 +40,7 @@ namespace arkade {
 		Size							_size;
 		bool							_enabled;
 		bool							_visible;
-		Rect							_form_rect;
+		bool							_should_render_border;
 
 		virtual void					setup_controls();
 

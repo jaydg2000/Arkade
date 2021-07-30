@@ -143,27 +143,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneChooseMap.cpp" />
     <ClCompile Include="SceneMainMenu.cpp" />
     <ClCompile Include="SceneMapEditor.cpp" />
     <ClCompile Include="SceneWar.cpp" />
+    <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TiledMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="WarMongerGame.cpp" />
     <ClCompile Include="WarMonger_Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="City.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="MapLoader.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneChooseMap.h" />
     <ClInclude Include="SceneMainMenu.h" />
     <ClInclude Include="SceneMapEditor.h" />
     <ClInclude Include="SceneWar.h" />
+    <ClInclude Include="Structure.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="TileSet.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="WarMongerGame.h" />
     <ClInclude Include="WarMonger_Main.h" />
   </ItemGroup>

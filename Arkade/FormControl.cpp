@@ -8,8 +8,9 @@ namespace arkade {
 		_x = screen_x;
 		_y = screen_y;
 		_size = size;
-		_margin = {0,0};
+		_margin = { 0,0 };
 		_click_action = nullptr;
+		_is_clicked = false;
 	}
 
 	arkade::FormControl::~FormControl()
@@ -88,9 +89,11 @@ namespace arkade {
 		if (is_mouse_over)
 		{
 			on_mouse_over(mouse_x, mouse_y);
-			if (ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT))
+
+			if (!_is_clicked && ptr_input_manager->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT))
 			{
 				on_mouse_down(mouse_x, mouse_y);
+				_wait_until_mouse_button_is_up(ptr_input_manager);
 				_mouse_up_interval->restart();
 				click(mouse_x, mouse_y);
 			}
@@ -100,14 +103,24 @@ namespace arkade {
 	void FormControl::on_update()
 	{
 		_mouse_up_interval->tick([this](uint32_t step) {
+			_is_clicked = false;
 			this->on_mouse_up();
-		});
+			});
 	}
 
 	void FormControl::click(uint32_t mouse_x, uint32_t mouse_y)
 	{
 		if (_click_action)
 			_click_action();
+	}
+
+	void FormControl::_wait_until_mouse_button_is_up(InputManager* input)
+	{
+		while (input->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT)
+			|| input->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_RIGHT))
+		{
+			input->update();
+		};
 	}
 
 	void FormControl::set_id(uint32_t id)

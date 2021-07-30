@@ -45,6 +45,16 @@ namespace arkade {
         _form->enable();
     }
 
+    void MenuForm::hide()
+    {
+        _form->hide();
+    }
+
+    void MenuForm::disable()
+    {
+        _form->disable();
+    }
+
     void MenuForm::_adjust()
     {      
         uint32_t longest_button_size = 0;

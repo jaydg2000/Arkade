@@ -11,10 +11,7 @@ namespace arkade {
         _visible = false;
         _next_control_id = 1000;
         
-        _form_rect.x = screen_x;
-        _form_rect.y = screen_y;
-        _form_rect.w = size.x;
-        _form_rect.h = size.y;
+        _should_render_border = false;
     }
 
     arkade::Form::~Form()
@@ -24,7 +21,7 @@ namespace arkade {
     void Form::size(Size size)
     {
         _size.x = size.x;
-        _size.y = size.y;
+        _size.y = size.y;        
     }
 
     void Form::position(uint32_t screen_x, uint32_t screen_y)
@@ -80,6 +77,11 @@ namespace arkade {
         _visible = false;
     }
 
+    void Form::show_border(bool should_render_border)
+    {
+        _should_render_border = should_render_border;
+    }
+
     void arkade::Form::setup_controls()
     {
         for (FormControl* control : _controls)
@@ -106,7 +108,9 @@ namespace arkade {
 
     void arkade::Form::on_render(Graphics* ptr_graphics)
     {
-        ptr_graphics->render(&_form_rect);
+        Rect rect = make_rect(_x, _y, _size.x, _size.y);
+        if (_should_render_border)
+            ptr_graphics->render(&rect);
         for (FormControl* control : _controls)
         {
             control->on_render(ptr_graphics);

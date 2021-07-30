@@ -87,6 +87,14 @@ namespace arkade {
 
 	void Scene::stop() {
 		m_scene_is_ended = true;
+		if (!m_form_list.empty())
+		{
+			for (Form* form : m_form_list)
+			{
+				form->disable();
+				form->hide();
+			}
+		}
 		on_end();
 	}
 
@@ -214,6 +222,9 @@ namespace arkade {
 
 	void Scene::check_forms_input(InputManager* ptr_input_manager)
 	{
+		if (m_form_list.size() < 1)
+			return;
+
 		for (Form* form : m_form_list)
 		{
 			if (form->enabled())

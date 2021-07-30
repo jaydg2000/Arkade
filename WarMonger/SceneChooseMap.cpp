@@ -25,27 +25,33 @@ void SceneChooseMap::on_setup()
 	_ptr_font = new Font("fonts/bahnschrift.ttf", 15);
 	_map_menu = new MenuForm(make_size(RES_WIDTH, RES_HEIGHT), _ptr_font);
 
-	_map_menu->add_menu_item("New", [this]() {
-		result((void*)"new-map.map");
-		stop(); 
-	});
+	//_map_menu->add_menu_item("New", [this]() {
+	//	result((void*)"new-map.map");		
+	//});
 	for (const char* filename : *_ptr_maps)
 	{
 		_map_menu->add_menu_item(filename, [this, filename]() 
 		{
-			result((void*)filename);
+			_map_menu->disable();
+			_map_menu->hide();			
+			result((void*)filename);			
 			stop();
 		});
 	}
-	_map_menu->add_menu_item("Back", [this](){stop();});
+	_map_menu->add_menu_item("Back", [this](){
+		_map_menu->disable();
+		_map_menu->hide();
+		stop();
+	});
 
 	register_form(_map_menu->form());
 	_map_menu->show();
-	_map_menu->enable();
+	_map_menu->enable();	
 }
 
 void SceneChooseMap::on_cleanup()
-{
+{	
+	unregister_form(_map_menu->form());
 	delete _ptr_font;
 	delete _map_menu;
 }
