@@ -23,5 +23,6 @@ namespace arkade {
 		static const RGB Yellow;
 		static const RGB DarkGreen;
 		static const RGB LightGray;
+		static const RGB SkyBlue;
 	};
 }

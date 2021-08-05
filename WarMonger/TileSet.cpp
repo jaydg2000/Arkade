@@ -19,3 +19,28 @@ Tile* TileSet::tile(uint16_t tile_id)
 {
     return _tiles[tile_id];
 }
+
+bool TileSet::is_land(uint16_t tile_type_id)
+{
+    return tile_type_id == TILE_LAND_1;
+}
+
+bool TileSet::is_water(uint16_t tile_type_id)
+{
+    return tile_type_id == TILE_WATER_1;
+}
+
+bool TileSet::is_forest(uint16_t tile_type_id)
+{
+    return tile_type_id == TILE_FOREST_1;
+}
+
+bool TileSet::is_mountain(uint16_t tile_type_id)
+{
+    return tile_type_id == TILE_MOUNTAIN_1;
+}
+
+bool TileSet::is_river(uint16_t tile_type_id)
+{
+    return tile_type_id == TILE_RIVER_1;
+}

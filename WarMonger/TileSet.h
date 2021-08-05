@@ -19,6 +19,11 @@ public:
 	~TileSet();
 	
 	Tile*					tile(uint16_t tile_id);
+	static bool				is_land(uint16_t tile_type_id);
+	static bool				is_water(uint16_t tile_type_id);
+	static bool				is_forest(uint16_t tile_type_id); 
+	static bool				is_mountain(uint16_t tile_type_id);
+	static bool				is_river(uint16_t tile_type_id);
 
 private:
 	map<uint16_t, Tile*>	_tiles;

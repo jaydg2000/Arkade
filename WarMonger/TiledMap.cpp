@@ -5,6 +5,7 @@ TiledMap::TiledMap()
 {	
 	//_camera_x = _camera_y = 0;
 	_tile_set = new TileSet();
+	_render_grid = false;
 }
 
 TiledMap::~TiledMap()
@@ -79,6 +80,10 @@ void TiledMap::render(Graphics* ptr_graphics, Rect viewport)
 	source_rect.w = TILE_WIDTH;
 	source_rect.h = TILE_HEIGHT;
 
+	Rect grid_rect;
+	grid_rect.w = 32;
+	grid_rect.h = 32;
+
 	int number_of_rows_to_draw = viewport.h / TILE_HEIGHT;
 	int number_of_cols_to_draw = viewport.w / TILE_WIDTH;
 
@@ -97,6 +102,13 @@ void TiledMap::render(Graphics* ptr_graphics, Rect viewport)
 			uint32_t render_x = camera_x + screen_x;
 			uint32_t render_y = camera_y + screen_y;
 			ptr_graphics->render(tile_to_render->texture(), render_x, render_y, &source_rect, FLIP_NONE, 0);
+			if (_render_grid)
+			{
+				grid_rect.x = render_x;
+				grid_rect.y = render_y;
+				camera->to_screen(&grid_rect, render_x, render_y);
+				ptr_graphics->render(&grid_rect, RGB::SkyBlue);
+			}
 		}
 	}
 }
@@ -111,3 +123,10 @@ void TiledMap::fill(Tile* tile)
 		}
 	}
 }
+
+void TiledMap::grid(bool display_grid)
+{
+	_render_grid = display_grid;
+}
+
+

@@ -20,7 +20,7 @@ namespace arkade {
 		if (_ptr_timer->has_elapsed())
 		{
 			f(_current_step++);	
-			if (_current_step >= _total_steps)
+			if (_current_step > _total_steps)
 			{
 				if (_is_repeating)
 				{

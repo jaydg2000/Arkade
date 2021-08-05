@@ -4,6 +4,7 @@
 #include "WarMonger_Main.h"
 #include "Tile.h"
 #include "TileSet.h"
+#include "City.h"
 
 using namespace arkade;
 
@@ -22,10 +23,11 @@ public:
 	uint32_t			map_to_screen_y(uint32_t map_y);
 	void				render(Graphics* ptr_graphics, Rect viewport);
 	void				fill(Tile* tile);
+	void				grid(bool display_grid);
 
 private:
-	//uint32_t			_camera_x, _camera_y;
 	uint16_t			_map[MAP_WIDTH][MAP_HEIGHT] = { 0 };
 	TileSet*			_tile_set;
+	bool				_render_grid;
 };
 

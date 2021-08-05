@@ -91,6 +91,8 @@ void SceneMapEditor::on_setup()
 	register_form(_editor_form);
 
 	_text_location = new Text("", _font);
+
+	_map->grid(true);
 }
 
 void SceneMapEditor::on_begin()

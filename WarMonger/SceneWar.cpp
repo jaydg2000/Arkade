@@ -1,6 +1,7 @@
 #include "SceneWar.h"
 #include "WarMonger_Main.h"
 #include "MapLoader.h"
+#include <Random.h>
 
 #define EDITOR_FORM_X 1512
 #define EDITOR_FORM_Y 7
@@ -24,11 +25,20 @@ SceneWar::SceneWar()
 	_map_preview_focus_rect.w = 96;
 	_map_preview_focus_rect.h = 66;
 
+	_interval_flash_current_unit = new IntervalLogic(250, 2);
+	_should_render_current_unit = true;
+	_unit_factory = new UnitFactory();
+	_path_finder = new PathFinder();
+	_current_path_solution = new PathSolution();
 }
 
 SceneWar::~SceneWar()
 {
 	delete _ptr_font;
+	delete _state;
+	delete _interval_flash_current_unit;
+	delete _unit_factory;
+	delete _path_finder;
 }
 
 void SceneWar::on_setup()
@@ -45,6 +55,16 @@ void SceneWar::on_setup()
 
 void SceneWar::on_begin()
 {
+	Player* player1 = new Player();
+	_state->add_player(player1);
+	Unit* unit = _unit_factory->create_unit(UNIT_INFANTRY);
+	unit->position(100,100);
+	player1->add_unit(unit);
+	unit = _unit_factory->create_unit(UNIT_MECHANIZED_INFANTRY);
+	unit->position(102, 100);
+	player1->add_unit(unit);
+
+	_interval_flash_current_unit->start();
 }
 
 void SceneWar::on_check_input(InputManager* input)
@@ -73,17 +93,68 @@ void SceneWar::on_check_input(InputManager* input)
 
 void SceneWar::on_update()
 {
+	Player* player = _state->current_player();
+	Unit* unit = _state->current_unit();
+
+	if (unit)
+	{
+
+	}
 }
 
 void SceneWar::on_render(Graphics* graphics)
 {
 	_state->map()->render(graphics, _map_viewport);
 	_hilite_map_cell(graphics, _last_mouse_x, _last_mouse_y);
-	_display_preview(graphics);	
+	_display_preview(graphics);
+
+	Player* player = _state->current_player();
+	Unit* current_unit = _state->current_unit();
+	vector<Unit*>* all_units = player->units();
+
+	Camera* camera = Camera::instance();
+	// determine what portion of the map is visible.
+	uint32_t camera_x = camera->position_x();
+	uint32_t camera_y = camera->position_y();
+	uint16_t top_left_tile_x = (camera_x / TILE_WIDTH);
+	uint16_t top_left_tile_y = (camera_y / TILE_HEIGHT);
+	uint16_t bottom_right_tile_x = top_left_tile_x + (_map_viewport.w / TILE_WIDTH) - 1;
+	uint16_t bottom_right_tile_y = top_left_tile_y + (_map_viewport.h / TILE_HEIGHT) - 1;
+
+	for (Unit* unit : *all_units)
+	{
+		if (unit != current_unit || _should_render_current_unit)
+		{
+			if (unit->x() < top_left_tile_x || unit->x() > bottom_right_tile_x)
+				return;
+			if (unit->y() < top_left_tile_y || unit->y() > bottom_right_tile_y)
+				return;
+			_render_unit(unit, graphics);
+		}
+	}
+
+	_interval_flash_current_unit->tick([this](uint32_t step) {
+		_should_render_current_unit = step;
+	});
+}
+
+void SceneWar::_render_unit(Unit* unit, Graphics* graphics)
+{
+	uint32_t sprite_x = _state->map()->map_to_screen_x(unit->x()) + MAP_VIEW_OFFSET_X;
+	uint32_t sprite_y = _state->map()->map_to_screen_y(unit->y()) + MAP_VIEW_OFFSET_Y;
+	unit->sprite()->position(sprite_x, sprite_y);
+	graphics->render(unit->sprite()->destination_rect(), unit->color(), true);
+	graphics->render(unit->sprite());
+}
+
+void SceneWar::_render_path_solution(Graphics* graphics)
+{
+	// todo: don't use queue for path solution. Need to resuse.
 }
 
 void SceneWar::on_end()
 {
+	_interval_flash_current_unit->start();
 }
 
 void SceneWar::on_cleanup()
@@ -171,6 +242,22 @@ void SceneWar::_move_map_view_to_position()
 	Camera::instance()->position(goto_map_x * TILE_WIDTH, goto_map_y * TILE_HEIGHT);
 }
 
+void SceneWar::_get_path_solution()
+{		
+	_current_path_solution->clear();
+	TiledMap* map = _state->map();
+	uint32_t map_x = map->screen_to_map_x(_last_mouse_x);
+	uint32_t map_y = map->screen_to_map_y(_last_mouse_y);
+
+	if (map_x >= MAP_WIDTH || map_x < 0)
+		return;
+	if (map_y >= MAP_HEIGHT || map_y < 0)
+		return;
+
+	Unit* unit = _state->current_unit();
+	_current_path_solution = _path_finder->find_path(map, unit->x(), unit->y(), map_x, map_y, unit->terrain_costs());
+}
+
 void SceneWar::_hilite_map_cell(Graphics* graphics, uint32_t mouse_x, uint32_t mouse_y)
 {
 	TiledMap* map = _state->map();
@@ -205,4 +292,19 @@ void SceneWar::_display_selected_map_location(Graphics* graphics, uint32_t map_x
 	location_str.append(std::to_string(map_y));
 	_text_location->text(location_str.c_str());
 	graphics->render(_text_location, EDITOR_FORM_X + 10, 1030);
+}
+
+void SceneWar::_initialize_new_game()
+{
+	vector<City*>* cities = _state->cities();
+	uint32_t number_of_cities = cities->size();
+	vector<Player*>* players = _state->players();
+	
+	for (Player* player : *players)
+	{
+		uint32_t city_index = Random::rand_int(0, number_of_cities - 1);
+		// todo: make sure to not assign an already assigned city.
+		player->take_city((*cities)[city_index]);
+	}
+	
 }

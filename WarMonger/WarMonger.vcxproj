@@ -146,16 +146,20 @@
     <ClCompile Include="City.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
+    <ClCompile Include="PathSolution.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneChooseMap.cpp" />
     <ClCompile Include="SceneMainMenu.cpp" />
     <ClCompile Include="SceneMapEditor.cpp" />
     <ClCompile Include="SceneWar.cpp" />
     <ClCompile Include="Structure.cpp" />
+    <ClCompile Include="TerrainCosts.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TiledMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitFactory.cpp" />
     <ClCompile Include="WarMongerGame.cpp" />
     <ClCompile Include="WarMonger_Main.cpp" />
   </ItemGroup>
@@ -163,6 +167,8 @@
     <ClInclude Include="City.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MapLoader.h" />
+    <ClInclude Include="PathFinder.h" />
+    <ClInclude Include="PathSolution.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneChooseMap.h" />
@@ -170,10 +176,12 @@
     <ClInclude Include="SceneMapEditor.h" />
     <ClInclude Include="SceneWar.h" />
     <ClInclude Include="Structure.h" />
+    <ClInclude Include="TerrainCosts.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitFactory.h" />
     <ClInclude Include="WarMongerGame.h" />
     <ClInclude Include="WarMonger_Main.h" />
   </ItemGroup>
