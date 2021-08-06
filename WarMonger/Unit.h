@@ -26,6 +26,7 @@ public:
 	void							color(RGB color);
 	void							map(TiledMap* map);
 	TerrainCosts*					terrain_costs();
+	void							move(Point point);
 
 private:
 	uint16_t						_type_id;
@@ -34,5 +35,6 @@ private:
 	Sprite*							_unit_sprite;
 	TiledMap*						_map;
 	TerrainCosts*					_costs;
+	queue<Point>*					_movement_points;
 };
 

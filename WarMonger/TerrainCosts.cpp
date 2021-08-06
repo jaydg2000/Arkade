@@ -16,14 +16,14 @@ TerrainCosts::~TerrainCosts()
 
 int32_t TerrainCosts::cost(uint16_t tile_type_id)
 {
-	if (TileSet::is_land)
+	if (TileSet::is_land(tile_type_id))
 		return _land;
-	if (TileSet::is_forest)
+	if (TileSet::is_forest(tile_type_id))
 		return _forest;
-	if (TileSet::is_mountain)
+	if (TileSet::is_mountain(tile_type_id))
 		return _mountain;
-	if (TileSet::is_water)
+	if (TileSet::is_water(tile_type_id))
 		return _water;
-	if (TileSet::is_river)
+	if (TileSet::is_river(tile_type_id))
 		return _river;
 }

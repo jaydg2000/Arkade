@@ -6,6 +6,7 @@ Unit::Unit(uint16_t type_id, RGB background_color, Sprite* unit_sprite, TerrainC
 	_unit_sprite = unit_sprite;
 	_type_id = type_id;	
 	_costs = costs;
+	_movement_points = new queue<Point>();
 }
 
 Unit::~Unit()
@@ -61,4 +62,9 @@ void Unit::map(TiledMap* map)
 TerrainCosts* Unit::terrain_costs()
 {
 	return _costs;
+}
+
+void Unit::move(Point point)
+{
+	_movement_points->push(Point(point));
 }

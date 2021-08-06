@@ -34,6 +34,7 @@ private:
 	TileSet*						_tileset;
 	PathSolution*					_current_path_solution;
 	Font*							_ptr_font;
+	Font*							_ptr_font_count_map;
 	Rect							_map_viewport;
 	Rect							_map_preview_rect;
 	Rect							_map_preview_focus_rect;
@@ -41,6 +42,7 @@ private:
 	UnitFactory*					_unit_factory;
 	PathFinder*						_path_finder;
 	Text*							_text_location;
+	Text*							_text_map_count;
 	bool							_should_render_current_unit;
 
 	IntervalLogic*					_interval_flash_current_unit;
@@ -53,5 +55,8 @@ private:
 	void							_render_unit(Unit* unit, Graphics* graphics);
 	void							_render_path_solution(Graphics* graphics);
 	void							_get_path_solution();
+	void							_move_camera_to_unit();
+	uint32_t						_top_left_x();
+	uint32_t						_top_left_y();
 };
 

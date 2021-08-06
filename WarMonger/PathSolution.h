@@ -1,5 +1,5 @@
 #pragma once
-#include <queue>
+#include <list>
 #include <Point.h>
 
 using namespace std;
@@ -15,8 +15,9 @@ public:
 	void							add_point(uint32_t x, uint32_t y);
 	void							clear();
 	bool							empty();
+	list<Point>*					points();
 
 private:
-	queue<Point>					_points;
+	list<Point>						_points;
 };
 

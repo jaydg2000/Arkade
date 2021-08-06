@@ -5,15 +5,15 @@
 
 #define EDITOR_FORM_X 1512
 #define EDITOR_FORM_Y 7
-#define MAP_VIEW_OFFSET_X 5
-#define MAP_VIEW_OFFSET_Y 5
+#define MAP_VIEW_OFFSET_X 6
+#define MAP_VIEW_OFFSET_Y 6
 
 SceneWar::SceneWar()
 {
 	_state = new GameState();
 
-	_map_viewport.x = 5;
-	_map_viewport.y = 5;
+	_map_viewport.x = MAP_VIEW_OFFSET_X;
+	_map_viewport.y = MAP_VIEW_OFFSET_Y;
 	_map_viewport.w = 1534;
 	_map_viewport.h = 1056;
 
@@ -35,6 +35,7 @@ SceneWar::SceneWar()
 SceneWar::~SceneWar()
 {
 	delete _ptr_font;
+	delete _ptr_font_count_map;
 	delete _state;
 	delete _interval_flash_current_unit;
 	delete _unit_factory;
@@ -44,7 +45,9 @@ SceneWar::~SceneWar()
 void SceneWar::on_setup()
 {
 	_ptr_font = new Font("fonts/bahnschrift.ttf", 30);
+	_ptr_font_count_map = new Font("fonts/bahnschrift.ttf", 15);
 	_text_location = new Text("", _ptr_font);
+	_text_map_count = new Text("", _ptr_font_count_map);
 	MapLoader map_loader;
 	// for now, hardcoding to map 1.
 	TiledMap* map = map_loader.load_map("maps/map1.bin");
@@ -65,6 +68,7 @@ void SceneWar::on_begin()
 	player1->add_unit(unit);
 
 	_interval_flash_current_unit->start();
+	_move_camera_to_unit();
 }
 
 void SceneWar::on_check_input(InputManager* input)
@@ -83,6 +87,18 @@ void SceneWar::on_check_input(InputManager* input)
 				return;
 			}
 		}
+
+		if (_current_path_solution && !_current_path_solution->empty())
+		{
+			Unit* unit = _state->current_unit();
+			// order to unit to move/attack.
+			while(!_current_path_solution->empty())
+			{
+				Point point = _current_path_solution->pop_point();
+				unit->move(point);
+			}			
+			_state->select_next_unit();
+		}
 	}
 
 	if (input->is_key_pressed(SDL_SCANCODE_ESCAPE))
@@ -98,7 +114,7 @@ void SceneWar::on_update()
 
 	if (unit)
 	{
-
+		_get_path_solution();
 	}
 }
 
@@ -120,6 +136,8 @@ void SceneWar::on_render(Graphics* graphics)
 	uint16_t top_left_tile_y = (camera_y / TILE_HEIGHT);
 	uint16_t bottom_right_tile_x = top_left_tile_x + (_map_viewport.w / TILE_WIDTH) - 1;
 	uint16_t bottom_right_tile_y = top_left_tile_y + (_map_viewport.h / TILE_HEIGHT) - 1;
+
+	_render_path_solution(graphics);
 
 	for (Unit* unit : *all_units)
 	{
@@ -144,12 +162,75 @@ void SceneWar::_render_unit(Unit* unit, Graphics* graphics)
 	uint32_t sprite_y = _state->map()->map_to_screen_y(unit->y()) + MAP_VIEW_OFFSET_Y;
 	unit->sprite()->position(sprite_x, sprite_y);
 	graphics->render(unit->sprite()->destination_rect(), unit->color(), true);
-	graphics->render(unit->sprite());
+	graphics->render(unit->sprite());	
 }
 
 void SceneWar::_render_path_solution(Graphics* graphics)
 {
-	// todo: don't use queue for path solution. Need to resuse.
+	if (!_current_path_solution || _current_path_solution->empty())
+		return;
+
+	TiledMap* map = _state->map();
+
+	list<Point>* points = _current_path_solution->points();
+	for (Point point : *points)
+	{
+		Rect rect;
+		rect.x = map->map_to_screen_x(point.x) + MAP_VIEW_OFFSET_X;
+		rect.y = map->map_to_screen_y(point.y) + MAP_VIEW_OFFSET_Y;
+		rect.w = TILE_WIDTH;
+		rect.h = TILE_HEIGHT;
+
+		if (rect.x > _map_viewport.x + (_map_viewport.w - TILE_WIDTH))
+			return;
+		if (rect.y > _map_viewport.y + (_map_viewport.h - TILE_HEIGHT))
+			return;
+
+		graphics->render(&rect);
+	}
+
+	//uint32_t first_tile_x = _top_left_x();
+	//uint32_t first_tile_y = _top_left_y();
+	//for (int y = first_tile_y; y < first_tile_y + MAP_COMPONENT_DISPLAY_Y-1; y++)
+	//{
+	//	for (int x = first_tile_x; x < first_tile_x + MAP_COMPONENT_DISPLAY_X-1; x++)
+	//	{
+	//		uint32_t count = _path_finder->count_at(x,y);
+	//						
+	//		char buff[4];
+	//		if (count > 999)
+	//			_text_map_count->text("#");
+	//		else
+	//		{
+	//			_itoa_s(count, buff, 10);
+	//			_text_map_count->text(buff);
+	//		}
+	//		uint32_t sx = map->map_to_screen_x(x) + MAP_VIEW_OFFSET_X;
+	//		uint32_t sy = map->map_to_screen_y(y) + MAP_VIEW_OFFSET_Y;
+	//		graphics->render(_text_map_count, sx, sy);
+	//	}
+	//}
+
+}
+
+void SceneWar::_move_camera_to_unit()
+{
+	Camera* camera = Camera::instance();
+	uint32_t map_x = _state->current_unit()->x();
+	uint32_t map_y = _state->current_unit()->y();
+	uint32_t screen_x = _state->map()->map_to_screen_x(map_x) - (RES_WIDTH / 2);
+	uint32_t screen_y = _state->map()->map_to_screen_y(map_y) - (RES_HEIGHT / 2);
+	Camera::instance()->position(screen_x, screen_y);
+}
+
+uint32_t SceneWar::_top_left_x()
+{
+	return _state->map()->screen_to_map_x(16);
+}
+
+uint32_t SceneWar::_top_left_y()
+{
+	return _state->map()->screen_to_map_y(16);
 }
 
 void SceneWar::on_end()
