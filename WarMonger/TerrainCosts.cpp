@@ -1,14 +1,14 @@
 #include "TerrainCosts.h"
 #include "TileSet.h"
 
-TerrainCosts::TerrainCosts(int32_t land, int32_t forest, int32_t mountain, int32_t river, int32_t water)
-{
-	_land = land;
-	_forest = forest;
-	_mountain = mountain;
-	_river = river;
-	_water = water;
-}
+//TerrainCosts::TerrainCosts(int32_t land, int32_t forest, int32_t mountain, int32_t river, int32_t water)
+//{
+//	_land = land;
+//	_forest = forest;
+//	_mountain = mountain;
+//	_river = river;
+//	_water = water;
+//}
 
 TerrainCosts::~TerrainCosts()
 {

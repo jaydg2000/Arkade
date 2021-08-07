@@ -6,6 +6,7 @@ GameState::GameState()
 	_players = new vector<Player*>();
 	_cities = new vector<City*>();
 	_current_player_index = 0;
+	_current_turn = 0;
 }
 
 GameState::~GameState()
@@ -65,6 +66,16 @@ vector<City*>* GameState::cities()
 vector<Player*>* GameState::players()
 {
 	return _players;
+}
+
+uint32_t GameState::mode()
+{
+	return _mode;
+}
+
+void GameState::mode(uint32_t mode)
+{
+	_mode = mode;
 }
 
 void GameState::_load_cities()

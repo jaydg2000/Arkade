@@ -2,6 +2,9 @@
 #include <Scene.h>
 #include <BoundingBoxCollisionDetector.h>
 #include <Image.h>
+#include <Button.h>
+#include <Checkbox.h>
+#include <Text.h>
 #include "TiledMap.h"
 #include <Font.h>
 #include <Text.h>
@@ -34,7 +37,7 @@ private:
 	TileSet*						_tileset;
 	PathSolution*					_current_path_solution;
 	Font*							_ptr_font;
-	Font*							_ptr_font_count_map;
+	Font*							_ptr_font_unit_panel;
 	Rect							_map_viewport;
 	Rect							_map_preview_rect;
 	Rect							_map_preview_focus_rect;
@@ -44,8 +47,20 @@ private:
 	Text*							_text_location;
 	Text*							_text_map_count;
 	bool							_should_render_current_unit;
+	RGB*							_path_color;
 
 	IntervalLogic*					_interval_flash_current_unit;
+	IntervalLogic*					_interval_path_solution_color_swap;
+
+	Form*							_form_unit_panel;
+	Text*							_text_unit_name;
+	Text*							_text_unit_health;	
+	Button*							_button_move;
+	Button*							_button_attack;
+	Button*							_button_skip;
+	Button*							_button_end_turn;
+	Button*							_button_quit;
+	Checkbox*						_checkbox_dig_in;
 
 	void							_initialize_new_game();
 	void							_display_preview(Graphics* graphics);
@@ -54,9 +69,14 @@ private:
 	void							_display_selected_map_location(Graphics* graphics, uint32_t map_x, uint32_t map_y);	
 	void							_render_unit(Unit* unit, Graphics* graphics);
 	void							_render_path_solution(Graphics* graphics);
+	void							_render_panel(Graphics* graphics);
 	void							_get_path_solution();
 	void							_move_camera_to_unit();
 	uint32_t						_top_left_x();
 	uint32_t						_top_left_y();
+	bool							_is_point_within_map_preview(uint32_t screen_x, uint32_t screen_y);
+	bool							_is_point_within_map(uint32_t screen_x, uint32_t screen_y);
+	void							_assign_movement_path_to_unit();
+	void							_load_current_unit_info();
 };
 

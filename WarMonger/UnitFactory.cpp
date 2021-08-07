@@ -1,8 +1,8 @@
 #include <TextureCache.h>
+#include <Random.h>
+#include <string>
 #include "UnitFactory.h"
-
-#define TEXTURE_UNIT_INFANTRY            "res/unit_infantry.png"
-#define TEXTURE_UNIT_MECH_INFANTRY       "res/unit_mech_infantry.png"
+#include "UnitSpecification.h"
 
 UnitFactory::UnitFactory()
 {
@@ -26,20 +26,42 @@ Unit* UnitFactory::create_unit(uint32_t type_id)
 
 }
 
+string UnitFactory::_generate_unit_name(const char* suffix)
+{
+    int unit_number = Random::rand_int(1, 999);
+    int digit = unit_number % 10;
+    string rd;
+
+    switch (digit)
+    {
+        case 1:
+            rd.append("st");
+            break;
+        case 2:
+            rd.append("nd");
+            break;
+        case 3:
+            rd.append("rd");
+            break;
+        default:
+            rd.append("th");
+    }
+
+    string name;    
+    name.append(std::to_string(unit_number)).append(rd).append(" ").append(suffix);
+    return name;
+}
+
 Unit* UnitFactory::_make_infantry()
 {
-    auto unit_sprite = new Sprite(TEXTURE_UNIT_INFANTRY, make_size(32, 32));
-    unit_sprite->use_screen_positioning(true);
-    TerrainCosts* costs = new TerrainCosts(1, 2, 3, 2);
-    Unit* unit = new Unit(UNIT_INFANTRY, RGB::White, unit_sprite, costs);
+    string unit_name = _generate_unit_name("Infantry");
+    Unit* unit = new Unit(UNIT_INFANTRY, RGB::White, unit_name, &UnitSpecification::Infantry);
     return unit;
 }
 
 Unit* UnitFactory::_make_mechanized_infantry()
 {
-    auto unit_sprite = new Sprite(TEXTURE_UNIT_MECH_INFANTRY, make_size(32, 32));
-    unit_sprite->use_screen_positioning(true);
-    TerrainCosts* costs = new TerrainCosts(1, 2, -1, 2);
-    Unit* unit = new Unit(UNIT_MECHANIZED_INFANTRY, RGB::White, unit_sprite, costs);
+    string unit_name = _generate_unit_name("Mech Infantry");
+    Unit* unit = new Unit(UNIT_MECHANIZED_INFANTRY, RGB::White, unit_name, &UnitSpecification::MechanizedInfantry);
     return unit;
 }

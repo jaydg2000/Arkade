@@ -7,6 +7,7 @@
 #define EDITOR_FORM_Y 7
 #define MAP_VIEW_OFFSET_X 6
 #define MAP_VIEW_OFFSET_Y 6
+#define PANEL_Y 415
 
 SceneWar::SceneWar()
 {
@@ -26,6 +27,7 @@ SceneWar::SceneWar()
 	_map_preview_focus_rect.h = 66;
 
 	_interval_flash_current_unit = new IntervalLogic(250, 2);
+	_interval_path_solution_color_swap = new IntervalLogic(100,3);
 	_should_render_current_unit = true;
 	_unit_factory = new UnitFactory();
 	_path_finder = new PathFinder();
@@ -35,19 +37,27 @@ SceneWar::SceneWar()
 SceneWar::~SceneWar()
 {
 	delete _ptr_font;
-	delete _ptr_font_count_map;
+	delete _ptr_font_unit_panel;
 	delete _state;
 	delete _interval_flash_current_unit;
+	delete _interval_path_solution_color_swap;
 	delete _unit_factory;
 	delete _path_finder;
 }
 
 void SceneWar::on_setup()
 {
+	UnitSpecification::init();
 	_ptr_font = new Font("fonts/bahnschrift.ttf", 30);
-	_ptr_font_count_map = new Font("fonts/bahnschrift.ttf", 15);
+	_ptr_font_unit_panel = new Font("fonts/bahnschrift.ttf", 21);
 	_text_location = new Text("", _ptr_font);
-	_text_map_count = new Text("", _ptr_font_count_map);
+	_text_map_count = new Text("", _ptr_font_unit_panel);
+	_text_unit_name = new Text("", _ptr_font_unit_panel);
+	_checkbox_dig_in = new Checkbox("Dig in", _ptr_font_unit_panel, 1800, PANEL_Y);
+
+	//_form_unit_panel = new Form(1520, PANEL_Y, make_size(500,900));
+	//_form_unit_panel->add_control(_checkbox_dig_in);
+
 	MapLoader map_loader;
 	// for now, hardcoding to map 1.
 	TiledMap* map = map_loader.load_map("maps/map1.bin");
@@ -67,8 +77,14 @@ void SceneWar::on_begin()
 	unit->position(102, 100);
 	player1->add_unit(unit);
 
+	_load_current_unit_info();
+
 	_interval_flash_current_unit->start();
+	_interval_path_solution_color_swap->start();
 	_move_camera_to_unit();
+	_state->mode(MODE_WAITING);
+
+	//register_form(_form_unit_panel);
 }
 
 void SceneWar::on_check_input(InputManager* input)
@@ -79,25 +95,10 @@ void SceneWar::on_check_input(InputManager* input)
 	if (input->is_mouse_button_pressed(MOUSE_BUTTON_INPUT_LEFT))
 	{
 		// first handle mouse clicks on map preview
-		if (_last_mouse_x > _map_preview_rect.x && _last_mouse_x < (_map_preview_rect.x + _map_preview_rect.w))
+		if (_is_point_within_map_preview(_last_mouse_x, _last_mouse_y))
 		{
-			if (_last_mouse_y > _map_preview_rect.y && _last_mouse_y < (_map_preview_rect.y + _map_preview_rect.h))
-			{
-				_move_map_view_to_position();
-				return;
-			}
-		}
-
-		if (_current_path_solution && !_current_path_solution->empty())
-		{
-			Unit* unit = _state->current_unit();
-			// order to unit to move/attack.
-			while(!_current_path_solution->empty())
-			{
-				Point point = _current_path_solution->pop_point();
-				unit->move(point);
-			}			
-			_state->select_next_unit();
+			_move_map_view_to_position();
+			return;
 		}
 	}
 
@@ -137,7 +138,10 @@ void SceneWar::on_render(Graphics* graphics)
 	uint16_t bottom_right_tile_x = top_left_tile_x + (_map_viewport.w / TILE_WIDTH) - 1;
 	uint16_t bottom_right_tile_y = top_left_tile_y + (_map_viewport.h / TILE_HEIGHT) - 1;
 
-	_render_path_solution(graphics);
+	if (_state->mode() == MODE_MOVING)
+	{
+		_render_path_solution(graphics);
+	}
 
 	for (Unit* unit : *all_units)
 	{
@@ -154,6 +158,11 @@ void SceneWar::on_render(Graphics* graphics)
 	_interval_flash_current_unit->tick([this](uint32_t step) {
 		_should_render_current_unit = step;
 	});
+
+	if (_state->current_unit())
+	{
+		_render_panel(graphics);
+	}
 }
 
 void SceneWar::_render_unit(Unit* unit, Graphics* graphics)
@@ -166,7 +175,22 @@ void SceneWar::_render_unit(Unit* unit, Graphics* graphics)
 }
 
 void SceneWar::_render_path_solution(Graphics* graphics)
-{
+{	
+	//_interval_path_solution_color_swap->tick([this](uint32_t step) {
+	//	switch (step)
+	//	{
+	//		case 0:
+	//			this->_path_color = &RGB(0xD1, 0xD0, 0xCD);
+	//			break;
+	//		case 1:
+	//			this->_path_color = &RGB(0x9C, 0x9B, 0x9A);
+	//			break;
+	//		case 2:
+	//			this->_path_color = &RGB(0x7D, 0x7D, 0x7D);
+	//			break;
+	//	}
+	//});
+
 	if (!_current_path_solution || _current_path_solution->empty())
 		return;
 
@@ -213,6 +237,24 @@ void SceneWar::_render_path_solution(Graphics* graphics)
 
 }
 
+void SceneWar::_render_panel(Graphics* graphics)
+{	
+	Unit* unit = _state->current_unit();
+	graphics->render(_text_unit_name, 1520, PANEL_Y);
+
+	if (unit->category() == CATEGORY_LAND)
+	{
+		_checkbox_dig_in->on_render(graphics);
+	}
+
+}
+
+void SceneWar::_load_current_unit_info()
+{
+	Unit* unit = _state->current_unit();
+	_text_unit_name->text(unit->name());
+}
+
 void SceneWar::_move_camera_to_unit()
 {
 	Camera* camera = Camera::instance();
@@ -226,6 +268,18 @@ void SceneWar::_move_camera_to_unit()
 uint32_t SceneWar::_top_left_x()
 {
 	return _state->map()->screen_to_map_x(16);
+}
+
+bool SceneWar::_is_point_within_map_preview(uint32_t screen_x, uint32_t screen_y)
+{
+	return (screen_x > _map_preview_rect.x && screen_x < (_map_preview_rect.x + _map_preview_rect.w)) &&
+		   (screen_y > _map_preview_rect.y && screen_y < (_map_preview_rect.y + _map_preview_rect.h));
+}
+
+bool SceneWar::_is_point_within_map(uint32_t screen_x, uint32_t screen_y)
+{
+	return (screen_x >= _map_viewport.x && screen_x < _map_viewport.x + (_map_viewport.w-1)) &&
+		   (screen_y >= _map_viewport.y && screen_y < _map_viewport.y + (_map_viewport.h-1));
 }
 
 uint32_t SceneWar::_top_left_y()
@@ -389,3 +443,20 @@ void SceneWar::_initialize_new_game()
 	}
 	
 }
+
+void SceneWar::_assign_movement_path_to_unit()
+{
+	if (_current_path_solution && !_current_path_solution->empty())
+	{
+		Unit* unit = _state->current_unit();
+		// order to unit to move/attack.
+		while (!_current_path_solution->empty())
+		{
+			Point point = _current_path_solution->pop_point();
+			unit->move(point);
+		}
+		_state->select_next_unit();
+	}
+}
+
+

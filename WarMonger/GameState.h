@@ -4,6 +4,11 @@
 #include "TiledMap.h"
 #include "City.h"
 
+#define MODE_WAITING		1000
+#define MODE_MOVING			1100
+#define MODE_ATTACKING		1200
+
+
 using namespace std;
 
 class GameState
@@ -21,6 +26,8 @@ public:
 	Unit*								current_unit();
 	vector<City*>*						cities();
 	vector<Player*>*					players();
+	uint32_t							mode();
+	void								mode(uint32_t mode);
 
 private:
 	vector<Player*>*					_players;
@@ -28,6 +35,8 @@ private:
 	TiledMap*							_map;
 	uint32_t							_current_player_index;
 	uint32_t							_current_unit_index;
+	uint32_t							_current_turn;
+	uint32_t							_mode;
 
 	void								_load_cities();
 };

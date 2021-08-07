@@ -1,12 +1,12 @@
 #include "Unit.h"
 
-Unit::Unit(uint16_t type_id, RGB background_color, Sprite* unit_sprite, TerrainCosts* costs)
+Unit::Unit(uint16_t type_id, RGB background_color, string name, UnitSpecification* specification)
 {
+	_specification = specification;
 	_background_color = background_color;
-	_unit_sprite = unit_sprite;
 	_type_id = type_id;	
-	_costs = costs;
 	_movement_points = new queue<Point>();
+	_name = name;
 }
 
 Unit::~Unit()
@@ -41,7 +41,7 @@ void Unit::position(uint32_t x, uint32_t y)
 
 Sprite* Unit::sprite()
 {
-	return _unit_sprite;
+	return _specification->_unit_sprite;
 }
 
 RGB Unit::color()
@@ -61,10 +61,30 @@ void Unit::map(TiledMap* map)
 
 TerrainCosts* Unit::terrain_costs()
 {
-	return _costs;
+	return &(_specification->_movement_profile);
 }
 
 void Unit::move(Point point)
 {
 	_movement_points->push(Point(point));
+}
+
+const char* Unit::name()
+{
+	return _name.c_str();
+}
+
+uint8_t Unit::category()
+{
+	return _specification->_category;
+}
+
+void Unit::dug_in(bool is_dug_in)
+{
+	_is_dug_in = is_dug_in;
+}
+
+bool Unit::is_dug_in()
+{
+	return _is_dug_in;
 }
