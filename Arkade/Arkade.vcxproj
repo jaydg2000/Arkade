@@ -74,8 +74,8 @@
     <LibraryPath>C:\SDL\SDL2-2.0.14\lib\x86;C:\SDL\SDL2_image-2.0.0\lib\x86;C:\SDL\SDL2_mixer-2.0.0\lib\x86;C:\SDL\SDL2_ttf-2.0.15\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_mixer-2.0.0\include;C:\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SDL\SDL2-2.0.4\lib\x64;C:\SDL\SDL2_mixer-2.0.0\lib\x64;C:\SDL\SDL2_image-2.0.0\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\SDL\SDL2_ttf-2.0.15\include;$(ProjectDir)..\SDL\SDL2-2.0.16\include;$(ProjectDir)..\SDL\SDL2_image-2.0.5\include;$(ProjectDir)..\SDL\SDL2_mixer-2.0.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\SDL\SDL2_ttf-2.0.15\lib\x64;$(ProjectDir)..\SDL2_mixer-2.0.4\lib\x64;$(ProjectDir)..\SDL\SDL2-2.0.16\lib\x64;$(ProjectDir)..\SDL2_image-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\SDL\SDL2-2.0.4\include;C:\SDL\SDL2_mixer-2.0.0\include;C:\SDL\SDL2_image-2.0.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
@@ -115,8 +115,8 @@ copy /Y "$(OutputPath)*.pdb" C:\Arkade\1.0\lib</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(OutDir)Arkade.lib c:\arkade
-copy /Y $(ProjectDir)*.h c:\arkade</Command>
+      <Command>copy /Y $(OutDir)Arkade.lib $(ProjectDir)..\out
+copy /Y $(ProjectDir)*.h $(ProjectDir)..\out</Command>
     </PostBuildEvent>
     <Xdcmake />
     <Xdcmake />

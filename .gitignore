@@ -37,8 +37,9 @@
 *.sdf
 
 */bin
-
+*/out
 */Debug
 */Release
-
-*/x64
+/out
+/Arkade/x64
+/WarMonger/x64
