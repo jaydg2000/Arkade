@@ -1,0 +1,22 @@
+﻿  AsteroidSprite.cpp
+C:\projects\Arkade\Asteroids\AsteroidSprite.cpp(9,28): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\AsteroidSprite.cpp(10,36): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+  Asteroids.cpp
+  AsteroidsGame.cpp
+  ExplosionSprite.cpp
+  LaserSprite.cpp
+  LevelOne.cpp
+  LevelOneGameScene.cpp
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(168,23): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(170,29): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(173,23): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(175,29): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(179,23): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(180,29): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(184,23): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\LevelOneGameScene.cpp(185,29): warning C4244: '=': conversion from 'int32_t' to 'float', possible loss of data
+  SpaceShipSprite.cpp
+C:\projects\Arkade\Asteroids\SpaceShipSprite.cpp(97,30): warning C4244: 'argument': conversion from 'int32_t' to 'float', possible loss of data
+C:\projects\Arkade\Asteroids\SpaceShipSprite.cpp(97,11): warning C4244: 'argument': conversion from 'int32_t' to 'float', possible loss of data
+  Generating Code...
+  Asteroids.vcxproj -> C:\projects\Arkade\Arkade\x64\Debug\Asteroids.exe
