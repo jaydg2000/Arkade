@@ -22,17 +22,30 @@ namespace arkade {
 	}
 
 	Message* MessagePool::obtain() {
-		if (m_messages.empty())
-			return new Message();
+		Message* message = nullptr;
 
-		Message* message = m_messages.front();
+		if (m_messages.empty())
+			message = new Message();
+
+		message = m_messages.front();
 		m_messages.pop();
+
+		m_obtained_messages.push(message);
 
 		return message;
 	}
 
-	void MessagePool::release(Message* message) {
-		message->set(0, nullptr, nullptr);
-		m_messages.push(message);
+	//void MessagePool::release(Message* message) {
+	//	message->set(0, nullptr, nullptr);
+	//	m_messages.push(message);
+	//}
+
+	void MessagePool::release_all() {
+		while (!m_obtained_messages.empty()) {
+			Message* message = m_obtained_messages.front();
+			m_obtained_messages.pop();
+			message->set(0, nullptr, nullptr);
+			m_messages.push(message);
+		}
 	}
 }

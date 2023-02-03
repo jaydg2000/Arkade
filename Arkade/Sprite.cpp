@@ -277,8 +277,14 @@ namespace arkade {
 		m_ptr_clip_rect->h = rect.h;
 	}
 
-	Rect* Sprite::collision_rect() {
-		return destination_rect();
+	Rect Sprite::collision_rect() {
+		destination_rect();
+		Rect coll_rect;
+		coll_rect.x = m_destination_rect.x;
+		coll_rect.y = m_destination_rect.y;
+		coll_rect.w = m_destination_rect.w * m_scale_x;
+		coll_rect.h = m_destination_rect.h * m_scale_y;
+		return coll_rect;
 	}
 
 	Point* Sprite::center_frame() {
@@ -287,7 +293,7 @@ namespace arkade {
 
 	bool Sprite::intersects_with(uint32_t x, uint32_t y) {
 		const Rect rect = make_rect(x, y, 1, 1);
-		return (SDL_HasIntersection(&rect, collision_rect()) == SDL_TRUE);		
+		return (SDL_HasIntersection(&rect, &(collision_rect())) == SDL_TRUE);		
 	}
 
 	void Sprite::on_setup() {

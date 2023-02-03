@@ -194,8 +194,8 @@ namespace arkade {
 			if (!clip(src_rect, dest_rect, clip_rect))
 				return;
 
-		//dest_rect->w = dest_rect->w * sprite->scale_x();
-		//dest_rect->h = dest_rect->h * sprite->scale_y();
+		dest_rect->w = dest_rect->w * sprite->scale_x();
+		dest_rect->h = dest_rect->h * sprite->scale_y();
 
 		sprite->on_pre_render();
 
@@ -210,11 +210,11 @@ namespace arkade {
 			);
 
 		if (m_show_bounding_box) {
-			Rect* bounding_rect = sprite->collision_rect();
+			Rect bounding_rect = sprite->collision_rect();
 			if (!sprite->use_screen_positioning()) {
-				m_ptr_camera->to_screen(bounding_rect, bounding_rect->x, bounding_rect->y);
+				m_ptr_camera->to_screen(&bounding_rect, bounding_rect.x, bounding_rect.y);
 			}
-			render_boundingBox(bounding_rect);
+			render_boundingBox(&bounding_rect);
 		}
 
 		sprite->on_post_render();

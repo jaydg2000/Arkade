@@ -18,7 +18,7 @@ namespace arkade {
 		uint32_t								message_type();
 		MessageSink*							sender();
 		void*									data();
-		void									release();
+		//void									release();
 
 	private:
 		uint32_t								m_message_type;

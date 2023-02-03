@@ -73,9 +73,9 @@ void LevelOneGameScene::on_check_input(InputManager* ptr_keyboard)
 		add_laser();
 	}
 	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_LEFT))
-		m_ptr_spaceship->rotate_left(5);
+		m_ptr_spaceship->rotate_left(3);
 	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_RIGHT))
-		m_ptr_spaceship->rotate_right(5);
+		m_ptr_spaceship->rotate_right(3);
 	if (ptr_keyboard->is_key_pressed(SDL_SCANCODE_UP)) {
 		m_ptr_spaceship->accelerate();
 		m_ptr_spaceship->thrust(true);

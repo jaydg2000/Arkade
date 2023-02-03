@@ -21,7 +21,7 @@ namespace arkade {
 			Message* ptr_message = m_message_queue.front();
 			if (ptr_message) {
 				on_message(ptr_message->message_type(), ptr_message->sender(), ptr_message->data());
-				ptr_message->release();
+				//ptr_message->release(); // This is wiping out the message so other recipients are getting nulls. First one wins!
 				m_message_queue.pop();
 			}
 		}

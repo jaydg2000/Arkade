@@ -14,10 +14,12 @@ namespace arkade {
 		static MessagePool*						instance();
 		Message*								obtain();
 		void									release(Message*);
+		void									release_all();
 
 	private:
 		static MessagePool*						m_instance;
 		queue<Message*>							m_messages;
+		queue<Message*>							m_obtained_messages;
 
 		MessagePool(uint32_t initial_size);
 	};

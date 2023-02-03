@@ -39,10 +39,6 @@ namespace arkade {
 		void					scale(float x, float y);
 		float					scale_x();
 		float					scale_y();
-		//void					scale(PointF& point);
-		//PointF					scale();
-		//void					scale(float scale);
-		//float					scale();
 		uint32_t				size_x();
 		uint32_t				size_y();
 		Size*					size();
@@ -66,7 +62,7 @@ namespace arkade {
 		virtual Rect*			destination_rect();
 		virtual Rect*			clip_rect();
 		void					clip_rect(Rect& rect);
-		virtual Rect*			collision_rect();
+		virtual Rect			collision_rect();
 		virtual Point*			center_frame();
 		void					type(uint32_t type);
 		uint32_t				type();

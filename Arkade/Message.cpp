@@ -54,8 +54,8 @@ namespace arkade {
 		return m_ptr_data;
 	}
 
-	void Message::release() {
-		MessagePool* pool = MessagePool::instance();
-		pool->release(this);
-	}
+	//void Message::release() {
+	//	MessagePool* pool = MessagePool::instance();
+	//	pool->release(this);
+	//}
 }

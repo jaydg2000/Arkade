@@ -25,6 +25,7 @@ SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, 
 	//m_explosion_sound = ptr_exploion_sound;
 
 	m_laser_fire_timer.start(200);
+	//scale(.75, .75);
 }
 
 
