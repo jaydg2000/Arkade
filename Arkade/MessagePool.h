@@ -14,7 +14,7 @@ namespace arkade {
 		static MessagePool*						instance();
 		Message*								obtain();
 		void									release(Message*);
-		void									release_all();
+		//void									release_all();
 
 	private:
 		static MessagePool*						m_instance;

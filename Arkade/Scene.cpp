@@ -201,8 +201,6 @@ namespace arkade {
 		for (Form* form : m_form_list) {
 			form->flush();
 		}
-
-		MessagePool::instance()->release_all();
 	}
 
 	void Scene::update_forms()

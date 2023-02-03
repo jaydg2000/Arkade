@@ -1,4 +1,5 @@
 #include "MessageRouter.h"
+#include "MessagePool.h"
 #include "MessageSink.h"
 #include "Message.h"
 
@@ -42,11 +43,12 @@ namespace arkade {
 
 	void MessageRouter::broadcast(Message* ptr_message) {
 		list<MessageSink*>* ptr_sinks = get_message_type_list(ptr_message->message_type());
-		if (!ptr_sinks)
-			return;
-		for (MessageSink* sink : *ptr_sinks) {
-			sink->post(ptr_message);
+		if (ptr_sinks) {
+			for (MessageSink* sink : *ptr_sinks) {
+				sink->post(ptr_message);
+			}
 		}
+		//MessagePool::instance()->release(ptr_message);
 	}
 
 	bool MessageRouter::contains_message_type(uint32_t message_type) {

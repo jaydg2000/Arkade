@@ -17,6 +17,7 @@ void LevelOneGameScene::on_setup()
 	register_for_messages(MESSAGE_TYPE_LASER_DEAD);
 	register_for_messages(MESSAGE_TYPE_EXPLOSION_DEAD);
 	register_for_messages(MESSAGE_TYPE_CREATE_EXPLOSION);
+	register_for_messages(MESSAGE_TYPE_COIN_COLLECTED);
 
 	m_bounds_checker = new BoundsChecker(-500, -500, RES_WIDTH + 500, RES_HEIGHT + 500);
 
@@ -32,6 +33,7 @@ void LevelOneGameScene::on_setup()
 
 	init_asteroid_pool();
 	init_explosion_pool();
+	init_coin_pool();
 }
 
 void LevelOneGameScene::init_asteroid_pool() {
@@ -49,6 +51,13 @@ void LevelOneGameScene::init_explosion_pool() {
 	
 	for (uint8_t count = 0; count < 10; count++) {
 		m_ptr_explosion_pool->add(new ExplosionSprite());
+	}
+}
+
+void LevelOneGameScene::init_coin_pool() {
+	m_ptr_coin_pool = new SpritePool();
+	for (int c = 0; c < 3; c++) {		
+		m_ptr_coin_pool->add(new CoinSprite());
 	}
 }
 
@@ -94,6 +103,9 @@ void LevelOneGameScene::on_update()
 {
 	if (m_asteroid_creation_timer.has_elapsed())
 		add_asteroid();
+	if (Random::rand_int(0, 100) > 90) {
+		add_coin();
+	}
 }
 
 void LevelOneGameScene::on_render(Graphics* ptr_graphics)
@@ -103,6 +115,7 @@ void LevelOneGameScene::on_render(Graphics* ptr_graphics)
 	ptr_graphics->render(m_ptr_spaceship);
 	ptr_graphics->render(m_ptr_asteroid_pool);
 	ptr_graphics->render(m_ptr_explosion_pool);
+	ptr_graphics->render(m_ptr_coin_pool);
 	//ptr_graphics->render("SCORE", 10, 10, m_ptr_font);
 }
 
@@ -120,6 +133,7 @@ void LevelOneGameScene::on_detect_collisions()
 {
 	m_collision_detector.detect(m_ptr_spaceship->laser_sprite_pool(), m_ptr_asteroid_pool);
 	m_collision_detector.detect(m_ptr_spaceship, m_ptr_asteroid_pool);
+	m_collision_detector.detect(m_ptr_spaceship, m_ptr_coin_pool);
 }
 
 void LevelOneGameScene::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
@@ -149,6 +163,12 @@ void LevelOneGameScene::on_message(uint32_t message_type, MessageSink* ptr_sende
 			exp_sprite = (ExplosionSprite*)ptr_data;
 			unregister_sprite(exp_sprite);
 			m_ptr_explosion_pool->release(exp_sprite);
+			break;
+
+		case MESSAGE_TYPE_COIN_COLLECTED:
+		 	CoinSprite* coin_sprite = (CoinSprite*)ptr_data;
+			unregister_sprite(coin_sprite);
+			m_ptr_coin_pool->release(coin_sprite);
 			break;
 	}
 }
@@ -208,4 +228,17 @@ void LevelOneGameScene::add_explosion(PointF* position) {
 
 	sprite->position(position->x, position->y);
 	sprite->animator()->start();
+}
+
+void LevelOneGameScene::add_coin() {
+	uint32_t x = Random::rand_int(10, RES_WIDTH-10);
+	uint32_t y = Random::rand_int(10, RES_HEIGHT-10 );
+
+	CoinSprite* sprite = (CoinSprite*)m_ptr_coin_pool->obtain();
+	if (!sprite)
+		return;
+
+	register_sprite(sprite);
+
+	sprite->position(x, y);
 }

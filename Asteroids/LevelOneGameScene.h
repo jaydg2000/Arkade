@@ -5,6 +5,7 @@
 #include "AsteroidSprite.h"
 #include "LaserSprite.h"
 #include "ExplosionSprite.h"
+#include "CoinSprite.h"
 #include "BoundsChecker.h"
 #include "Font.h"
 
@@ -31,6 +32,7 @@ private:
 	SpaceShipSprite*				m_ptr_spaceship;
 	SpritePool*						m_ptr_asteroid_pool;
 	SpritePool*						m_ptr_explosion_pool;
+	SpritePool*						m_ptr_coin_pool;
 	Timer							m_asteroid_creation_timer;
 	BoundsChecker*					m_bounds_checker;
 	BoundingBoxCollisionDetector	m_collision_detector;
@@ -42,8 +44,10 @@ private:
 
 	void							init_asteroid_pool();
 	void							init_explosion_pool();
+	void							init_coin_pool();
 	void							add_asteroid();
 	void							add_laser();
 	void							add_explosion(PointF* position);
+	void							add_coin();
 };
 

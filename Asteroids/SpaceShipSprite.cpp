@@ -57,7 +57,6 @@ void SpaceShipSprite::on_update() {
 			reset_position();
 		}
 	}
-
 	apply_texture();
 	check_bounds();
 }
@@ -71,6 +70,7 @@ void SpaceShipSprite::on_collision(Sprite* ptr_colliding_sprite) {
 		m_death_timer.start(3000);
 		//m_scream_sound->play_sound();
 		//m_explosion_sound->play_sound();
+		return;
 	}
 }
 
@@ -89,8 +89,16 @@ void SpaceShipSprite::check_bounds() {
 	float x = position_x();
 	float y = position_y();
 
-	if (m_bounds_checker->is_out_of_bounds(x,y))
-		reset_position();
+	if (y < -30.0)
+		y = RES_HEIGHT;
+	if (y > RES_HEIGHT)
+		y = -30.0;
+
+	if (x < -30.0)
+		x = RES_WIDTH;
+	if (x > RES_WIDTH)
+		x = -30.0;
+	position(x, y);
 }
 
 void SpaceShipSprite::reset_position() {

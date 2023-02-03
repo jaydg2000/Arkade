@@ -1,7 +1,7 @@
 #include "LaserSprite.h"
 #include "Asteroids.h"
 
-#define LASER_SPEED 7
+#define LASER_SPEED 11
 
 LaserSprite::LaserSprite(BoundsChecker* ptr_bounds_checker)
 	: Sprite("res/images/player_fire.png", make_size(9, 16))
