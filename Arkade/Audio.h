@@ -14,8 +14,11 @@ namespace arkade {
 		void				uninitialize();
 		Mix_Chunk*			load_sound(const char* filename);
 		void				stop_all_sound();
+		void				enable(bool is_enabled);
+		bool				enabled();
 
 	private:
 		static Audio*		m_instance;
+		bool				_enabled;
 	};
 }

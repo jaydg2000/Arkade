@@ -157,7 +157,7 @@
     <ClInclude Include="AsteroidsGame.h" />
     <ClInclude Include="AsteroidSprite.h" />
     <ClInclude Include="BoundsChecker.h" />
-    <ClInclude Include="CoinSprite.h" />
+    <ClInclude Include="DiamondSprite.h" />
     <ClInclude Include="ExplosionSprite.h" />
     <ClInclude Include="LaserSprite.h" />
     <ClInclude Include="LevelOne.h" />
@@ -171,7 +171,7 @@
     <ClCompile Include="AsteroidsGame.cpp" />
     <ClCompile Include="AsteroidSprite.cpp" />
     <ClCompile Include="BoundsChecker.cpp" />
-    <ClCompile Include="CoinSprite.cpp" />
+    <ClCompile Include="DiamondSprite.cpp" />
     <ClCompile Include="ExplosionSprite.cpp" />
     <ClCompile Include="LaserSprite.cpp" />
     <ClCompile Include="LevelOne.cpp" />

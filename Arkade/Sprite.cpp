@@ -206,6 +206,9 @@ namespace arkade {
 		m_frame_size.y = size_point.y;
 		m_frame_center.x = m_frame_size.x / 2;
 		m_frame_center.y = m_frame_size.y / 2;
+
+		m_source_rect.w = m_frame_size.x;
+		m_source_rect.h = m_frame_size.y;
 	}
 
 	uint32_t Sprite::z_order() {

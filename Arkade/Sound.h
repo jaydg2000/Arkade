@@ -3,7 +3,7 @@
 #include <SDL_mixer.h>
 
 namespace arkade {
-
+	class Audio;
 	class Sound {
 	public:
 		Sound(const char* filename);
@@ -14,6 +14,7 @@ namespace arkade {
 		void				stop_sound(int channel);
 
 	private:
+		Audio*              _audio;
 		Mix_Chunk*			m_ptr_mix_chunk;
 		int					m_channel;
 	};

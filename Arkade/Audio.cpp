@@ -8,6 +8,7 @@ namespace arkade {
 
 	Audio::Audio()
 	{
+		_enabled = true;
 		initialize();
 	}
 
@@ -52,4 +53,13 @@ namespace arkade {
 		Mix_HaltChannel(-1);
 	}
 
+	void Audio::enable(bool is_enabled) {
+		_enabled = is_enabled;
+	}
+
+	bool Audio::enabled() {
+		return _enabled;
+	}
+
+	
 }

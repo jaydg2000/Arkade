@@ -17,7 +17,7 @@ void LevelOneGameScene::on_setup()
 	register_for_messages(MESSAGE_TYPE_LASER_DEAD);
 	register_for_messages(MESSAGE_TYPE_EXPLOSION_DEAD);
 	register_for_messages(MESSAGE_TYPE_CREATE_EXPLOSION);
-	register_for_messages(MESSAGE_TYPE_COIN_COLLECTED);
+	register_for_messages(MESSAGE_TYPE_DIAMOND_COLLECTED);
 
 	m_bounds_checker = new BoundsChecker(-500, -500, RES_WIDTH + 500, RES_HEIGHT + 500);
 
@@ -33,10 +33,12 @@ void LevelOneGameScene::on_setup()
 
 	init_asteroid_pool();
 	init_explosion_pool();
-	init_coin_pool();
+	init_diamond_pool();
 
 	m_delay_between_asteroid_creation = 3000;
 	m_lives_left = 3;
+
+	Audio::instance()->enable(false);
 }
 
 void LevelOneGameScene::init_asteroid_pool() {
@@ -57,10 +59,10 @@ void LevelOneGameScene::init_explosion_pool() {
 	}
 }
 
-void LevelOneGameScene::init_coin_pool() {
-	m_ptr_coin_pool = new SpritePool();
+void LevelOneGameScene::init_diamond_pool() {
+	m_ptr_diamond_pool = new SpritePool();
 	for (int c = 0; c < 3; c++) {		
-		m_ptr_coin_pool->add(new CoinSprite());
+		m_ptr_diamond_pool->add(new DiamondSprite(m_bounds_checker));
 	}
 }
 
@@ -111,8 +113,8 @@ void LevelOneGameScene::on_update()
 		}
 		add_asteroid();
 	}
-	if (Random::rand_int(0, 1000) > 990) {
-		add_coin();
+	if (Random::rand_int(0, 10) > 8) {
+		add_diamond();
 	}
 }
 
@@ -123,7 +125,7 @@ void LevelOneGameScene::on_render(Graphics* ptr_graphics)
 	ptr_graphics->render(m_ptr_spaceship);
 	ptr_graphics->render(m_ptr_asteroid_pool);
 	ptr_graphics->render(m_ptr_explosion_pool);
-	ptr_graphics->render(m_ptr_coin_pool);
+	ptr_graphics->render(m_ptr_diamond_pool);
 	//ptr_graphics->render("SCORE", 10, 10, m_ptr_font);
 }
 
@@ -141,7 +143,7 @@ void LevelOneGameScene::on_detect_collisions()
 {
 	m_collision_detector.detect(m_ptr_spaceship->laser_sprite_pool(), m_ptr_asteroid_pool);
 	m_collision_detector.detect(m_ptr_spaceship, m_ptr_asteroid_pool);
-	m_collision_detector.detect(m_ptr_spaceship, m_ptr_coin_pool);
+	m_collision_detector.detect(m_ptr_spaceship, m_ptr_diamond_pool);
 }
 
 void LevelOneGameScene::on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data) {
@@ -173,10 +175,10 @@ void LevelOneGameScene::on_message(uint32_t message_type, MessageSink* ptr_sende
 			m_ptr_explosion_pool->release(exp_sprite);
 			break;
 
-		case MESSAGE_TYPE_COIN_COLLECTED:
-		 	CoinSprite* coin_sprite = (CoinSprite*)ptr_data;
+		case MESSAGE_TYPE_DIAMOND_COLLECTED:
+		 	DiamondSprite* coin_sprite = (DiamondSprite*)ptr_data;
 			unregister_sprite(coin_sprite);
-			m_ptr_coin_pool->release(coin_sprite);
+			m_ptr_diamond_pool->release(coin_sprite);
 			break;
 	}
 }
@@ -238,15 +240,40 @@ void LevelOneGameScene::add_explosion(PointF* position) {
 	sprite->animator()->start();
 }
 
-void LevelOneGameScene::add_coin() {
-	uint32_t x = Random::rand_int(10, RES_WIDTH-10);
-	uint32_t y = Random::rand_int(10, RES_HEIGHT-10 );
-
-	CoinSprite* sprite = (CoinSprite*)m_ptr_coin_pool->obtain();
+void LevelOneGameScene::add_diamond() {
+	DiamondSprite* sprite = (DiamondSprite*)m_ptr_diamond_pool->obtain();
 	if (!sprite)
 		return;
 
-	register_sprite(sprite);
+	float x, y;
+	int8_t starting_side = Random::rand_int(0, 3);
+	float heading = 0.0f;
+
+	switch (starting_side) {
+	case 2:
+		x = Random::rand_int(0, RES_WIDTH);
+		y = -80;
+		heading = Random::rand_int(115, 225);
+		break;
+	case 1:
+		x = Random::rand_int(0, RES_WIDTH);
+		y = RES_HEIGHT + 80;
+		heading = Random::rand_int(280, 395);
+		break;
+	case 0:
+		x = -80;
+		y = Random::rand_int(0, RES_HEIGHT);;
+		heading = Random::rand_int(30, 165);
+		break;
+	case 3:
+		x = RES_WIDTH + 80;
+		y = Random::rand_int(0, RES_HEIGHT);;
+		heading = Random::rand_int(195, 345);
+		break;
+	}
 
 	sprite->position(x, y);
+	sprite->heading(heading);
+
+	register_sprite(sprite);
 }
