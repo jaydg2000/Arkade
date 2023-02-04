@@ -48,7 +48,7 @@ namespace arkade {
 				sink->post(ptr_message);
 			}
 		}
-		//MessagePool::instance()->release(ptr_message);
+		MessagePool::instance()->release(ptr_message);
 	}
 
 	bool MessageRouter::contains_message_type(uint32_t message_type) {

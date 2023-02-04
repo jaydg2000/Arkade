@@ -13,16 +13,18 @@ namespace arkade {
 	}
 
 	void MessageSink::post(Message* message) {
-		m_message_queue.push(message);
+		QueuedMessage msg;
+		msg.message_type = message->message_type();
+		msg.ptr_sender = message->sender();
+		msg.ptr_data = message->data();
+		m_message_queue.push(msg);
 	}
 
 	void MessageSink::flush() {
 		while (!m_message_queue.empty()) {
-			Message* ptr_message = m_message_queue.front();
-			if (ptr_message) {
-				on_message(ptr_message->message_type(), ptr_message->sender(), ptr_message->data());
-				m_message_queue.pop();
-			}
+			QueuedMessage message = m_message_queue.front();
+			on_message(message.message_type, message.ptr_sender, message.ptr_data);
+			m_message_queue.pop();
 		}
 	}
 

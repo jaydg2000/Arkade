@@ -27,4 +27,9 @@ namespace arkade {
 
 	};
 
+	struct QueuedMessage {
+		uint32_t message_type;
+		MessageSink* ptr_sender;
+		void* ptr_data;
+	};
 }

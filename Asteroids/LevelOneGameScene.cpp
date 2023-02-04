@@ -34,12 +34,15 @@ void LevelOneGameScene::on_setup()
 	init_asteroid_pool();
 	init_explosion_pool();
 	init_coin_pool();
+
+	m_delay_between_asteroid_creation = 3000;
+	m_lives_left = 3;
 }
 
 void LevelOneGameScene::init_asteroid_pool() {
 	m_ptr_asteroid_pool = new SpritePool();
 
-	for (uint8_t count = 0; count < 15; count++) {
+	for (uint8_t count = 0; count < 20; count++) {
 		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid1.bmp", make_size(49, 59), m_bounds_checker, m_ptr_asteroid_explosion_sound));
 		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid2.bmp", make_size(29, 33), m_bounds_checker, m_ptr_asteroid_explosion_sound));
 		m_ptr_asteroid_pool->add(new AsteroidSprite("res/images/asteroid3.bmp", make_size(35, 39), m_bounds_checker, m_ptr_asteroid_explosion_sound));
@@ -64,7 +67,7 @@ void LevelOneGameScene::init_coin_pool() {
 void LevelOneGameScene::on_begin()
 {
 	m_ptr_spaceship->position(RES_WIDTH / 2, RES_HEIGHT / 2);
-	m_asteroid_creation_timer.start(750);
+	m_asteroid_creation_timer.start(m_delay_between_asteroid_creation);
 }
 
 void LevelOneGameScene::on_check_input(InputManager* ptr_keyboard)
@@ -101,9 +104,14 @@ void LevelOneGameScene::on_mouse_input()
 
 void LevelOneGameScene::on_update()
 {
-	if (m_asteroid_creation_timer.has_elapsed())
+	if (m_asteroid_creation_timer.has_elapsed()) {
+		if (m_delay_between_asteroid_creation > 500) {
+			m_delay_between_asteroid_creation -= 25;
+			m_asteroid_creation_timer.delay(m_delay_between_asteroid_creation);
+		}
 		add_asteroid();
-	if (Random::rand_int(0, 100) > 90) {
+	}
+	if (Random::rand_int(0, 1000) > 990) {
 		add_coin();
 	}
 }

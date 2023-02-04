@@ -41,7 +41,8 @@ private:
 	Sound*							m_ptr_laser_sound;
 	Sound*							m_ptr_scream_sound;
 	Font*							m_ptr_font;
-
+	uint32_t						m_delay_between_asteroid_creation;
+	int								m_lives_left;
 	void							init_asteroid_pool();
 	void							init_explosion_pool();
 	void							init_coin_pool();

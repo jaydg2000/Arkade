@@ -21,7 +21,7 @@ namespace arkade {
 		virtual void		on_message(uint32_t message_type, MessageSink* ptr_sender, void* ptr_data);
 
 	private:
-		queue<Message*>		m_message_queue;
+		queue<QueuedMessage>	m_message_queue;
 	};
 
 }
