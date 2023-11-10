@@ -37,8 +37,8 @@ void LevelOneGameScene::on_setup()
 
 	m_delay_between_asteroid_creation = 3000;
 	m_lives_left = 3;
-
-	Audio::instance()->enable(false);
+		
+	//Audio::instance()->enable(false);
 }
 
 void LevelOneGameScene::init_asteroid_pool() {
@@ -95,7 +95,7 @@ void LevelOneGameScene::on_check_input(InputManager* ptr_keyboard)
 		m_ptr_spaceship->thrust(true);
 	}
 	else {
-		m_ptr_spaceship->friction();		
+		m_ptr_spaceship->apply_friction();		
 		m_ptr_spaceship->thrust(false);
 	}
 }

@@ -18,7 +18,7 @@ AsteroidsGame::~AsteroidsGame()
 }
 
 void AsteroidsGame::on_setup() {
-	//Graphics::instance()->visible_bounding_box(true);
+	Graphics::instance()->visible_bounding_box(true);
 	add_level(&m_level_1);
 }
 

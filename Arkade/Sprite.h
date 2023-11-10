@@ -75,8 +75,25 @@ namespace arkade {
 		virtual void			on_collision(Sprite* ptr_sprite_collided_with);
 		virtual void			on_pool_obtain();
 		virtual void			on_pool_release();
+		virtual void			on_attached(float rel_x, float rel_y);
+		virtual void			on_detached();
+
+		void					use_physics(bool enabled);
+		void					friction(float friction);
+		void					acceleration(float magnitude, float max);
+		virtual void			accelerate();
+		virtual void			apply_friction();
+		virtual void			stop();
+
+		void					tag(uint32_t val);
+		bool					has_tag(uint32_t val);
+
+		void					attach_sprite(Sprite* sprite, float rel_x, float rel_y);
+		void					detach_sprite(Sprite* sprite);
 
 	private:
+		vector<uint32_t>		m_tags;
+		vector<Sprite*>			m_attached_sprites;
 		uint32_t				m_type;
 		float					m_x;
 		float					m_y;
@@ -99,6 +116,19 @@ namespace arkade {
 		Rect					m_destination_rect;
 		Rect*					m_ptr_clip_rect;
 		Point					m_frame_center;
+
+		// physics
+		float				    m_speed;
+		float					m_velocity_x;
+		float					m_velocity_y;
+		float					m_acceleration_magnitude;
+		float					m_acceleration_maximum;
+		float					m_movementHeadingInRadians;
+		float					m_friction_magnitude;
+		bool					m_use_physics;
+
+		bool					m_is_attached;
+		float					m_attached_relative_x, m_attached_relative_y;
 
 		void					check_bounds();
 	};

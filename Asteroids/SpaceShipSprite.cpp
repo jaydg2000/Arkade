@@ -7,7 +7,7 @@
 #include "Asteroids.h"
 
 SpaceShipSprite::SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker, Sound* ptr_laser_sound /*, Sound* ptr_scream_sound, Sound* ptr_exploion_sound*/)
-	: PhysicsBasedSprite("res/images/PlayerSheet.png", arkade::make_size(66, 52))
+	: Sprite("res/images/PlayerSheet.png", arkade::make_size(66, 52))
 {
 	type(SPRITE_TYPE_PLAYER);
 	m_engine_on_animator = new OscillatingAnimator(3, 150);
@@ -48,7 +48,7 @@ void SpaceShipSprite::on_message(uint32_t message_type, MessageSink* ptr_sender,
 
 void SpaceShipSprite::on_update() {
 	
-	PhysicsBasedSprite::on_update();
+	Sprite::on_update();
 
 	if (!is_visible()) {
 		if (m_death_timer.has_elapsed()) {

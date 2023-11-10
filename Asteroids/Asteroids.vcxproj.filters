@@ -51,6 +51,9 @@
     <ClInclude Include="ExplosionSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DiamondSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ExplosionSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DiamondSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

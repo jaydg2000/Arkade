@@ -1,5 +1,5 @@
 #pragma once
-#include <PhysicsBasedSprite.h>
+#include <Sprite.h>
 #include <SpritePool.h>
 #include "BoundsChecker.h"
 #include <Sound.h>
@@ -7,7 +7,7 @@
 using namespace arkade;
 
 class LaserSprite;
-class SpaceShipSprite : public PhysicsBasedSprite {
+class SpaceShipSprite : public Sprite {
 public:
 	SpaceShipSprite(uint32_t screen_width, uint32_t screen_height, BoundsChecker* bounds_checker, Sound* ptr_laser_sound/*, Sound* ptr_scream_sound, Sound* ptr_exploion_sound*/);
 	~SpaceShipSprite();

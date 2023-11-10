@@ -32,8 +32,19 @@ namespace arkade {
 		m_x = 0;
 		m_y = 0;
 
+		m_speed = 0.0f;
+		m_velocity_x = 0.0f;
+		m_velocity_y = 0.0f;
+		m_friction_magnitude = .0050f;
+		m_acceleration_magnitude = .0050f;
+		m_acceleration_maximum = 1.0f;
+
 		m_use_screen_positioning = false;
 		m_is_visible = true;
+		m_use_physics - false;
+
+		m_is_attached = false;
+		m_attached_relative_x = m_attached_relative_y = 0.0f;
 	}
 
 	Sprite::Sprite(const char* filename, const Size& frame_size) : Sprite() {		
@@ -306,6 +317,15 @@ namespace arkade {
 	}
 
 	void Sprite::on_update() {
+		if (m_use_physics) {
+			move_relative_x(m_velocity_x);
+			move_relative_y(m_velocity_y);
+		}
+		if (!m_attached_sprites.empty()) {
+			for (auto spr : m_attached_sprites) {
+
+			}
+		}
 	}
 
 	void Sprite::on_pre_render() {
@@ -321,5 +341,98 @@ namespace arkade {
 	}
 
 	void Sprite::on_pool_release() {
+	}
+
+	void Sprite::on_attached(float rel_x, float rel_y) {
+		m_attached_relative_x = rel_x;
+		m_attached_relative_y = rel_y;
+		m_is_attached = true;
+	}
+
+	void Sprite::on_detached() {
+		m_is_attached = false;
+	}
+
+	void Sprite::use_physics(bool enabled) {
+		m_use_physics = enabled;
+	}
+
+	void Sprite::friction(float friction) {
+		m_friction_magnitude = friction;
+	}
+
+	void Sprite::acceleration(float magnitude, float max) {
+		m_acceleration_magnitude = magnitude;
+		m_acceleration_maximum = max;
+	}
+
+	void Sprite::accelerate() {
+
+		if (m_speed < m_acceleration_maximum)
+			m_speed += m_acceleration_magnitude;
+
+		float heading = rotation();
+		m_movementHeadingInRadians = MathUtil::degrees_to_radians(heading);
+		m_velocity_y += -(m_speed * cos(m_movementHeadingInRadians));
+		m_velocity_x += m_speed * sin(m_movementHeadingInRadians);
+	}
+
+	void Sprite::apply_friction() {
+		m_speed = 0.0f;
+
+		if (m_velocity_x < 0) {
+			m_velocity_x += m_friction_magnitude;
+			if (m_velocity_x > 0)
+				m_velocity_x = 0;
+		}
+		if (m_velocity_x > 0) {
+			m_velocity_x -= m_friction_magnitude;
+			if (m_velocity_x < 0)
+				m_velocity_x = 0;
+		}
+
+		if (m_velocity_y < 0) {
+			m_velocity_y += m_friction_magnitude;
+			if (m_velocity_y > 0)
+				m_velocity_y = 0;
+		}
+		if (m_velocity_y > 0) {
+			m_velocity_y -= m_friction_magnitude;
+			if (m_velocity_y < 0)
+				m_velocity_y = 0;
+		}
+	}
+
+	void Sprite::stop() {
+		m_speed = 0;
+		m_velocity_x = 0;
+		m_velocity_y = 0;
+		rotation(0);
+	}
+
+	void Sprite::tag(uint32_t val) {
+		m_tags.emplace_back(val);
+	}
+
+	bool Sprite::has_tag(uint32_t val)
+	{
+		for (uint32_t t : m_tags) {
+			if (t == val)
+				return true;
+		}
+		return false;
+	}
+
+	void Sprite::attach_sprite(Sprite* sprite, float rel_x, float rel_y) {
+		sprite->on_attached(rel_x, rel_y);
+		m_attached_sprites.emplace_back(sprite);
+	}
+
+	void Sprite::detach_sprite(Sprite* sprite) {		
+		auto iter = std::find(m_attached_sprites.begin(), m_attached_sprites.end(), sprite);
+		if (iter != m_attached_sprites.end()) {
+			m_attached_sprites.erase(iter);
+			sprite->on_detached();
+		}
 	}
 }

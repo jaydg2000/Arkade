@@ -195,7 +195,6 @@ copy /Y $(ProjectDir)*.h $(ProjectDir)..\out</Command>
     <ClInclude Include="MessageRouter.h" />
     <ClInclude Include="MessageSink.h" />
     <ClInclude Include="OscillatingAnimator.h" />
-    <ClInclude Include="PhysicsBasedSprite.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointF.h" />
     <ClInclude Include="Random.h" />
@@ -243,7 +242,6 @@ copy /Y $(ProjectDir)*.h $(ProjectDir)..\out</Command>
     <ClCompile Include="MessageRouter.cpp" />
     <ClCompile Include="MessageSink.cpp" />
     <ClCompile Include="OscillatingAnimator.cpp" />
-    <ClCompile Include="PhysicsBasedSprite.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="RandomAnimator.cpp" />
     <ClCompile Include="RGB.cpp" />

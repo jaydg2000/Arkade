@@ -1,82 +1,82 @@
 ﻿  stdafx.cpp
   BirdSprite.cpp
-C:\projects\Arkade\FrankyFish\BirdSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\BirdSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   BoulderSprite.cpp
-C:\projects\Arkade\FrankyFish\BoulderSprite.h(3,10): fatal error C1083: Cannot open include file: 'Random.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\BoulderSprite.h(3,10): fatal error C1083: Cannot open include file: 'Random.h': No such file or directory
   BugOneSprite.cpp
-C:\projects\Arkade\FrankyFish\BugOneSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\BugOneSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   BugThreeSprite.cpp
-C:\projects\Arkade\FrankyFish\BugThreeSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\BugThreeSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   BugTwoSprite.cpp
-C:\projects\Arkade\FrankyFish\BugTwoSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\BugTwoSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   ButtonSprite.cpp
-C:\projects\Arkade\FrankyFish\ButtonSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\ButtonSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   Collidable.cpp
-C:\projects\Arkade\FrankyFish\Collidable.h(4,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\Collidable.h(4,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   ConfigSettings.cpp
-C:\projects\Arkade\FrankyFish\ConfigSettings.h(2,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\ConfigSettings.h(2,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   DollarSprite.cpp
-C:\projects\Arkade\FrankyFish\DollarSprite.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\DollarSprite.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   FrankyFishScene.cpp
-C:\projects\Arkade\FrankyFish\FrankyFishScene.h(2,10): fatal error C1083: Cannot open include file: 'Scene.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\FrankyFishScene.h(2,10): fatal error C1083: Cannot open include file: 'Scene.h': No such file or directory
   HeartSprite.cpp
-C:\projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   JellyFishSprite.cpp
-C:\projects\Arkade\FrankyFish\JellyFishSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\JellyFishSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   LittleHeartSprite.cpp
-C:\projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   MultipleBoundingBoxCollisionDetector.cpp
-C:\projects\Arkade\FrankyFish\Collidable.h(4,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\Collidable.h(4,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   RewardSprite.cpp
-C:\projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   CoinSprite.cpp
-C:\projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   FishGame.cpp
-C:\projects\Arkade\FrankyFish\FishGame.h(2,10): fatal error C1083: Cannot open include file: 'Game.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\FishGame.h(2,10): fatal error C1083: Cannot open include file: 'Game.h': No such file or directory
   FlyingBugSprite.cpp
-C:\projects\Arkade\FrankyFish\FlyingBugSprite.h(2,10): fatal error C1083: Cannot open include file: 'Random.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\FlyingBugSprite.h(2,10): fatal error C1083: Cannot open include file: 'Random.h': No such file or directory
   FrankyFish.cpp
-C:\projects\Arkade\FrankyFish\FrankyFish.cpp(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\FrankyFish.cpp(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
   FrankySprite.cpp
-C:\projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   Generating Code...
   Compiling...
   GameSprite.cpp
-C:\projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\GameSprite.h(2,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   Level1.cpp
-C:\projects\Arkade\FrankyFish\Level1.h(3,10): fatal error C1083: Cannot open include file: 'Level.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\Level1.h(3,10): fatal error C1083: Cannot open include file: 'Level.h': No such file or directory
   SceneLoader.cpp
-C:\projects\Arkade\FrankyFish\SceneLoader.h(4,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\SceneLoader.h(4,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   SceneRepository.cpp
-C:\projects\Arkade\FrankyFish\SceneRepository.h(4,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\SceneRepository.h(4,10): fatal error C1083: Cannot open include file: 'Sprite.h': No such file or directory
   ScoreKeeper.cpp
-C:\projects\Arkade\FrankyFish\ScoreKeeper.h(2,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\ScoreKeeper.h(2,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   SharkSprite.cpp
-C:\projects\Arkade\FrankyFish\SharkSprite.h(2,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\SharkSprite.h(2,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   SpikeSprite.cpp
-C:\projects\Arkade\FrankyFish\SpikeSprite.h(3,10): fatal error C1083: Cannot open include file: 'Random.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\SpikeSprite.h(3,10): fatal error C1083: Cannot open include file: 'Random.h': No such file or directory
   SplashScene.cpp
-C:\projects\Arkade\FrankyFish\SplashScene.h(3,10): fatal error C1083: Cannot open include file: 'Scene.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\SplashScene.h(3,10): fatal error C1083: Cannot open include file: 'Scene.h': No such file or directory
   SwimmingSprite.cpp
-C:\projects\Arkade\FrankyFish\SwimmingSprite.h(2,10): fatal error C1083: Cannot open include file: 'Timer.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\SwimmingSprite.h(2,10): fatal error C1083: Cannot open include file: 'Timer.h': No such file or directory
   Tile.cpp
-C:\projects\Arkade\FrankyFish\Tile.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\Tile.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   TileDef.cpp
-C:\projects\Arkade\FrankyFish\TileDef.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\TileDef.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   TileMap.cpp
-C:\projects\Arkade\FrankyFish\Tile.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\Tile.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   TileMapLoader.cpp
-C:\projects\Arkade\FrankyFish\TileMapLoader.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\TileMapLoader.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   TileMapRepository.cpp
-C:\projects\Arkade\FrankyFish\TileMapRepository.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\TileMapRepository.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   TileSet.cpp
-C:\projects\Arkade\FrankyFish\TileDef.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\TileDef.h(3,10): fatal error C1083: Cannot open include file: 'ArkadeTypes.h': No such file or directory
   TileSetRepository.cpp
-C:\projects\Arkade\FrankyFish\TileSetRepository.h(3,10): fatal error C1083: Cannot open include file: 'Graphics.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\TileSetRepository.h(3,10): fatal error C1083: Cannot open include file: 'Graphics.h': No such file or directory
   ToothyFishOneSprite.cpp
-C:\projects\Arkade\FrankyFish\ToothyFishOneSprite.h(2,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\ToothyFishOneSprite.h(2,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   ToothyFishThreeSprite.cpp
-C:\projects\Arkade\FrankyFish\ToothyFishThreeSprite.h(2,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\ToothyFishThreeSprite.h(2,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   ToothyFishTwoSprite.cpp
-C:\projects\Arkade\FrankyFish\ToothyFishTwoSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
+C:\Projects\Arkade\FrankyFish\ToothyFishTwoSprite.h(3,10): fatal error C1083: Cannot open include file: 'ForwardAnimator.h': No such file or directory
   Generating Code...
